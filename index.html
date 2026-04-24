@@ -3,471 +3,598 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sørlia/Egge J11 2026</title>
+<title>Sørlia/Egge J11 · 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green: #456C4B;
-  --green-dark: #2d4a30;
-  --green-pale: #EBF3EC;
-  --blue: #1B4F8A;
-  --red: #C0392B;
-  --orange: #E85C00;
-  --surface: #F4F6F4;
-  --card: #fff;
-  --border: #D8E6DA;
-  --text: #111;
-  --soft: #6B7D6F;
-  --radius: 12px;
-  --shadow: 0 2px 8px rgba(0,0,0,.07);
+  --g: #3D6142; --gd: #2a4530; --gl: #EBF3EC; --gm: #c3ddc6;
+  --bl: #1B4F8A; --bll: #dceeff;
+  --re: #B83025; --rel: #FDECEA;
+  --or: #C95200; --orl: #FEF0E7;
+  --bg: #EFF2EF; --card: #FFFFFF; --bd: #D2E4D4; --bd2: #E8F0E9;
+  --t1: #111B13; --t2: #4a6050; --t3: #8a9e8d;
+  --r: 12px; --rs: 8px;
+  --sh: 0 1px 3px rgba(0,0,0,.07), 0 4px 14px rgba(0,0,0,.05);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Outfit', sans-serif; background: var(--surface); color: var(--text); min-height: 100vh; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--t1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-/* NAV */
-.topnav { background: var(--green); color: #fff; padding: 0 16px; display: flex; align-items: center; gap: 0; height: 52px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.15); }
-.nav-logo { font-weight: 800; font-size: 1rem; letter-spacing: -.01em; margin-right: 20px; }
-.nav-tabs { display: flex; height: 100%; }
-.nav-tab { height: 100%; padding: 0 14px; display: flex; align-items: center; font-size: .82rem; font-weight: 600; color: rgba(255,255,255,.7); cursor: pointer; border-bottom: 3px solid transparent; transition: all .15s; white-space: nowrap; }
-.nav-tab.active, .nav-tab:hover { color: #fff; border-bottom-color: #fff; }
+/* ── NAV ── */
+.nav { position: sticky; top: 0; z-index: 100; background: var(--gd); display: flex; align-items: stretch; height: 54px; padding: 0 16px; box-shadow: 0 2px 10px rgba(0,0,0,.22); }
+.nav-brand { display: flex; align-items: center; margin-right: 20px; }
+.nav-brand span { font-size: .95rem; font-weight: 800; color: #fff; letter-spacing: -.01em; }
+.nav-tabs { display: flex; }
+.ntab { display: flex; align-items: center; padding: 0 14px; font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.5); cursor: pointer; border-bottom: 3px solid transparent; transition: .15s; white-space: nowrap; user-select: none; }
+.ntab.on, .ntab:hover { color: #fff; border-bottom-color: #fff; }
+.nav-end { margin-left: auto; display: flex; align-items: center; }
+.sbadge { font-size: .7rem; font-weight: 700; background: rgba(255,255,255,.14); color: #fff; padding: 3px 9px; border-radius: 20px; }
 
-/* PAGES */
-.page { display: none; padding: 16px; max-width: 900px; margin: 0 auto; }
-.page.active { display: block; }
+/* ── PAGE CONTAINERS ── */
+.screen { display: none; max-width: 940px; margin: 0 auto; padding: 16px; }
+.screen.on { display: block; }
 
-/* CARDS */
-.card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 12px; }
-.card-header { padding: 10px 14px; background: var(--green); color: #fff; display: flex; justify-content: space-between; align-items: center; }
-.card-header h3 { font-size: .9rem; font-weight: 700; }
-.card-body { padding: 14px; }
+/* ── NEXT MATCH BANNER ── */
+.nxt { background: linear-gradient(135deg, var(--g), var(--gd)); color: #fff; border-radius: var(--r); padding: 15px 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--sh); }
+.nxt-ico { font-size: 1.8rem; flex-shrink: 0; padding-top: 1px; }
+.nxt-lbl { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; opacity: .65; margin-bottom: 3px; }
+.nxt-date { font-size: .98rem; font-weight: 800; }
+.nxt-detail { font-size: .74rem; opacity: .82; margin-top: 3px; line-height: 1.5; }
+.nxt-alert { display: inline-flex; align-items: center; gap: 5px; background: rgba(184,48,37,.45); border: 1px solid rgba(255,255,255,.2); padding: 3px 10px; border-radius: 20px; font-size: .68rem; font-weight: 700; margin-top: 7px; }
 
-/* KAMPPLAN */
-.kamp-card { margin-bottom: 12px; }
-.kamp-header { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
-.kamp-header.home { background: var(--green); color: #fff; }
-.kamp-header.away { background: var(--blue); color: #fff; }
-.kamp-date { font-size: 1rem; font-weight: 800; }
-.kamp-meta { font-size: .75rem; opacity: .85; margin-top: 2px; }
-.kamp-info { font-size: .8rem; font-weight: 600; }
-.kamp-body { padding: 12px 14px; }
-.lag-section { margin-bottom: 10px; }
-.lag-section:last-child { margin-bottom: 0; }
-.lag-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 7px; padding: 3px 8px; border-radius: 20px; display: inline-block; }
-.lag-label.l1 { background: var(--green-pale); color: var(--green-dark); }
-.lag-label.l2 { background: #E8F0FA; color: var(--blue); }
-.players-grid { display: flex; flex-wrap: wrap; gap: 5px; }
-.player-chip { padding: 4px 10px; border-radius: 20px; font-size: .78rem; font-weight: 600; cursor: pointer; transition: all .15s; border: 1.5px solid transparent; position: relative; }
-.player-chip.active { background: var(--green-pale); color: var(--green-dark); border-color: var(--border); }
-.player-chip.absent { background: #fdecea; color: var(--red); text-decoration: line-through; border-color: #f5c6c2; }
-.player-chip.coach-kid { font-style: italic; }
-.player-chip:hover { filter: brightness(.95); }
-.jersey-badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
-.jersey-rod { background: var(--red); }
-.jersey-oransje { background: var(--orange); }
+/* ── FILTER BAR ── */
+.filters { display: flex; gap: 7px; margin-bottom: 16px; flex-wrap: wrap; }
+.fb { padding: 5px 13px; border-radius: 20px; border: 1.5px solid var(--bd); background: var(--card); font-family: inherit; font-size: .74rem; font-weight: 700; cursor: pointer; color: var(--t2); transition: .12s; display: inline-flex; align-items: center; gap: 5px; }
+.fb.on { background: var(--g); color: #fff; border-color: var(--g); }
+.fb:hover:not(.on) { background: var(--gl); border-color: var(--gm); }
+.fb-cnt { font-size: .64rem; font-weight: 700; background: rgba(0,0,0,.1); border-radius: 10px; padding: 1px 6px; }
+.fb.on .fb-cnt { background: rgba(255,255,255,.25); }
 
-/* ABSENT COUNT BADGE */
-.absent-count { background: var(--red); color: #fff; border-radius: 20px; font-size: .65rem; font-weight: 700; padding: 1px 5px; margin-left: 5px; }
+/* ── KAMPDAG CARD ── */
+.kd { background: var(--card); border-radius: var(--r); border: 1px solid var(--bd); box-shadow: var(--sh); margin-bottom: 12px; overflow: hidden; }
+.kd-hd { display: flex; align-items: center; gap: 12px; padding: 12px 18px; }
+.kd-hd.hm  { background: linear-gradient(135deg, #3D6142, #2a4530); }
+.kd-hd.aw  { background: linear-gradient(135deg, #1d5290, #0f3560); }
+.kd-hd.dn  { background: linear-gradient(135deg, #53685a, #3a4a3f); }
+.kd-day { background: rgba(255,255,255,.15); border-radius: 6px; padding: 5px 8px; text-align: center; min-width: 46px; flex-shrink: 0; }
+.kd-day-n { display: block; font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1; }
+.kd-day-m { display: block; font-size: .57rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.7); margin-top: 1px; }
+.kd-mid { flex: 1; min-width: 0; }
+.kd-opp { font-size: .88rem; font-weight: 800; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kd-venue { font-size: .7rem; color: rgba(255,255,255,.72); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.kd-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
+.kpill { font-size: .59rem; font-weight: 700; background: rgba(255,255,255,.15); color: #fff; padding: 2px 8px; border-radius: 10px; }
+.kpill-abs { background: rgba(184,48,37,.5); }
+.kpill-done { background: rgba(255,255,255,.25); }
 
-/* STATS */
-.stats-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-.stats-table th { background: var(--green); color: #fff; padding: 8px 10px; text-align: left; font-weight: 600; font-size: .75rem; position: sticky; top: 52px; }
-.stats-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
-.stats-table tr:hover td { background: var(--surface); }
-.stats-table tr.coach-kid td { font-style: italic; }
-.stat-bar-wrap { display: flex; align-items: center; gap: 6px; }
-.stat-bar { height: 5px; border-radius: 3px; background: var(--green); flex-shrink: 0; }
-.stat-num { font-variant-numeric: tabular-nums; font-weight: 600; }
-.badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: .68rem; font-weight: 700; }
-.badge-rod { background: #fdecea; color: var(--red); }
-.badge-oransje { background: #fff0e8; color: var(--orange); }
-.badge-home { background: var(--green-pale); color: var(--green-dark); }
-.badge-away { background: #E8F0FA; color: var(--blue); }
+/* ── INTERN KAMP ── */
+.intern-body { padding: 15px 18px; background: var(--gl); border-top: 1px solid var(--bd); display: flex; align-items: center; gap: 12px; }
+.intern-ico { font-size: 1.3rem; }
+.intern-txt { font-size: .82rem; font-weight: 700; color: var(--gd); }
+.intern-sub { font-size: .7rem; color: var(--t2); margin-top: 2px; }
 
-/* MODAL */
-.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
-.modal-overlay.open { display: flex; }
-.modal { background: #fff; border-radius: 16px; padding: 20px; max-width: 360px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,.18); }
-.modal h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
-.modal p { font-size: .85rem; color: var(--soft); margin-bottom: 16px; }
-.modal-btns { display: flex; gap: 8px; }
-.btn { padding: 9px 18px; border-radius: 8px; font-family: inherit; font-weight: 600; font-size: .85rem; cursor: pointer; border: none; transition: all .15s; }
-.btn-danger { background: var(--red); color: #fff; }
-.btn-success { background: var(--green); color: #fff; }
-.btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-.btn:hover { filter: brightness(.92); }
+/* ── TWO-TEAM GRID ── */
+.kd-body { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--bd2); }
+@media (max-width: 560px) { .kd-body { grid-template-columns: 1fr; } }
+.tc { padding: 13px 15px; }
+.tc + .tc { border-left: 1px solid var(--bd2); }
+@media (max-width: 560px) { .tc + .tc { border-left: none; border-top: 1px solid var(--bd2); } }
+.tc.solo { grid-column: 1 / -1; }
 
-/* TOAST */
-.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 10px 20px; border-radius: 8px; font-size: .82rem; font-weight: 600; z-index: 300; opacity: 0; transition: opacity .25s; pointer-events: none; }
-.toast.show { opacity: 1; }
+/* ── TEAM HEADER ── */
+.t-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; flex-wrap: wrap; }
+.tname { font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
+.tname.l1 { background: var(--gl); color: var(--gd); }
+.tname.l2 { background: var(--bll); color: var(--bl); }
+.tha { font-size: .69rem; font-weight: 600; color: var(--t2); }
+.jbadge { display: inline-flex; align-items: center; gap: 3px; font-size: .63rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+.jbadge-rod { background: var(--rel); color: var(--re); }
+.jbadge-oransje { background: var(--orl); color: var(--or); }
+.t-cnt { font-size: .63rem; font-weight: 700; color: var(--t3); margin-left: auto; }
+.t-cnt-abs { color: var(--re); }
 
-/* LOADING */
-.loading { text-align: center; padding: 40px; color: var(--soft); font-size: .9rem; }
-.spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin .7s linear infinite; margin: 0 auto 10px; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.t-opp { font-size: .8rem; font-weight: 700; color: var(--t1); margin-bottom: 3px; }
+.t-venue { font-size: .68rem; color: var(--t2); margin-bottom: 9px; }
 
-/* NEXT MATCH BANNER */
-.next-banner { background: var(--green); color: #fff; border-radius: var(--radius); padding: 14px 16px; margin-bottom: 14px; display: flex; align-items: center; gap: 12px; }
-.next-banner-icon { font-size: 1.5rem; }
-.next-banner-text { flex: 1; }
-.next-banner-text strong { font-size: .95rem; display: block; }
-.next-banner-text span { font-size: .78rem; opacity: .85; }
+/* ── PLAYER CHIPS ── */
+.chips { display: flex; flex-wrap: wrap; gap: 5px; min-height: 30px; padding: 4px; border-radius: var(--rs); transition: background .15s, outline .15s; }
+.chips.dz-on { background: rgba(61,97,66,.08); outline: 2px dashed var(--g); outline-offset: -2px; }
+.chip { padding: 5px 11px; border-radius: 20px; font-size: .77rem; font-weight: 600; cursor: pointer; transition: transform .12s, filter .12s, box-shadow .12s; border: 1.5px solid transparent; user-select: none; white-space: nowrap; }
+.chip.ok  { background: var(--gl); color: var(--gd); border-color: var(--gm); }
+.chip.abs { background: var(--rel); color: var(--re); text-decoration: line-through; border-color: #f0bfba; }
+.chip.cc  { font-style: italic; }
+.chip.dragging { opacity: .3; }
+.chip:not(.dragging):hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.12); filter: brightness(.92); }
 
-/* SECTION TITLE */
-.section-title { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--soft); margin: 16px 0 8px; }
+/* ── ACTION SHEET ── */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.42); z-index: 200; align-items: flex-end; justify-content: center; }
+.overlay.on { display: flex; }
+.sheet { background: var(--card); border-radius: 18px 18px 0 0; padding: 20px 20px 36px; width: 100%; max-width: 480px; animation: su .2s ease; }
+@keyframes su { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sh-hdl { width: 36px; height: 4px; background: var(--bd); border-radius: 2px; margin: 0 auto 18px; }
+.sh-name { font-size: 1.05rem; font-weight: 800; }
+.sh-info { font-size: .78rem; color: var(--t2); margin-top: 2px; margin-bottom: 18px; }
+.sh-btns { display: flex; flex-direction: column; gap: 9px; }
+.sb { padding: 13px 16px; border-radius: var(--rs); font-family: inherit; font-size: .87rem; font-weight: 700; cursor: pointer; border: none; text-align: left; display: flex; align-items: center; gap: 12px; transition: .12s; }
+.sb:hover { filter: brightness(.95); }
+.sb-ico { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
+.sb-abs { background: var(--rel); color: var(--re); }
+.sb-prs { background: var(--gl); color: var(--gd); }
+.sb-mv  { background: var(--bll); color: var(--bl); }
+.sb-x   { background: var(--bg); color: var(--t2); border: 1.5px solid var(--bd); }
 
-/* FILTER BAR */
-.filter-bar { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-.filter-btn { padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--border); background: #fff; font-family: inherit; font-size: .75rem; font-weight: 600; cursor: pointer; color: var(--soft); transition: all .15s; }
-.filter-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+/* ── TOAST ── */
+.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--t1); color: #fff; padding: 10px 20px; border-radius: var(--rs); font-size: .82rem; font-weight: 600; z-index: 400; opacity: 0; transition: .22s; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
+.toast.on { opacity: 1; transform: translateX(-50%); }
 
-@media (max-width: 500px) {
-  .topnav { overflow-x: auto; }
-  .nav-tab { padding: 0 10px; font-size: .75rem; }
-  .stats-table { font-size: .75rem; }
-  .stats-table th, .stats-table td { padding: 6px 7px; }
-}
+/* ── STATS TABLE ── */
+.scard { background: var(--card); border-radius: var(--r); border: 1px solid var(--bd); box-shadow: var(--sh); overflow: hidden; }
+.scard-hd { background: linear-gradient(135deg, var(--g), var(--gd)); color: #fff; padding: 13px 18px; display: flex; justify-content: space-between; align-items: center; }
+.scard-hd h2 { font-size: .92rem; font-weight: 800; }
+.scard-sub { font-size: .72rem; opacity: .78; }
+.scard-body { overflow-x: auto; }
+.stats-tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
+.stats-tbl th { background: var(--gd); color: #fff; padding: 9px 12px; text-align: left; font-size: .67rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; position: sticky; top: 54px; white-space: nowrap; }
+.stats-tbl td { padding: 8px 12px; border-bottom: 1px solid var(--bd2); vertical-align: middle; }
+.stats-tbl tr:last-child td { border-bottom: none; }
+.stats-tbl tr:hover td { background: var(--bg); }
+.stats-tbl tr.cc-row td { font-style: italic; }
+.km-cell { display: flex; align-items: center; gap: 7px; }
+.km-bar { height: 6px; border-radius: 3px; flex-shrink: 0; min-width: 4px; }
+.nfont { font-variant-numeric: tabular-nums; font-weight: 700; }
+.spill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .66rem; font-weight: 700; white-space: nowrap; }
+.sp-g { background: var(--gl); color: var(--gd); }
+.sp-b { background: var(--bll); color: var(--bl); }
+.sp-r { background: var(--rel); color: var(--re); }
+.sp-o { background: var(--orl); color: var(--or); }
+.scard-foot { background: var(--gl); border-top: 1px solid var(--bd); padding: 12px 18px; display: flex; gap: 24px; flex-wrap: wrap; }
+.fstat { display: flex; flex-direction: column; gap: 2px; }
+.flbl { font-size: .63rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--t2); }
+.fval { font-size: .9rem; font-weight: 800; color: var(--gd); }
+
+/* ── LOADER ── */
+.loader { text-align: center; padding: 56px 20px; color: var(--t2); font-size: .9rem; }
+.spin { width: 30px; height: 30px; border: 3px solid var(--bd); border-top-color: var(--g); border-radius: 50%; animation: rot .7s linear infinite; margin: 0 auto 12px; }
+@keyframes rot { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
-  <div class="nav-logo">⚽ J11 2026</div>
+<nav class="nav">
+  <div class="nav-brand"><span>⚽ Sørlia/Egge J11</span></div>
   <div class="nav-tabs">
-    <div class="nav-tab active" onclick="showPage('kampplan')">Kampplan</div>
-    <div class="nav-tab" onclick="showPage('statistikk')">Statistikk</div>
+    <div class="ntab on" data-pg="plan">Kampplan</div>
+    <div class="ntab" data-pg="stat">Statistikk</div>
   </div>
+  <div class="nav-end"><span class="sbadge">2026</span></div>
 </nav>
 
 <div id="toast" class="toast"></div>
 
-<div class="modal-overlay" id="modal">
-  <div class="modal">
-    <h3 id="modal-title">Spiller</h3>
-    <p id="modal-desc"></p>
-    <div class="modal-btns">
-      <button class="btn btn-danger" id="modal-absent-btn" onclick="confirmAbsent()">Meld fraværende</button>
-      <button class="btn btn-success" id="modal-present-btn" onclick="confirmPresent()">Meld tilstede</button>
-      <button class="btn btn-ghost" onclick="closeModal()">Avbryt</button>
-    </div>
+<div class="overlay" id="overlay" onclick="closeSheet(event)">
+  <div class="sheet">
+    <div class="sh-hdl"></div>
+    <div class="sh-name" id="sh-name"></div>
+    <div class="sh-info" id="sh-info"></div>
+    <div class="sh-btns" id="sh-btns"></div>
   </div>
 </div>
 
-<!-- KAMPPLAN PAGE -->
-<div class="page active" id="page-kampplan">
-  <div id="next-banner"></div>
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="setFilter('alle',this)">Alle kamper</button>
-    <button class="filter-btn" onclick="setFilter('kommende',this)">Kommende</button>
-    <button class="filter-btn" onclick="setFilter('spilt',this)">Spilt</button>
-    <button class="filter-btn" onclick="setFilter('forfall',this)">Med forfall</button>
+<div class="screen on" id="pg-plan">
+  <div id="banner"></div>
+  <div class="filters" id="filters">
+    <button class="fb on" data-f="alle">Alle kamper <span class="fb-cnt" id="cnt-alle"></span></button>
+    <button class="fb" data-f="kommende">Kommende <span class="fb-cnt" id="cnt-kommende"></span></button>
+    <button class="fb" data-f="spilt">Spilt <span class="fb-cnt" id="cnt-spilt"></span></button>
+    <button class="fb" data-f="forfall">Med forfall <span class="fb-cnt" id="cnt-forfall"></span></button>
   </div>
-  <div id="kampplan-content"><div class="loading"><div class="spinner"></div>Laster kampplan...</div></div>
+  <div id="plan-list"><div class="loader"><div class="spin"></div>Laster kampplan…</div></div>
 </div>
 
-<!-- STATISTIKK PAGE -->
-<div class="page" id="page-statistikk">
-  <div id="stats-content"><div class="loading"><div class="spinner"></div>Beregner statistikk...</div></div>
+<div class="screen" id="pg-stat">
+  <div id="stat-body"><div class="loader"><div class="spin"></div>Beregner…</div></div>
 </div>
 
 <script>
-// ── CONFIG ──────────────────────────────────────────────────────────────────
-const SUPABASE_URL = 'https://jxteosjxgrblasksfeyu.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4dGVvc2p4Z3JibGFza3NmZXl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkxOTE1ODMsImV4cCI6MjA4NDc2NzU4M30.4VhLfxcX0PCkUeK9aYrTrfmTwESH9zOyx4sY61lIZ9w';
+'use strict';
+// ── CONFIG ─────────────────────────────────────────────────────────────
+const SB  = 'https://jxteosjxgrblasksfeyu.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4dGVvc2p4Z3JibGFza3NmZXl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkxOTE1ODMsImV4cCI6MjA4NDc2NzU4M30.4VhLfxcX0PCkUeK9aYrTrfmTwESH9zOyx4sY61lIZ9w';
 
-async function sb(path, opts={}) {
-  const r = await fetch(SUPABASE_URL + '/rest/v1/' + path, {
-    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY,
-                'Content-Type': 'application/json', 'Prefer': 'return=minimal', ...opts.headers },
+async function api(path, opts = {}) {
+  const r = await fetch(SB + '/rest/v1/' + path, {
+    headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY,
+               'Content-Type': 'application/json', 'Prefer': 'return=minimal',
+               ...(opts.headers || {}) },
     ...opts
   });
-  if (!r.ok) { const e = await r.text(); throw new Error(e); }
-  const txt = await r.text();
-  return txt ? JSON.parse(txt) : null;
+  if (!r.ok) { console.error('API', r.status, await r.text()); return null; }
+  const t = await r.text();
+  return t ? JSON.parse(t) : null;
 }
 
-// ── STATE ────────────────────────────────────────────────────────────────────
-let matches=[], players=[], assignments=[], absences=[];
-let currentFilter='alle';
-let modalState={matchId:null, playerId:null, playerName:null, absent:false};
+// ── STATE ──────────────────────────────────────────────────────────────
+let P = [], M = [], A = [];
+let filter = 'alle', shCtx = null;
+let dragPid = null, dragMid = null, dragDate = null; // FIX: declare dragDate
+let dzCounters = {};
 
-// ── DATA LOAD ────────────────────────────────────────────────────────────────
-async function loadAll() {
-  [players, matches, assignments, absences] = await Promise.all([
-    sb('j11_players?select=*&order=name'),
-    sb('j11_matches?select=*&order=id'),
-    sb('j11_assignments?select=*'),
-    sb('j11_assignments?select=*&is_absent=eq.true'),
+// ── INIT ───────────────────────────────────────────────────────────────
+async function init() {
+  [P, M, A] = await Promise.all([
+    api('j11_players?select=*&order=name'),
+    api('j11_matches?select=*&order=id'),
+    api('j11_assignments?select=*'),
   ]);
-  // Absences are already in assignments with is_absent=true
-  // Let's use assignments as source of truth
-  renderAll();
+  if (!P || !M || !A) {
+    document.getElementById('plan-list').innerHTML =
+      '<div class="loader" style="color:var(--re)">Feil ved lasting. Sjekk internettilkobling.</div>';
+    return;
+  }
+  render();
 }
 
-function playerById(id) { return players.find(p=>p.id===id); }
-function matchById(id) { return matches.find(m=>m.id===id); }
+// ── HELPERS ────────────────────────────────────────────────────────────
+const pById = id => P.find(p => p.id === id);
+const mById = id => M.find(m => m.id === id);
 
-function isAbsent(matchId, playerId) {
-  const a = assignments.find(a=>a.match_id===matchId && a.player_id===playerId);
-  return a && a.is_absent;
+// FIX: date-aware sort key (month first, then day)
+const dateKey = s => { const [d, mo] = s.split('.'); return +mo * 100 + +d; };
+
+// isPlayed: compare by date only (not time), today's matches are NOT yet played
+const isPlayed = s => {
+  const [d, mo] = s.split('.');
+  const match = new Date(2026, +mo - 1, +d);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  return match < today;
+};
+
+const MONTHS = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
+const DAYS   = { man:'Man', tir:'Tir', ons:'Ons', tor:'Tor', fre:'Fre', lør:'Lør', søn:'Søn' };
+const fDate  = s => { const [d, mo] = s.split('.'); return `${+d}. ${MONTHS[+mo - 1]}`; };
+const meetup = ko => {
+  const [h, min] = ko.split(':').map(Number);
+  const t = h * 60 + min - 30;
+  return `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
+};
+
+function psOf(matchId) {
+  return A.filter(a => a.match_id === matchId)
+    .map(a => ({ ...pById(a.player_id), absent: a.is_absent }))
+    .filter(Boolean)
+    .sort((a, b) => a.name.localeCompare(b.name, 'no'));
 }
 
-function playersForMatch(matchId) {
-  return assignments
-    .filter(a=>a.match_id===matchId)
-    .map(a=>({...playerById(a.player_id), absent: a.is_absent}))
-    .filter(p=>p)
-    .sort((a,b)=>a.name.localeCompare(b.name,'no'));
-}
+// ── RENDER ─────────────────────────────────────────────────────────────
+function render() { renderBanner(); renderFilterCounts(); renderPlan(); renderStats(); }
 
-// ── DATE UTILS ───────────────────────────────────────────────────────────────
-function parseDate(str) {
-  // "14.04" -> Date in 2026
-  const [d,m] = str.split('.');
-  return new Date(2026, parseInt(m)-1, parseInt(d));
-}
-
-function today() { return new Date(); }
-
-function isPlayed(dateStr) { return parseDate(dateStr) < today(); }
-
-function formatDate(dateStr) {
-  const [d,m] = dateStr.split('.');
-  const months=['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
-  return `${parseInt(d)}. ${months[parseInt(m)-1]}`;
-}
-
-// ── RENDER KAMPPLAN ──────────────────────────────────────────────────────────
-function renderAll() {
-  renderNextBanner();
-  renderKampplan();
-  renderStats();
-}
-
-function renderNextBanner() {
-  const el = document.getElementById('next-banner');
-  const upcoming = matches.filter(m => !isPlayed(m.date)).sort((a,b)=>a.id-b.id);
-  if (!upcoming.length) { el.innerHTML=''; return; }
-  // Get first unique date
-  const nextDate = upcoming[0].date;
-  const nextMatches = upcoming.filter(m=>m.date===nextDate);
-  const opps = nextMatches.map(m=>m.opponent||'?').filter((v,i,a)=>a.indexOf(v)===i).join(' & ');
-  el.innerHTML = `<div class="next-banner">
-    <div class="next-banner-icon">📅</div>
-    <div class="next-banner-text">
-      <strong>Neste kamp: ${formatDate(nextDate)}</strong>
-      <span>vs ${opps}</span>
+// ── BANNER ─────────────────────────────────────────────────────────────
+function renderBanner() {
+  const el = document.getElementById('banner');
+  const next = [...M].filter(m => !isPlayed(m.date)).sort((a, b) => dateKey(a.date) - dateKey(b.date))[0];
+  if (!next) { el.innerHTML = ''; return; }
+  const day = M.filter(m => m.date === next.date);
+  const opps = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ') || 'Intern kamp';
+  const venues = [...new Set(day.map(m => m.venue))];
+  const nAbs = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
+  el.innerHTML = `<div class="nxt">
+    <div class="nxt-ico">📅</div>
+    <div>
+      <div class="nxt-lbl">Neste kamp</div>
+      <div class="nxt-date">${DAYS[next.weekday] || next.weekday} ${fDate(next.date)} · Avspark ${next.kickoff} · Oppmøte ${meetup(next.kickoff)}</div>
+      <div class="nxt-detail">vs ${opps}<br>${venues.join(' / ')}</div>
+      ${nAbs ? `<div class="nxt-alert">⚠ ${nAbs} forfall meldt</div>` : ''}
     </div>
   </div>`;
 }
 
-function renderKampplan() {
-  const el = document.getElementById('kampplan-content');
-  // Group matches by date
+// ── FILTER COUNTS ──────────────────────────────────────────────────────
+function renderFilterCounts() {
+  const allDates = [...new Set(M.map(m => m.date))];
+  const cnt = { alle: 0, kommende: 0, spilt: 0, forfall: 0 };
+  for (const date of allDates) {
+    const day = M.filter(m => m.date === date);
+    const done = isPlayed(date);
+    const hasAbs = day.some(m => psOf(m.id).some(p => p.absent));
+    cnt.alle++;
+    if (!done) cnt.kommende++;
+    if (done) cnt.spilt++;
+    if (hasAbs) cnt.forfall++;
+  }
+  for (const [k, v] of Object.entries(cnt)) {
+    const el = document.getElementById('cnt-' + k);
+    if (el) el.textContent = v;
+  }
+}
+
+// ── PLAN ───────────────────────────────────────────────────────────────
+function renderPlan() {
+  const el = document.getElementById('plan-list');
   const byDate = {};
-  for (const m of matches) {
-    if (!byDate[m.date]) byDate[m.date] = [];
-    byDate[m.date].push(m);
-  }
+  for (const m of M) { if (!byDate[m.date]) byDate[m.date] = []; byDate[m.date].push(m); }
 
-  const filter = currentFilter;
+  // FIX: sort dates by month+day, not alphabetically
+  const sortedDates = Object.keys(byDate).sort((a, b) => dateKey(a) - dateKey(b));
+
   let html = '';
+  for (const date of sortedDates) {
+    const day = byDate[date], done = isPlayed(date);
+    const nAbs = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
+    if (filter === 'kommende' && done) continue;
+    if (filter === 'spilt' && !done) continue;
+    if (filter === 'forfall' && !nAbs) continue;
 
-  for (const date of Object.keys(byDate).sort()) {
-    const dayMatches = byDate[date];
-    const played = isPlayed(date);
+    const isHome = day.some(m => m.ha === 'H');
+    const allIntern = day.every(m => m.is_intern);
+    const opps = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ');
+    const venues = [...new Set(day.map(m => m.venue))].join(' / ');
+    const hc = done ? 'dn' : isHome ? 'hm' : 'aw';
+    const [dn, dm] = date.split('.');
+    const wd = DAYS[day[0].weekday] || day[0].weekday;
+    const ko = day[0].kickoff;
 
-    if (filter === 'kommende' && played) continue;
-    if (filter === 'spilt' && !played) continue;
+    html += `<div class="kd">
+      <div class="kd-hd ${hc}">
+        <div class="kd-day">
+          <span class="kd-day-n">${+dn}</span>
+          <span class="kd-day-m">${MONTHS[+dm - 1]}</span>
+        </div>
+        <div class="kd-mid">
+          <div class="kd-opp">${allIntern ? '🔄 Intern kamp' : 'vs ' + opps}</div>
+          <div class="kd-venue">${venues}</div>
+          <div class="kd-pills">
+            <span class="kpill">${wd} · ${ko} (Oppmøte ${meetup(ko)})</span>
+            ${done ? '<span class="kpill kpill-done">✓ Spilt</span>' : ''}
+            ${nAbs ? `<span class="kpill kpill-abs">⚠ ${nAbs} forfall</span>` : ''}
+          </div>
+        </div>
+      </div>`;
 
-    // Check if any player is absent this day
-    const hasAbsent = dayMatches.some(m => playersForMatch(m.id).some(p=>p.absent));
-    if (filter === 'forfall' && !hasAbsent) continue;
-
-    const isHome = dayMatches.some(m=>m.ha==='H');
-    const opps = dayMatches.map(m=>m.opponent||'?').filter((v,i,a)=>a.indexOf(v)===i).join(' + ');
-
-    let matchHtml = `<div class="card kamp-card">`;
-    matchHtml += `<div class="kamp-header ${isHome?'home':'away'}">
-      <div>
-        <div class="kamp-date">${formatDate(date)}${played?' ✓':''}</div>
-        <div class="kamp-meta">${dayMatches[0].venue||''}</div>
-      </div>
-      <div class="kamp-info">${opps}</div>
-    </div>`;
-    matchHtml += `<div class="kamp-body">`;
-
-    for (const m of dayMatches) {
-      const ps = playersForMatch(m.id);
-      const absentCount = ps.filter(p=>p.absent).length;
-      const lagLabel = m.lag==='L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
-      const haLabel = m.ha==='H' ? 'Hjemme' : 'Borte';
-      const jerseyDot = `<span class="jersey-badge jersey-${m.jersey}"></span>`;
-
-      matchHtml += `<div class="lag-section">
+    if (allIntern) {
+      html += `<div class="intern-body">
+        <div class="intern-ico">👥</div>
         <div>
-          <span class="lag-label ${m.lag.toLowerCase()}">${lagLabel}</span>
-          <span style="font-size:.72rem;color:var(--soft);margin-left:6px;">${haLabel} · ${jerseyDot}${m.jersey}</span>
-          ${absentCount ? `<span class="absent-count">${absentCount} forfall</span>` : ''}
+          <div class="intern-txt">Tropp settes opp på kampdagen</div>
+          <div class="intern-sub">Begge lag møtes — fordeling avtales på stedet</div>
         </div>
-        <div class="players-grid" style="margin-top:7px;">`;
+      </div>`;
+    } else {
+      const solo = day.length === 1;
+      html += `<div class="kd-body">`;
+      for (const m of day) {
+        const ps = psOf(m.id);
+        const nA = ps.filter(p => p.absent).length;
+        const nOk = ps.length - nA;
+        const lc = m.lag === 'L1' ? 'l1' : 'l2';
+        const ln = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
+        const ha = m.ha === 'H' ? 'Hjemme' : m.km ? `Borte · ${m.km} km` : 'Borte';
+        const jbCls = m.jersey === 'rød' ? 'jbadge-rod' : 'jbadge-oransje';
+        const jLabel = m.jersey === 'rød' ? '🔴 Rød' : '🟠 Oransje';
 
-      for (const p of ps) {
-        const cls = ['player-chip', p.absent?'absent':'active', p.is_coach_kid?'coach-kid':''].filter(Boolean).join(' ');
-        matchHtml += `<div class="${cls}" onclick="openModal(${m.id},${p.id},'${p.name}',${p.absent})">${p.name}</div>`;
+        html += `<div class="tc${solo ? ' solo' : ''}" data-mid="${m.id}" data-date="${m.date}">
+          <div class="t-hd">
+            <span class="tname ${lc}">${ln}</span>
+            <span class="tha">${ha}</span>
+            <span class="jbadge ${jbCls}">${jLabel}</span>
+            <span class="t-cnt${nA ? ' t-cnt-abs' : ''}">
+              ${nA ? `${nOk} av ${ps.length} (${nA} borte)` : `${ps.length} spillere`}
+            </span>
+          </div>
+          <div class="t-opp">vs ${m.opponent}</div>
+          <div class="t-venue">${m.venue}</div>
+          <div class="chips" data-mid="${m.id}" data-date="${m.date}"
+            ondragover="dzOver(event)"
+            ondragenter="dzEnter(event)"
+            ondragleave="dzLeave(event)"
+            ondrop="dzDrop(event)">`;
+        for (const p of ps) {
+          const c = ['chip', p.absent ? 'abs' : 'ok', p.is_coach_kid ? 'cc' : ''].filter(Boolean).join(' ');
+          html += `<span class="${c}" draggable="true"
+            data-pid="${p.id}" data-mid="${m.id}" data-date="${m.date}"
+            ondragstart="chipStart(event)"
+            ondragend="chipEnd(event)"
+            onclick="openSheet(${p.id},${m.id})">${p.name}</span>`;
+        }
+        html += `</div></div>`;
       }
-
-      matchHtml += `</div></div>`;
+      html += `</div>`;
     }
-
-    matchHtml += `</div></div>`;
-    html += matchHtml;
+    html += `</div>`;
   }
-
-  el.innerHTML = html || '<div class="loading">Ingen kamper å vise</div>';
+  el.innerHTML = html || '<div class="loader">Ingen kamper å vise</div>';
 }
 
-// ── STATS ─────────────────────────────────────────────────────────────────────
+// ── STATS ──────────────────────────────────────────────────────────────
 function renderStats() {
-  const el = document.getElementById('stats-content');
-
-  // Compute per player
   const stats = {};
-  for (const p of players) {
-    stats[p.id] = { name: p.name, is_coach_kid: p.is_coach_kid, games: 0, km: 0, home: 0, away: 0, rod: 0, oransje: 0, absent: 0 };
-  }
+  for (const p of P)
+    stats[p.id] = { name: p.name, cc: p.is_coach_kid, played: 0, km: 0, h: 0, b: 0, r: 0, o: 0, abs: 0 };
 
-  for (const a of assignments) {
-    const m = matchById(a.match_id);
-    const s = stats[a.player_id];
+  for (const a of A) {
+    const m = mById(a.match_id), s = stats[a.player_id];
     if (!m || !s) continue;
-    if (a.is_absent) { s.absent++; continue; }
-    s.games++;
-    s.km += m.km||0;
-    if (m.ha==='H') s.home++; else s.away++;
-    if (m.jersey==='rød') s.rod++; else s.oransje++;
+    s.km += m.km || 0;            // ALWAYS: planlagt km uavhengig av forfall
+    if (a.is_absent) { s.abs++; continue; }
+    s.played++;
+    m.ha === 'H' ? s.h++ : s.b++;
+    m.jersey === 'rød' ? s.r++ : s.o++;
   }
 
-  const rows = Object.values(stats).sort((a,b)=>a.km-b.km);
-  const maxKm = Math.max(...rows.map(r=>r.km));
-  const avgKm = Math.round(rows.reduce((s,r)=>s+r.km,0)/rows.length);
+  const rows = Object.values(stats).sort((a, b) => a.km - b.km);
+  const maxKm = Math.max(...rows.map(r => r.km), 1);
+  const avg   = Math.round(rows.reduce((s, r) => s + r.km, 0) / rows.length);
+  const minKm = Math.min(...rows.map(r => r.km));
+  const maxKmVal = Math.max(...rows.map(r => r.km));
+  const spread = maxKmVal - minKm;
 
-  let html = `<div class="card">
-    <div class="card-header"><h3>Statistikk per spiller</h3><span style="font-size:.75rem;opacity:.8">Snitt km: ${avgKm}</span></div>
-    <div style="overflow-x:auto">
-    <table class="stats-table">
+  document.getElementById('stat-body').innerHTML = `<div class="scard">
+    <div class="scard-hd">
+      <h2>Sesongstatistikk · planlagt reise</h2>
+      <span class="scard-sub">Snitt: ${avg} km · Spread: ${spread} km</span>
+    </div>
+    <div class="scard-body"><table class="stats-tbl">
       <thead><tr>
-        <th>Spiller</th>
-        <th>Kamper</th>
-        <th>Km reise</th>
-        <th>H / B</th>
-        <th>Rød / Oransje</th>
-        <th>Forfall</th>
+        <th>Spiller</th><th>Spilt</th><th>Planl. km ↑</th><th>H / B</th><th>Drakt</th><th>Forfall</th>
       </tr></thead>
-      <tbody>`;
-
-  for (const r of rows) {
-    const barW = maxKm > 0 ? Math.round(r.km/maxKm*60) : 0;
-    const kmColor = r.km > avgKm*1.15 ? 'var(--red)' : r.km < avgKm*0.85 ? 'var(--blue)' : 'var(--green)';
-    html += `<tr class="${r.is_coach_kid?'coach-kid':''}">
-      <td><strong>${r.name}</strong>${r.is_coach_kid?'<span style="font-size:.65rem;color:var(--soft);margin-left:4px;">CC</span>':''}</td>
-      <td class="stat-num">${r.games}</td>
-      <td>
-        <div class="stat-bar-wrap">
-          <div class="stat-bar" style="width:${barW}px;background:${kmColor}"></div>
-          <span class="stat-num" style="color:${kmColor}">${r.km}</span>
-        </div>
-      </td>
-      <td><span class="badge badge-home">${r.home}H</span> <span class="badge badge-away">${r.away}B</span></td>
-      <td><span class="badge badge-rod">${r.rod}</span> <span class="badge badge-oransje">${r.oransje}</span></td>
-      <td>${r.absent > 0 ? `<span style="color:var(--red);font-weight:600">${r.absent}</span>` : '—'}</td>
-    </tr>`;
-  }
-
-  html += `</tbody></table></div></div>`;
-  el.innerHTML = html;
+      <tbody>${rows.map(r => {
+        const bw = Math.round(r.km / maxKm * 64);
+        const c  = r.km > avg * 1.18 ? 'var(--re)' : r.km < avg * 0.82 ? 'var(--bl)' : 'var(--g)';
+        return `<tr class="${r.cc ? 'cc-row' : ''}">
+          <td><b>${r.name}</b>${r.cc ? '<span style="font-size:.58rem;color:var(--t3);margin-left:5px">CC</span>' : ''}</td>
+          <td class="nfont">${r.played}</td>
+          <td><div class="km-cell">
+            <div class="km-bar" style="width:${bw}px;background:${c}"></div>
+            <span class="nfont" style="color:${c}">${r.km}</span>
+          </div></td>
+          <td><span class="spill sp-g">${r.h}H</span> <span class="spill sp-b">${r.b}B</span></td>
+          <td><span class="spill sp-r">${r.r}</span> <span class="spill sp-o">${r.o}</span></td>
+          <td>${r.abs ? `<b style="color:var(--re)">${r.abs}</b>` : '—'}</td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table></div>
+    <div class="scard-foot">
+      <div class="fstat"><span class="flbl">Km-spread</span><span class="fval">${spread} km</span></div>
+      <div class="fstat"><span class="flbl">Minimum</span><span class="fval">${minKm} km</span></div>
+      <div class="fstat"><span class="flbl">Maksimum</span><span class="fval">${maxKmVal} km</span></div>
+      <div class="fstat"><span class="flbl">Snitt</span><span class="fval">${avg} km</span></div>
+    </div>
+  </div>`;
 }
 
-// ── MODAL ─────────────────────────────────────────────────────────────────────
-function openModal(matchId, playerId, playerName, isCurrentlyAbsent) {
-  const m = matchById(matchId);
-  modalState = {matchId, playerId, playerName, absent: isCurrentlyAbsent};
-  document.getElementById('modal-title').textContent = playerName;
-  document.getElementById('modal-desc').textContent =
-    `${formatDate(m.date)} · ${m.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2'} vs ${m.opponent}`;
+// ── DRAG-DROP ──────────────────────────────────────────────────────────
+function chipStart(e) {
+  dragPid  = +e.currentTarget.dataset.pid;
+  dragMid  = +e.currentTarget.dataset.mid;
+  dragDate = e.currentTarget.dataset.date;   // FIX: now declared above
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', String(dragPid));
+}
+function chipEnd(e) { e.currentTarget.classList.remove('dragging'); }
 
-  const absentBtn = document.getElementById('modal-absent-btn');
-  const presentBtn = document.getElementById('modal-present-btn');
+function dzEnter(e) {
+  e.preventDefault();
+  const z = e.currentTarget;
+  dzCounters[z.dataset.mid] = (dzCounters[z.dataset.mid] || 0) + 1;
+  if (z.dataset.date === dragDate) z.classList.add('dz-on');
+}
+function dzOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
+function dzLeave(e) {
+  const z = e.currentTarget;
+  dzCounters[z.dataset.mid] = (dzCounters[z.dataset.mid] || 1) - 1;
+  if (dzCounters[z.dataset.mid] <= 0) {
+    z.classList.remove('dz-on');
+    dzCounters[z.dataset.mid] = 0;
+  }
+}
+async function dzDrop(e) {
+  e.preventDefault();
+  const z = e.currentTarget;
+  z.classList.remove('dz-on');
+  dzCounters[z.dataset.mid] = 0;
+  const toMid = +z.dataset.mid;
+  if (!dragPid || !dragMid || toMid === dragMid) return;
+  if (z.dataset.date !== dragDate) { toast('Kan bare flytte innen samme kampdag'); return; }
+  await movePlayer(dragPid, dragMid, toMid);
+  dragPid = null; dragMid = null; dragDate = null;
+}
 
-  if (isCurrentlyAbsent) {
-    absentBtn.style.display = 'none';
-    presentBtn.style.display = '';
+// ── ACTION SHEET ───────────────────────────────────────────────────────
+function openSheet(playerId, matchId) {
+  const p = pById(playerId), m = mById(matchId);
+  const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
+  if (!p || !m) return;
+  shCtx = { playerId, matchId, absent: !!a?.is_absent };
+  document.getElementById('sh-name').textContent = p.name;
+  document.getElementById('sh-info').textContent =
+    `${fDate(m.date)} · ${m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2'} vs ${m.opponent}`;
+  const other = M.find(x => x.date === m.date && x.id !== m.id && !x.is_intern);
+  let btns = '';
+  if (shCtx.absent) {
+    btns = `<button class="sb sb-prs" onclick="doPresent()"><span class="sb-ico">✓</span>Meld tilstede igjen</button>`;
   } else {
-    absentBtn.style.display = '';
-    presentBtn.style.display = 'none';
+    btns = `<button class="sb sb-abs" onclick="doAbsent()"><span class="sb-ico">✗</span>Meld fraværende</button>`;
+    if (other) {
+      const on = other.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
+      btns += `<button class="sb sb-mv" onclick="doMove(${other.id})"><span class="sb-ico">⇄</span>Flytt til ${on}</button>`;
+    }
   }
-
-  document.getElementById('modal').classList.add('open');
+  btns += `<button class="sb sb-x" onclick="closeSheet()"><span class="sb-ico">✕</span>Avbryt</button>`;
+  document.getElementById('sh-btns').innerHTML = btns;
+  document.getElementById('overlay').classList.add('on');
+}
+function closeSheet(e) {
+  if (e && e.target !== document.getElementById('overlay')) return;
+  document.getElementById('overlay').classList.remove('on');
+  shCtx = null;
+}
+async function doAbsent() {
+  document.getElementById('overlay').classList.remove('on');
+  await setAbsent(shCtx.matchId, shCtx.playerId, true);
+  toast(`${pById(shCtx.playerId)?.name} meldt fraværende`);
+}
+async function doPresent() {
+  document.getElementById('overlay').classList.remove('on');
+  await setAbsent(shCtx.matchId, shCtx.playerId, false);
+  toast(`${pById(shCtx.playerId)?.name} meldt tilstede`);
+}
+async function doMove(toMid) {
+  document.getElementById('overlay').classList.remove('on');
+  await movePlayer(shCtx.playerId, shCtx.matchId, toMid);
 }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-}
-
-async function confirmAbsent() {
-  closeModal();
-  await setAbsence(modalState.matchId, modalState.playerId, true);
-  showToast(`${modalState.playerName} meldt fraværende`);
-}
-
-async function confirmPresent() {
-  closeModal();
-  await setAbsence(modalState.matchId, modalState.playerId, false);
-  showToast(`${modalState.playerName} meldt tilstede`);
-}
-
-async function setAbsence(matchId, playerId, absent) {
-  await sb(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {
+// ── DB OPS ─────────────────────────────────────────────────────────────
+async function setAbsent(matchId, playerId, absent) {
+  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ is_absent: absent, updated_at: new Date().toISOString() })
   });
-  // Update local state
-  const a = assignments.find(a=>a.match_id===matchId && a.player_id===playerId);
+  const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
   if (a) a.is_absent = absent;
-  renderAll();
+  render();
+}
+async function movePlayer(playerId, fromMid, toMid) {
+  const p = pById(playerId);
+  await api(`j11_assignments?match_id=eq.${fromMid}&player_id=eq.${playerId}`, { method: 'DELETE' });
+  await api('j11_assignments', {
+    method: 'POST',
+    headers: { 'Prefer': 'resolution=merge-duplicates' },
+    body: JSON.stringify({ match_id: toMid, player_id: playerId, is_absent: false })
+  });
+  const idx = A.findIndex(a => a.match_id === fromMid && a.player_id === playerId);
+  if (idx > -1) A.splice(idx, 1);
+  const ex = A.find(a => a.match_id === toMid && a.player_id === playerId);
+  if (!ex) A.push({ match_id: toMid, player_id: playerId, is_absent: false });
+  else ex.is_absent = false;
+  toast(`${p?.name} flyttet`);
+  render();
 }
 
-// ── FILTER ────────────────────────────────────────────────────────────────────
-function setFilter(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderKampplan();
-}
+// ── NAV ────────────────────────────────────────────────────────────────
+document.querySelectorAll('.ntab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.ntab').forEach(x => x.classList.remove('on'));
+  document.querySelectorAll('.screen').forEach(x => x.classList.remove('on'));
+  t.classList.add('on');
+  document.getElementById('pg-' + t.dataset.pg).classList.add('on');
+}));
 
-// ── NAV ───────────────────────────────────────────────────────────────────────
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  event.target.classList.add('active');
-}
+// ── FILTER ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.fb').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.fb').forEach(x => x.classList.remove('on'));
+  b.classList.add('on');
+  filter = b.dataset.f;
+  renderPlan();
+}));
 
-// ── TOAST ─────────────────────────────────────────────────────────────────────
-function showToast(msg) {
+// ── TOAST ──────────────────────────────────────────────────────────────
+function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2500);
+  t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 2400);
 }
 
-// ── CLOSE MODAL ON BACKDROP ───────────────────────────────────────────────────
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-
-// ── BOOT ─────────────────────────────────────────────────────────────────────
-loadAll();
+// ── BOOT ───────────────────────────────────────────────────────────────
+init();
 </script>
 </body>
 </html>
