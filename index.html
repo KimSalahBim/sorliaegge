@@ -7,154 +7,163 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --g: #3D6142; --gd: #2a4530; --gl: #EBF3EC; --gm: #c3ddc6;
-  --bl: #1B4F8A; --bll: #dceeff;
-  --re: #B83025; --rel: #FDECEA;
-  --or: #C95200; --orl: #FEF0E7;
-  --bg: #EFF2EF; --card: #FFFFFF; --bd: #D2E4D4; --bd2: #E8F0E9;
-  --t1: #111B13; --t2: #4a6050; --t3: #8a9e8d;
-  --r: 12px; --rs: 8px;
-  --sh: 0 1px 3px rgba(0,0,0,.07), 0 4px 14px rgba(0,0,0,.05);
+  --g:#3D6142; --gd:#2a4530; --gl:#EBF3EC; --gm:#c3ddc6;
+  --bl:#1B4F8A; --bll:#dceeff;
+  --re:#B83025; --rel:#FDECEA;
+  --or:#C95200; --orl:#FEF0E7;
+  --bg:#EFF2EF; --card:#fff; --bd:#D2E4D4; --bd2:#E8F0E9;
+  --t1:#111B13; --t2:#4a6050; --t3:#8a9e8d;
+  --r:12px; --rs:8px;
+  --sh:0 1px 3px rgba(0,0,0,.07),0 4px 14px rgba(0,0,0,.05);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--t1); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased}
 
-/* ── NAV ── */
-.nav { position: sticky; top: 0; z-index: 100; background: var(--gd); display: flex; align-items: stretch; height: 54px; padding: 0 16px; box-shadow: 0 2px 10px rgba(0,0,0,.22); }
-.nav-brand { display: flex; align-items: center; margin-right: 20px; }
-.nav-brand span { font-size: .95rem; font-weight: 800; color: #fff; letter-spacing: -.01em; }
-.nav-tabs { display: flex; }
-.ntab { display: flex; align-items: center; padding: 0 14px; font-size: .8rem; font-weight: 700; color: rgba(255,255,255,.5); cursor: pointer; border-bottom: 3px solid transparent; transition: .15s; white-space: nowrap; user-select: none; }
-.ntab.on, .ntab:hover { color: #fff; border-bottom-color: #fff; }
-.nav-end { margin-left: auto; display: flex; align-items: center; }
-.sbadge { font-size: .7rem; font-weight: 700; background: rgba(255,255,255,.14); color: #fff; padding: 3px 9px; border-radius: 20px; }
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--gd);display:flex;align-items:stretch;height:54px;padding:0 16px;box-shadow:0 2px 10px rgba(0,0,0,.22)}
+.nav-brand{display:flex;align-items:center;margin-right:20px}
+.nav-brand span{font-size:.95rem;font-weight:800;color:#fff;letter-spacing:-.01em}
+.nav-tabs{display:flex}
+.ntab{display:flex;align-items:center;padding:0 14px;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.5);cursor:pointer;border-bottom:3px solid transparent;transition:.15s;white-space:nowrap;user-select:none}
+.ntab.on,.ntab:hover{color:#fff;border-bottom-color:#fff}
+.nav-end{margin-left:auto;display:flex;align-items:center}
+.sbadge{font-size:.7rem;font-weight:700;background:rgba(255,255,255,.14);color:#fff;padding:3px 9px;border-radius:20px}
 
-/* ── PAGE CONTAINERS ── */
-.screen { display: none; max-width: 940px; margin: 0 auto; padding: 16px; }
-.screen.on { display: block; }
+/* SCREENS */
+.screen{display:none;max-width:940px;margin:0 auto;padding:16px}
+.screen.on{display:block}
 
-/* ── NEXT MATCH BANNER ── */
-.nxt { background: linear-gradient(135deg, var(--g), var(--gd)); color: #fff; border-radius: var(--r); padding: 15px 18px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 14px; box-shadow: var(--sh); }
-.nxt-ico { font-size: 1.8rem; flex-shrink: 0; padding-top: 1px; }
-.nxt-lbl { font-size: .6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; opacity: .65; margin-bottom: 3px; }
-.nxt-date { font-size: .98rem; font-weight: 800; }
-.nxt-detail { font-size: .74rem; opacity: .82; margin-top: 3px; line-height: 1.5; }
-.nxt-alert { display: inline-flex; align-items: center; gap: 5px; background: rgba(184,48,37,.45); border: 1px solid rgba(255,255,255,.2); padding: 3px 10px; border-radius: 20px; font-size: .68rem; font-weight: 700; margin-top: 7px; }
+/* BANNER */
+.nxt{background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;border-radius:var(--r);padding:15px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:14px;box-shadow:var(--sh)}
+.nxt-ico{font-size:1.8rem;flex-shrink:0;padding-top:1px}
+.nxt-lbl{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.65;margin-bottom:3px}
+.nxt-date{font-size:.98rem;font-weight:800}
+.nxt-detail{font-size:.74rem;opacity:.82;margin-top:3px;line-height:1.5}
+.nxt-alert{display:inline-flex;align-items:center;gap:5px;background:rgba(184,48,37,.45);border:1px solid rgba(255,255,255,.2);padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;margin-top:7px}
 
-/* ── FILTER BAR ── */
-.filters { display: flex; gap: 7px; margin-bottom: 16px; flex-wrap: wrap; }
-.fb { padding: 5px 13px; border-radius: 20px; border: 1.5px solid var(--bd); background: var(--card); font-family: inherit; font-size: .74rem; font-weight: 700; cursor: pointer; color: var(--t2); transition: .12s; display: inline-flex; align-items: center; gap: 5px; }
-.fb.on { background: var(--g); color: #fff; border-color: var(--g); }
-.fb:hover:not(.on) { background: var(--gl); border-color: var(--gm); }
-.fb-cnt { font-size: .64rem; font-weight: 700; background: rgba(0,0,0,.1); border-radius: 10px; padding: 1px 6px; }
-.fb.on .fb-cnt { background: rgba(255,255,255,.25); }
+/* FILTERS */
+.filters{display:flex;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.fb{padding:5px 13px;border-radius:20px;border:1.5px solid var(--bd);background:var(--card);font-family:inherit;font-size:.74rem;font-weight:700;cursor:pointer;color:var(--t2);transition:.12s;display:inline-flex;align-items:center;gap:5px}
+.fb.on{background:var(--g);color:#fff;border-color:var(--g)}
+.fb:hover:not(.on){background:var(--gl);border-color:var(--gm)}
+.fb-cnt{font-size:.64rem;font-weight:700;background:rgba(0,0,0,.1);border-radius:10px;padding:1px 6px}
+.fb.on .fb-cnt{background:rgba(255,255,255,.25)}
 
-/* ── KAMPDAG CARD ── */
-.kd { background: var(--card); border-radius: var(--r); border: 1px solid var(--bd); box-shadow: var(--sh); margin-bottom: 12px; overflow: hidden; }
-.kd-hd { display: flex; align-items: center; gap: 12px; padding: 12px 18px; }
-.kd-hd.hm  { background: linear-gradient(135deg, #3D6142, #2a4530); }
-.kd-hd.aw  { background: linear-gradient(135deg, #1d5290, #0f3560); }
-.kd-hd.dn  { background: linear-gradient(135deg, #53685a, #3a4a3f); }
-.kd-day { background: rgba(255,255,255,.15); border-radius: 6px; padding: 5px 8px; text-align: center; min-width: 46px; flex-shrink: 0; }
-.kd-day-n { display: block; font-size: 1.3rem; font-weight: 800; color: #fff; line-height: 1; }
-.kd-day-m { display: block; font-size: .57rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.7); margin-top: 1px; }
-.kd-mid { flex: 1; min-width: 0; }
-.kd-opp { font-size: .88rem; font-weight: 800; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.kd-venue { font-size: .7rem; color: rgba(255,255,255,.72); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.kd-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 5px; }
-.kpill { font-size: .59rem; font-weight: 700; background: rgba(255,255,255,.15); color: #fff; padding: 2px 8px; border-radius: 10px; }
-.kpill-abs { background: rgba(184,48,37,.5); }
-.kpill-done { background: rgba(255,255,255,.25); }
+/* KAMPDAG CARD */
+.kd{background:var(--card);border-radius:var(--r);border:1px solid var(--bd);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
+.kd-hd{display:flex;align-items:center;gap:12px;padding:12px 18px}
+.kd-hd.hm{background:linear-gradient(135deg,#3D6142,#2a4530)}
+.kd-hd.aw{background:linear-gradient(135deg,#1d5290,#0f3560)}
+.kd-hd.dn{background:linear-gradient(135deg,#53685a,#3a4a3f)}
+.kd-day{background:rgba(255,255,255,.15);border-radius:6px;padding:5px 8px;text-align:center;min-width:46px;flex-shrink:0}
+.kd-day-n{display:block;font-size:1.3rem;font-weight:800;color:#fff;line-height:1}
+.kd-day-m{display:block;font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.7);margin-top:1px}
+.kd-mid{flex:1;min-width:0}
+.kd-opp{font-size:.88rem;font-weight:800;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kd-venue{font-size:.7rem;color:rgba(255,255,255,.72);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kd-pills{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.kpill{font-size:.59rem;font-weight:700;background:rgba(255,255,255,.15);color:#fff;padding:2px 8px;border-radius:10px}
+.kpill-abs{background:rgba(184,48,37,.5)}
+.kpill-done{background:rgba(255,255,255,.25)}
 
-/* ── INTERN KAMP ── */
-.intern-body { padding: 15px 18px; background: var(--gl); border-top: 1px solid var(--bd); display: flex; align-items: center; gap: 12px; }
-.intern-ico { font-size: 1.3rem; }
-.intern-txt { font-size: .82rem; font-weight: 700; color: var(--gd); }
-.intern-sub { font-size: .7rem; color: var(--t2); margin-top: 2px; }
+/* INTERN */
+.intern-body{padding:15px 18px;background:var(--gl);border-top:1px solid var(--bd);display:flex;align-items:center;gap:12px}
+.intern-ico{font-size:1.3rem}
+.intern-txt{font-size:.82rem;font-weight:700;color:var(--gd)}
+.intern-sub{font-size:.7rem;color:var(--t2);margin-top:2px}
 
-/* ── TWO-TEAM GRID ── */
-.kd-body { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--bd2); }
-@media (max-width: 560px) { .kd-body { grid-template-columns: 1fr; } }
-.tc { padding: 13px 15px; }
-.tc + .tc { border-left: 1px solid var(--bd2); }
-@media (max-width: 560px) { .tc + .tc { border-left: none; border-top: 1px solid var(--bd2); } }
-.tc.solo { grid-column: 1 / -1; }
+/* TWO-TEAM GRID */
+.kd-body{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--bd2)}
+@media(max-width:560px){.kd-body{grid-template-columns:1fr}}
+.tc{padding:13px 15px}
+.tc+.tc{border-left:1px solid var(--bd2)}
+@media(max-width:560px){.tc+.tc{border-left:none;border-top:1px solid var(--bd2)}}
+.tc.solo{grid-column:1/-1}
 
-/* ── TEAM HEADER ── */
-.t-hd { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; flex-wrap: wrap; }
-.tname { font-size: .66rem; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; padding: 3px 9px; border-radius: 20px; flex-shrink: 0; }
-.tname.l1 { background: var(--gl); color: var(--gd); }
-.tname.l2 { background: var(--bll); color: var(--bl); }
-.tha { font-size: .69rem; font-weight: 600; color: var(--t2); }
-.jbadge { display: inline-flex; align-items: center; gap: 3px; font-size: .63rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
-.jbadge-rod { background: var(--rel); color: var(--re); }
-.jbadge-oransje { background: var(--orl); color: var(--or); }
-.t-cnt { font-size: .63rem; font-weight: 700; color: var(--t3); margin-left: auto; }
-.t-cnt-abs { color: var(--re); }
+/* TEAM HEADER */
+.t-hd{display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap}
+.tname{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:20px;flex-shrink:0}
+.tname.l1{background:var(--gl);color:var(--gd)}
+.tname.l2{background:var(--bll);color:var(--bl)}
+.tha{font-size:.69rem;font-weight:600;color:var(--t2)}
+.jbadge{display:inline-flex;align-items:center;gap:3px;font-size:.63rem;font-weight:700;padding:2px 7px;border-radius:10px}
+.jbadge-rod{background:var(--rel);color:var(--re)}
+.jbadge-oransje{background:var(--orl);color:var(--or)}
+.t-cnt{font-size:.63rem;font-weight:700;color:var(--t3);margin-left:auto}
+.t-cnt-abs{color:var(--re)}
+.t-opp{font-size:.8rem;font-weight:700;color:var(--t1);margin-bottom:3px}
+.t-venue{font-size:.68rem;color:var(--t2);margin-bottom:9px}
 
-.t-opp { font-size: .8rem; font-weight: 700; color: var(--t1); margin-bottom: 3px; }
-.t-venue { font-size: .68rem; color: var(--t2); margin-bottom: 9px; }
+/* CHIPS ZONE */
+.chips{display:flex;flex-wrap:wrap;gap:5px;min-height:30px;padding:4px;border-radius:var(--rs);transition:background .15s,outline .15s}
+.chips.dz-on{background:rgba(61,97,66,.08);outline:2px dashed var(--g);outline-offset:-2px}
 
-/* ── PLAYER CHIPS ── */
-.chips { display: flex; flex-wrap: wrap; gap: 5px; min-height: 30px; padding: 4px; border-radius: var(--rs); transition: background .15s, outline .15s; }
-.chips.dz-on { background: rgba(61,97,66,.08); outline: 2px dashed var(--g); outline-offset: -2px; }
-.chip { padding: 5px 11px; border-radius: 20px; font-size: .77rem; font-weight: 600; cursor: pointer; transition: transform .12s, filter .12s, box-shadow .12s; border: 1.5px solid transparent; user-select: none; white-space: nowrap; }
-.chip.ok  { background: var(--gl); color: var(--gd); border-color: var(--gm); }
-.chip.abs { background: var(--rel); color: var(--re); text-decoration: line-through; border-color: #f0bfba; }
-.chip.cc  { font-style: italic; }
-.chip.dragging { opacity: .3; }
-.chip:not(.dragging):hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.12); filter: brightness(.92); }
+/* POOL SECTION */
+.pool-section{margin-top:12px;padding-top:10px;border-top:1px dashed var(--bd)}
+.pool-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.pool-label::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--t3)}
 
-/* ── ACTION SHEET ── */
-.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.42); z-index: 200; align-items: flex-end; justify-content: center; }
-.overlay.on { display: flex; }
-.sheet { background: var(--card); border-radius: 18px 18px 0 0; padding: 20px 20px 36px; width: 100%; max-width: 480px; animation: su .2s ease; }
-@keyframes su { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
-.sh-hdl { width: 36px; height: 4px; background: var(--bd); border-radius: 2px; margin: 0 auto 18px; }
-.sh-name { font-size: 1.05rem; font-weight: 800; }
-.sh-info { font-size: .78rem; color: var(--t2); margin-top: 2px; margin-bottom: 18px; }
-.sh-btns { display: flex; flex-direction: column; gap: 9px; }
-.sb { padding: 13px 16px; border-radius: var(--rs); font-family: inherit; font-size: .87rem; font-weight: 700; cursor: pointer; border: none; text-align: left; display: flex; align-items: center; gap: 12px; transition: .12s; }
-.sb:hover { filter: brightness(.95); }
-.sb-ico { font-size: 1.1rem; width: 22px; text-align: center; flex-shrink: 0; }
-.sb-abs { background: var(--rel); color: var(--re); }
-.sb-prs { background: var(--gl); color: var(--gd); }
-.sb-mv  { background: var(--bll); color: var(--bl); }
-.sb-x   { background: var(--bg); color: var(--t2); border: 1.5px solid var(--bd); }
+/* CHIPS */
+.chip{padding:5px 11px;border-radius:20px;font-size:.77rem;font-weight:600;cursor:grab;transition:transform .12s,filter .12s,box-shadow .12s,outline .12s;border:1.5px solid transparent;user-select:none;white-space:nowrap}
+.chip.ok{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+.chip.abs{background:var(--rel);color:var(--re);text-decoration:line-through;border-color:#f0bfba}
+.chip.pool{background:var(--bg);color:var(--t2);border-color:var(--bd);border-style:dashed}
+.chip.cc{font-style:italic}
+.chip.dragging{opacity:.3;cursor:grabbing}
+/* SWAP TARGET: visual when another chip hovers over this one */
+.chip.swap-target{outline:2px solid var(--bl);outline-offset:2px;background:var(--bll)!important;color:var(--bl)!important;transform:scale(1.07)}
+.chip:not(.dragging):not(.swap-target):hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.12);filter:brightness(.92)}
 
-/* ── TOAST ── */
-.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--t1); color: #fff; padding: 10px 20px; border-radius: var(--rs); font-size: .82rem; font-weight: 600; z-index: 400; opacity: 0; transition: .22s; pointer-events: none; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
-.toast.on { opacity: 1; transform: translateX(-50%); }
+/* ACTION SHEET */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;align-items:flex-end;justify-content:center}
+.overlay.on{display:flex}
+.sheet{background:var(--card);border-radius:18px 18px 0 0;padding:20px 20px 36px;width:100%;max-width:480px;animation:su .2s ease}
+@keyframes su{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.sh-hdl{width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 18px}
+.sh-name{font-size:1.05rem;font-weight:800}
+.sh-info{font-size:.78rem;color:var(--t2);margin-top:2px;margin-bottom:18px}
+.sh-btns{display:flex;flex-direction:column;gap:9px}
+.sb{padding:13px 16px;border-radius:var(--rs);font-family:inherit;font-size:.87rem;font-weight:700;cursor:pointer;border:none;text-align:left;display:flex;align-items:center;gap:12px;transition:.12s;width:100%}
+.sb:hover{filter:brightness(.95)}
+.sb-ico{font-size:1.1rem;width:22px;text-align:center;flex-shrink:0}
+.sb-abs{background:var(--rel);color:var(--re)}
+.sb-prs{background:var(--gl);color:var(--gd)}
+.sb-mv{background:var(--bll);color:var(--bl)}
+.sb-x{background:var(--bg);color:var(--t2);border:1.5px solid var(--bd)}
 
-/* ── STATS TABLE ── */
-.scard { background: var(--card); border-radius: var(--r); border: 1px solid var(--bd); box-shadow: var(--sh); overflow: hidden; }
-.scard-hd { background: linear-gradient(135deg, var(--g), var(--gd)); color: #fff; padding: 13px 18px; display: flex; justify-content: space-between; align-items: center; }
-.scard-hd h2 { font-size: .92rem; font-weight: 800; }
-.scard-sub { font-size: .72rem; opacity: .78; }
-.scard-body { overflow-x: auto; }
-.stats-tbl { width: 100%; border-collapse: collapse; font-size: .8rem; }
-.stats-tbl th { background: var(--gd); color: #fff; padding: 9px 12px; text-align: left; font-size: .67rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; position: sticky; top: 54px; white-space: nowrap; }
-.stats-tbl td { padding: 8px 12px; border-bottom: 1px solid var(--bd2); vertical-align: middle; }
-.stats-tbl tr:last-child td { border-bottom: none; }
-.stats-tbl tr:hover td { background: var(--bg); }
-.stats-tbl tr.cc-row td { font-style: italic; }
-.km-cell { display: flex; align-items: center; gap: 7px; }
-.km-bar { height: 6px; border-radius: 3px; flex-shrink: 0; min-width: 4px; }
-.nfont { font-variant-numeric: tabular-nums; font-weight: 700; }
-.spill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .66rem; font-weight: 700; white-space: nowrap; }
-.sp-g { background: var(--gl); color: var(--gd); }
-.sp-b { background: var(--bll); color: var(--bl); }
-.sp-r { background: var(--rel); color: var(--re); }
-.sp-o { background: var(--orl); color: var(--or); }
-.scard-foot { background: var(--gl); border-top: 1px solid var(--bd); padding: 12px 18px; display: flex; gap: 24px; flex-wrap: wrap; }
-.fstat { display: flex; flex-direction: column; gap: 2px; }
-.flbl { font-size: .63rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--t2); }
-.fval { font-size: .9rem; font-weight: 800; color: var(--gd); }
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--t1);color:#fff;padding:10px 20px;border-radius:var(--rs);font-size:.82rem;font-weight:600;z-index:400;opacity:0;transition:.22s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.toast.on{opacity:1;transform:translateX(-50%)}
 
-/* ── LOADER ── */
-.loader { text-align: center; padding: 56px 20px; color: var(--t2); font-size: .9rem; }
-.spin { width: 30px; height: 30px; border: 3px solid var(--bd); border-top-color: var(--g); border-radius: 50%; animation: rot .7s linear infinite; margin: 0 auto 12px; }
-@keyframes rot { to { transform: rotate(360deg); } }
+/* STATS */
+.scard{background:var(--card);border-radius:var(--r);border:1px solid var(--bd);box-shadow:var(--sh);overflow:hidden}
+.scard-hd{background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;border-radius:var(--r) var(--r) 0 0}
+.scard-hd h2{font-size:.92rem;font-weight:800}
+.scard-sub{font-size:.72rem;opacity:.78}
+.scard-body{overflow-x:auto;overflow-y:auto;max-height:calc(100vh - 160px)}
+.stats-tbl{width:100%;border-collapse:collapse;font-size:.8rem}
+.stats-tbl th{background:var(--gd);color:#fff;padding:9px 12px;text-align:left;font-size:.72rem;font-weight:700;position:-webkit-sticky;position:sticky;top:0;z-index:10;white-space:nowrap}
+.stats-tbl td{padding:8px 12px;border-bottom:1px solid var(--bd2);vertical-align:middle}
+.stats-tbl tr:last-child td{border-bottom:none}
+.stats-tbl tr:hover td{background:var(--bg)}
+.stats-tbl tr.cc-row td{font-style:italic}
+.km-cell{display:flex;align-items:center;gap:7px}
+.km-bar{height:6px;border-radius:3px;flex-shrink:0;min-width:4px}
+.nfont{font-variant-numeric:tabular-nums;font-weight:700}
+.spill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.66rem;font-weight:700;white-space:nowrap}
+.sp-g{background:var(--gl);color:var(--gd)}
+.sp-b{background:var(--bll);color:var(--bl)}
+.sp-r{background:var(--rel);color:var(--re)}
+.sp-o{background:var(--orl);color:var(--or)}
+.scard-foot{background:var(--gl);border-top:1px solid var(--bd);padding:12px 18px;display:flex;gap:24px;flex-wrap:wrap}
+.fstat{display:flex;flex-direction:column;gap:2px}
+.flbl{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t2)}
+.fval{font-size:.9rem;font-weight:800;color:var(--gd)}
+
+/* LOADER */
+.loader{text-align:center;padding:56px 20px;color:var(--t2);font-size:.9rem}
+.spin{width:30px;height:30px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:rot .7s linear infinite;margin:0 auto 12px}
+@keyframes rot{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -181,7 +190,7 @@ body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--t1
 
 <div class="screen on" id="pg-plan">
   <div id="banner"></div>
-  <div class="filters" id="filters">
+  <div class="filters">
     <button class="fb on" data-f="alle">Alle kamper <span class="fb-cnt" id="cnt-alle"></span></button>
     <button class="fb" data-f="kommende">Kommende <span class="fb-cnt" id="cnt-kommende"></span></button>
     <button class="fb" data-f="spilt">Spilt <span class="fb-cnt" id="cnt-spilt"></span></button>
@@ -196,29 +205,33 @@ body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--t1
 
 <script>
 'use strict';
-// ── CONFIG ─────────────────────────────────────────────────────────────
+
+// ── CONFIG ───────────────────────────────────────────────────────────────
 const SB  = 'https://jxteosjxgrblasksfeyu.supabase.co';
 const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4dGVvc2p4Z3JibGFza3NmZXl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkxOTE1ODMsImV4cCI6MjA4NDc2NzU4M30.4VhLfxcX0PCkUeK9aYrTrfmTwESH9zOyx4sY61lIZ9w';
 
 async function api(path, opts = {}) {
   const r = await fetch(SB + '/rest/v1/' + path, {
-    headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY,
-               'Content-Type': 'application/json', 'Prefer': 'return=minimal',
-               ...(opts.headers || {}) },
+    headers: {
+      'apikey': KEY, 'Authorization': 'Bearer ' + KEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=minimal',
+      ...(opts.headers || {})
+    },
     ...opts
   });
-  if (!r.ok) { console.error('API', r.status, await r.text()); return null; }
+  if (!r.ok) { console.error('API', r.status, path, await r.text()); return null; }
   const t = await r.text();
   return t ? JSON.parse(t) : null;
 }
 
-// ── STATE ──────────────────────────────────────────────────────────────
+// ── STATE ─────────────────────────────────────────────────────────────────
 let P = [], M = [], A = [];
 let filter = 'alle', shCtx = null;
-let dragPid = null, dragMid = null, dragDate = null; // FIX: declare dragDate
+// Drag state — 0 means "from pool" (unassigned player)
+let dragPid = null, dragMid = null, dragDate = null;
 let dzCounters = {};
 
-// ── INIT ───────────────────────────────────────────────────────────────
+// ── BOOT ──────────────────────────────────────────────────────────────────
 async function init() {
   [P, M, A] = await Promise.all([
     api('j11_players?select=*&order=name'),
@@ -227,20 +240,17 @@ async function init() {
   ]);
   if (!P || !M || !A) {
     document.getElementById('plan-list').innerHTML =
-      '<div class="loader" style="color:var(--re)">Feil ved lasting. Sjekk internettilkobling.</div>';
+      '<div class="loader" style="color:var(--re)">Feil ved lasting. Sjekk tilkobling.</div>';
     return;
   }
   render();
 }
 
-// ── HELPERS ────────────────────────────────────────────────────────────
-const pById = id => P.find(p => p.id === id);
-const mById = id => M.find(m => m.id === id);
+// ── HELPERS ───────────────────────────────────────────────────────────────
+const pById  = id => P.find(p => p.id === id);
+const mById  = id => M.find(m => m.id === id);
+const dateKey = s  => { const [d, mo] = s.split('.'); return +mo * 100 + +d; };
 
-// FIX: date-aware sort key (month first, then day)
-const dateKey = s => { const [d, mo] = s.split('.'); return +mo * 100 + +d; };
-
-// isPlayed: compare by date only (not time), today's matches are NOT yet played
 const isPlayed = s => {
   const [d, mo] = s.split('.');
   const match = new Date(2026, +mo - 1, +d);
@@ -248,15 +258,16 @@ const isPlayed = s => {
   return match < today;
 };
 
-const MONTHS = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
-const DAYS   = { man:'Man', tir:'Tir', ons:'Ons', tor:'Tor', fre:'Fre', lør:'Lør', søn:'Søn' };
-const fDate  = s => { const [d, mo] = s.split('.'); return `${+d}. ${MONTHS[+mo - 1]}`; };
+const MO   = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
+const DAYS = { man:'Man', tir:'Tir', ons:'Ons', tor:'Tor', fre:'Fre', lør:'Lør', søn:'Søn' };
+const fDate  = s  => { const [d, mo] = s.split('.'); return `${+d}. ${MO[+mo - 1]}`; };
 const meetup = ko => {
-  const [h, min] = ko.split(':').map(Number);
-  const t = h * 60 + min - 30;
+  const [h, m] = ko.split(':').map(Number);
+  const t = h * 60 + m - 30;
   return `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
 };
 
+// Players assigned to a specific match (with absent flag)
 function psOf(matchId) {
   return A.filter(a => a.match_id === matchId)
     .map(a => ({ ...pById(a.player_id), absent: a.is_absent }))
@@ -264,18 +275,27 @@ function psOf(matchId) {
     .sort((a, b) => a.name.localeCompare(b.name, 'no'));
 }
 
-// ── RENDER ─────────────────────────────────────────────────────────────
+// Players NOT assigned to any match on this date (pool)
+function poolOf(date) {
+  const assigned = new Set(
+    M.filter(m => m.date === date)
+     .flatMap(m => A.filter(a => a.match_id === m.id).map(a => a.player_id))
+  );
+  return P.filter(p => !assigned.has(p.id)).sort((a, b) => a.name.localeCompare(b.name, 'no'));
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
 function render() { renderBanner(); renderFilterCounts(); renderPlan(); renderStats(); }
 
-// ── BANNER ─────────────────────────────────────────────────────────────
+// ── BANNER ────────────────────────────────────────────────────────────────
 function renderBanner() {
-  const el = document.getElementById('banner');
+  const el  = document.getElementById('banner');
   const next = [...M].filter(m => !isPlayed(m.date)).sort((a, b) => dateKey(a.date) - dateKey(b.date))[0];
   if (!next) { el.innerHTML = ''; return; }
-  const day = M.filter(m => m.date === next.date);
-  const opps = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ') || 'Intern kamp';
+  const day    = M.filter(m => m.date === next.date);
+  const opps   = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ') || 'Intern kamp';
   const venues = [...new Set(day.map(m => m.venue))];
-  const nAbs = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
+  const nAbs   = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
   el.innerHTML = `<div class="nxt">
     <div class="nxt-ico">📅</div>
     <div>
@@ -287,18 +307,15 @@ function renderBanner() {
   </div>`;
 }
 
-// ── FILTER COUNTS ──────────────────────────────────────────────────────
+// ── FILTER COUNTS ─────────────────────────────────────────────────────────
 function renderFilterCounts() {
-  const allDates = [...new Set(M.map(m => m.date))];
   const cnt = { alle: 0, kommende: 0, spilt: 0, forfall: 0 };
-  for (const date of allDates) {
+  for (const date of [...new Set(M.map(m => m.date))]) {
     const day = M.filter(m => m.date === date);
-    const done = isPlayed(date);
-    const hasAbs = day.some(m => psOf(m.id).some(p => p.absent));
     cnt.alle++;
-    if (!done) cnt.kommende++;
-    if (done) cnt.spilt++;
-    if (hasAbs) cnt.forfall++;
+    if (!isPlayed(date)) cnt.kommende++;
+    else cnt.spilt++;
+    if (day.some(m => psOf(m.id).some(p => p.absent))) cnt.forfall++;
   }
   for (const [k, v] of Object.entries(cnt)) {
     const el = document.getElementById('cnt-' + k);
@@ -306,13 +323,12 @@ function renderFilterCounts() {
   }
 }
 
-// ── PLAN ───────────────────────────────────────────────────────────────
+// ── PLAN ──────────────────────────────────────────────────────────────────
 function renderPlan() {
+  dzCounters = {};
   const el = document.getElementById('plan-list');
   const byDate = {};
   for (const m of M) { if (!byDate[m.date]) byDate[m.date] = []; byDate[m.date].push(m); }
-
-  // FIX: sort dates by month+day, not alphabetically
   const sortedDates = Object.keys(byDate).sort((a, b) => dateKey(a) - dateKey(b));
 
   let html = '';
@@ -320,29 +336,28 @@ function renderPlan() {
     const day = byDate[date], done = isPlayed(date);
     const nAbs = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
     if (filter === 'kommende' && done) continue;
-    if (filter === 'spilt' && !done) continue;
-    if (filter === 'forfall' && !nAbs) continue;
+    if (filter === 'spilt'    && !done) continue;
+    if (filter === 'forfall'  && !nAbs) continue;
 
-    const isHome = day.some(m => m.ha === 'H');
+    const isHome    = day.some(m => m.ha === 'H');
     const allIntern = day.every(m => m.is_intern);
-    const opps = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ');
-    const venues = [...new Set(day.map(m => m.venue))].join(' / ');
-    const hc = done ? 'dn' : isHome ? 'hm' : 'aw';
-    const [dn, dm] = date.split('.');
-    const wd = DAYS[day[0].weekday] || day[0].weekday;
-    const ko = day[0].kickoff;
+    const opps      = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ');
+    const venues    = [...new Set(day.map(m => m.venue))].join(' / ');
+    const hc        = done ? 'dn' : isHome ? 'hm' : 'aw';
+    const [dn, dm]  = date.split('.');
+    const ko        = day[0].kickoff;
 
     html += `<div class="kd">
       <div class="kd-hd ${hc}">
         <div class="kd-day">
           <span class="kd-day-n">${+dn}</span>
-          <span class="kd-day-m">${MONTHS[+dm - 1]}</span>
+          <span class="kd-day-m">${MO[+dm - 1]}</span>
         </div>
         <div class="kd-mid">
           <div class="kd-opp">${allIntern ? '🔄 Intern kamp' : 'vs ' + opps}</div>
           <div class="kd-venue">${venues}</div>
           <div class="kd-pills">
-            <span class="kpill">${wd} · ${ko} (Oppmøte ${meetup(ko)})</span>
+            <span class="kpill">${DAYS[day[0].weekday] || day[0].weekday} · ${ko} (Oppmøte ${meetup(ko)})</span>
             ${done ? '<span class="kpill kpill-done">✓ Spilt</span>' : ''}
             ${nAbs ? `<span class="kpill kpill-abs">⚠ ${nAbs} forfall</span>` : ''}
           </div>
@@ -359,18 +374,20 @@ function renderPlan() {
       </div>`;
     } else {
       const solo = day.length === 1;
+      const pool = poolOf(date);   // unassigned players this date
+
       html += `<div class="kd-body">`;
       for (const m of day) {
         const ps = psOf(m.id);
         const nA = ps.filter(p => p.absent).length;
         const nOk = ps.length - nA;
-        const lc = m.lag === 'L1' ? 'l1' : 'l2';
-        const ln = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
-        const ha = m.ha === 'H' ? 'Hjemme' : m.km ? `Borte · ${m.km} km` : 'Borte';
+        const lc  = m.lag === 'L1' ? 'l1' : 'l2';
+        const ln  = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
+        const ha  = m.ha === 'H' ? 'Hjemme' : m.km ? `Borte · ${m.km} km` : 'Borte';
         const jbCls = m.jersey === 'rød' ? 'jbadge-rod' : 'jbadge-oransje';
         const jLabel = m.jersey === 'rød' ? '🔴 Rød' : '🟠 Oransje';
 
-        html += `<div class="tc${solo ? ' solo' : ''}" data-mid="${m.id}" data-date="${m.date}">
+        html += `<div class="tc${solo ? ' solo' : ''}">
           <div class="t-hd">
             <span class="tname ${lc}">${ln}</span>
             <span class="tha">${ha}</span>
@@ -381,20 +398,48 @@ function renderPlan() {
           </div>
           <div class="t-opp">vs ${m.opponent}</div>
           <div class="t-venue">${m.venue}</div>
-          <div class="chips" data-mid="${m.id}" data-date="${m.date}"
-            ondragover="dzOver(event)"
-            ondragenter="dzEnter(event)"
-            ondragleave="dzLeave(event)"
-            ondrop="dzDrop(event)">`;
+          <div class="chips" data-mid="${m.id}" data-date="${date}"
+            ondragover="zoneOver(event)"
+            ondragenter="zoneEnter(event)"
+            ondragleave="zoneLeave(event)"
+            ondrop="zoneDrop(event)">`;
+
         for (const p of ps) {
-          const c = ['chip', p.absent ? 'abs' : 'ok', p.is_coach_kid ? 'cc' : ''].filter(Boolean).join(' ');
-          html += `<span class="${c}" draggable="true"
-            data-pid="${p.id}" data-mid="${m.id}" data-date="${m.date}"
+          const cls = ['chip', p.absent ? 'abs' : 'ok', p.is_coach_kid ? 'cc' : ''].filter(Boolean).join(' ');
+          html += `<span class="${cls}" draggable="true"
+            data-pid="${p.id}" data-mid="${m.id}" data-date="${date}"
             ondragstart="chipStart(event)"
             ondragend="chipEnd(event)"
+            ondragover="chipOver(event)"
+            ondragleave="chipLeave(event)"
+            ondrop="chipDrop(event)"
             onclick="openSheet(${p.id},${m.id})">${p.name}</span>`;
         }
-        html += `</div></div>`;
+        html += `</div>`;
+
+        // Pool section: show for solo days OR any day where pool is non-empty
+        if (pool.length > 0) {
+          html += `<div class="pool-section">
+            <div class="pool-label">Tilgjengelige (dra inn)</div>
+            <div class="chips" data-mid="${m.id}" data-date="${date}"
+              ondragover="zoneOver(event)"
+              ondragenter="zoneEnter(event)"
+              ondragleave="zoneLeave(event)"
+              ondrop="zoneDrop(event)">`;
+          for (const p of pool) {
+            html += `<span class="chip pool" draggable="true"
+              data-pid="${p.id}" data-mid="0" data-date="${date}"
+              ondragstart="chipStart(event)"
+              ondragend="chipEnd(event)"
+              ondragover="chipOver(event)"
+              ondragleave="chipLeave(event)"
+              ondrop="chipDrop(event)"
+              onclick="openSheetPool(${p.id},${m.id})">${p.name}</span>`;
+          }
+          html += `</div></div>`;
+        }
+
+        html += `</div>`;
       }
       html += `</div>`;
     }
@@ -403,37 +448,34 @@ function renderPlan() {
   el.innerHTML = html || '<div class="loader">Ingen kamper å vise</div>';
 }
 
-// ── STATS ──────────────────────────────────────────────────────────────
+// ── STATS ─────────────────────────────────────────────────────────────────
 function renderStats() {
   const stats = {};
   for (const p of P)
     stats[p.id] = { name: p.name, cc: p.is_coach_kid, played: 0, km: 0, h: 0, b: 0, r: 0, o: 0, abs: 0 };
-
   for (const a of A) {
     const m = mById(a.match_id), s = stats[a.player_id];
     if (!m || !s) continue;
-    s.km += m.km || 0;            // ALWAYS: planlagt km uavhengig av forfall
+    s.km += m.km || 0;   // planlagt km — teller alltid, uavhengig av forfall
     if (a.is_absent) { s.abs++; continue; }
     s.played++;
     m.ha === 'H' ? s.h++ : s.b++;
     m.jersey === 'rød' ? s.r++ : s.o++;
   }
-
   const rows = Object.values(stats).sort((a, b) => a.km - b.km);
   const maxKm = Math.max(...rows.map(r => r.km), 1);
   const avg   = Math.round(rows.reduce((s, r) => s + r.km, 0) / rows.length);
   const minKm = Math.min(...rows.map(r => r.km));
   const maxKmVal = Math.max(...rows.map(r => r.km));
-  const spread = maxKmVal - minKm;
 
   document.getElementById('stat-body').innerHTML = `<div class="scard">
     <div class="scard-hd">
-      <h2>Sesongstatistikk · planlagt reise</h2>
-      <span class="scard-sub">Snitt: ${avg} km · Spread: ${spread} km</span>
+      <h2>Sesongstatistikk — planlagt reise</h2>
+      <span class="scard-sub">Snitt: ${avg} km · Spread: ${maxKmVal - minKm} km</span>
     </div>
     <div class="scard-body"><table class="stats-tbl">
       <thead><tr>
-        <th>Spiller</th><th>Spilt</th><th>Planl. km ↑</th><th>H / B</th><th>Drakt</th><th>Forfall</th>
+        <th>Spiller</th><th>Spilt</th><th>Planlagt km ↑</th><th>Hjemme / Borte</th><th>Drakt</th><th>Forfall</th>
       </tr></thead>
       <tbody>${rows.map(r => {
         const bw = Math.round(r.km / maxKm * 64);
@@ -441,10 +483,8 @@ function renderStats() {
         return `<tr class="${r.cc ? 'cc-row' : ''}">
           <td><b>${r.name}</b>${r.cc ? '<span style="font-size:.58rem;color:var(--t3);margin-left:5px">CC</span>' : ''}</td>
           <td class="nfont">${r.played}</td>
-          <td><div class="km-cell">
-            <div class="km-bar" style="width:${bw}px;background:${c}"></div>
-            <span class="nfont" style="color:${c}">${r.km}</span>
-          </div></td>
+          <td><div class="km-cell"><div class="km-bar" style="width:${bw}px;background:${c}"></div>
+            <span class="nfont" style="color:${c}">${r.km}</span></div></td>
           <td><span class="spill sp-g">${r.h}H</span> <span class="spill sp-b">${r.b}B</span></td>
           <td><span class="spill sp-r">${r.r}</span> <span class="spill sp-o">${r.o}</span></td>
           <td>${r.abs ? `<b style="color:var(--re)">${r.abs}</b>` : '—'}</td>
@@ -452,7 +492,7 @@ function renderStats() {
       }).join('')}</tbody>
     </table></div>
     <div class="scard-foot">
-      <div class="fstat"><span class="flbl">Km-spread</span><span class="fval">${spread} km</span></div>
+      <div class="fstat"><span class="flbl">Km-spread</span><span class="fval">${maxKmVal - minKm} km</span></div>
       <div class="fstat"><span class="flbl">Minimum</span><span class="fval">${minKm} km</span></div>
       <div class="fstat"><span class="flbl">Maksimum</span><span class="fval">${maxKmVal} km</span></div>
       <div class="fstat"><span class="flbl">Snitt</span><span class="fval">${avg} km</span></div>
@@ -460,25 +500,85 @@ function renderStats() {
   </div>`;
 }
 
-// ── DRAG-DROP ──────────────────────────────────────────────────────────
+// ── DRAG: CHIP EVENTS ─────────────────────────────────────────────────────
 function chipStart(e) {
   dragPid  = +e.currentTarget.dataset.pid;
-  dragMid  = +e.currentTarget.dataset.mid;
-  dragDate = e.currentTarget.dataset.date;   // FIX: now declared above
+  dragMid  = +e.currentTarget.dataset.mid;   // 0 = pool/unassigned
+  dragDate = e.currentTarget.dataset.date;
   e.currentTarget.classList.add('dragging');
   e.dataTransfer.effectAllowed = 'move';
   e.dataTransfer.setData('text/plain', String(dragPid));
 }
-function chipEnd(e) { e.currentTarget.classList.remove('dragging'); }
+function chipEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+}
 
-function dzEnter(e) {
+// Hovering OVER an existing chip — show swap indicator if valid target
+function chipOver(e) {
+  e.preventDefault();
+  e.stopPropagation();   // don't trigger zoneOver
+  const t = e.currentTarget;
+  const tDate = t.dataset.date;
+  const tMid  = +t.dataset.mid;
+  // Valid swap: same date, different match, drag source is not pool (dragMid > 0)
+  // OR pool drag onto chip: valid add-and-remove
+  if (tDate === dragDate && tMid !== dragMid) {
+    e.dataTransfer.dropEffect = 'move';
+    t.classList.add('swap-target');
+  }
+}
+function chipLeave(e) {
+  e.currentTarget.classList.remove('swap-target');
+}
+
+// DROP onto a chip — performs SWAP or ADD-AND-REMOVE
+async function chipDrop(e) {
+  e.preventDefault();
+  e.stopPropagation();   // prevent zoneDrop from also firing
+  const t       = e.currentTarget;
+  t.classList.remove('swap-target');
+  const tPid    = +t.dataset.pid;
+  const tMid    = +t.dataset.mid;
+  const tDate   = t.dataset.date;
+
+  if (!dragPid || dragPid === tPid) return;
+  if (tDate !== dragDate) { toast('Kan bare flytte innen samme kampdag'); return; }
+  if (tMid === dragMid) return;  // same team — no-op
+
+  if (dragMid === 0) {
+    // Pool → chip: INSERT pool player, REMOVE chip player (pool player takes chip's spot)
+    await api(`j11_assignments?match_id=eq.${tMid}&player_id=eq.${tPid}`, { method: 'DELETE' });
+    await api('j11_assignments', {
+      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({ match_id: tMid, player_id: dragPid, is_absent: false })
+    });
+    // Update local state
+    const idx = A.findIndex(a => a.match_id === tMid && a.player_id === tPid);
+    if (idx > -1) A.splice(idx, 1);
+    if (!A.find(a => a.match_id === tMid && a.player_id === dragPid))
+      A.push({ match_id: tMid, player_id: dragPid, is_absent: false });
+    toast(`${pById(dragPid)?.name} inn, ${pById(tPid)?.name} ut`);
+  } else {
+    // Team → chip: SWAP — player 1 goes to team 2, player 2 goes to team 1
+    await swapPlayers(dragPid, dragMid, tPid, tMid);
+  }
+  dragPid = null; dragMid = null; dragDate = null;
+  render();
+}
+
+// ── DRAG: ZONE EVENTS ─────────────────────────────────────────────────────
+function zoneEnter(e) {
   e.preventDefault();
   const z = e.currentTarget;
   dzCounters[z.dataset.mid] = (dzCounters[z.dataset.mid] || 0) + 1;
-  if (z.dataset.date === dragDate) z.classList.add('dz-on');
+  if (z.dataset.date === dragDate && +z.dataset.mid !== dragMid)
+    z.classList.add('dz-on');
 }
-function dzOver(e) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
-function dzLeave(e) {
+function zoneOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+}
+function zoneLeave(e) {
   const z = e.currentTarget;
   dzCounters[z.dataset.mid] = (dzCounters[z.dataset.mid] || 1) - 1;
   if (dzCounters[z.dataset.mid] <= 0) {
@@ -486,19 +586,86 @@ function dzLeave(e) {
     dzCounters[z.dataset.mid] = 0;
   }
 }
-async function dzDrop(e) {
+async function zoneDrop(e) {
   e.preventDefault();
-  const z = e.currentTarget;
+  const z   = e.currentTarget;
   z.classList.remove('dz-on');
   dzCounters[z.dataset.mid] = 0;
   const toMid = +z.dataset.mid;
-  if (!dragPid || !dragMid || toMid === dragMid) return;
+  if (!dragPid || toMid === dragMid) return;
   if (z.dataset.date !== dragDate) { toast('Kan bare flytte innen samme kampdag'); return; }
-  await movePlayer(dragPid, dragMid, toMid);
-  dragPid = null; dragMid = null; dragDate = null;
+
+  if (dragMid === 0) {
+    // Pool → zone: ADD player to team (no removal)
+    await api('j11_assignments', {
+      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({ match_id: toMid, player_id: dragPid, is_absent: false })
+    });
+    if (!A.find(a => a.match_id === toMid && a.player_id === dragPid))
+      A.push({ match_id: toMid, player_id: dragPid, is_absent: false });
+    toast(`${pById(dragPid)?.name} lagt til`);
+    dragPid = null; dragMid = null; dragDate = null;
+    render();
+  } else {
+    // Team → zone: MOVE (existing behaviour)
+    const pid = dragPid, fromMid = dragMid;
+    dragPid = null; dragMid = null; dragDate = null;
+    await movePlayer(pid, fromMid, toMid);
+  }
 }
 
-// ── ACTION SHEET ───────────────────────────────────────────────────────
+// ── DB OPERATIONS ─────────────────────────────────────────────────────────
+async function swapPlayers(pid1, mid1, pid2, mid2) {
+  // Delete both assignments, then re-insert swapped
+  await Promise.all([
+    api(`j11_assignments?match_id=eq.${mid1}&player_id=eq.${pid1}`, { method: 'DELETE' }),
+    api(`j11_assignments?match_id=eq.${mid2}&player_id=eq.${pid2}`, { method: 'DELETE' }),
+  ]);
+  await Promise.all([
+    api('j11_assignments', {
+      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({ match_id: mid2, player_id: pid1, is_absent: false })
+    }),
+    api('j11_assignments', {
+      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
+      body: JSON.stringify({ match_id: mid1, player_id: pid2, is_absent: false })
+    }),
+  ]);
+  // Update local state
+  const a1 = A.find(a => a.match_id === mid1 && a.player_id === pid1);
+  const a2 = A.find(a => a.match_id === mid2 && a.player_id === pid2);
+  if (a1) { a1.match_id = mid2; a1.is_absent = false; }
+  if (a2) { a2.match_id = mid1; a2.is_absent = false; }
+  toast(`${pById(pid1)?.name} ↔ ${pById(pid2)?.name} byttet plass`);
+  render();
+}
+
+async function movePlayer(pid, fromMid, toMid) {
+  await api(`j11_assignments?match_id=eq.${fromMid}&player_id=eq.${pid}`, { method: 'DELETE' });
+  await api('j11_assignments', {
+    method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
+    body: JSON.stringify({ match_id: toMid, player_id: pid, is_absent: false })
+  });
+  const idx = A.findIndex(a => a.match_id === fromMid && a.player_id === pid);
+  if (idx > -1) A.splice(idx, 1);
+  const ex = A.find(a => a.match_id === toMid && a.player_id === pid);
+  if (!ex) A.push({ match_id: toMid, player_id: pid, is_absent: false });
+  else ex.is_absent = false;
+  toast(`${pById(pid)?.name} flyttet`);
+  render();
+}
+
+async function setAbsent(matchId, playerId, absent) {
+  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ is_absent: absent, updated_at: new Date().toISOString() })
+  });
+  const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
+  if (a) a.is_absent = absent;
+  render();
+}
+
+// ── ACTION SHEET ──────────────────────────────────────────────────────────
 function openSheet(playerId, matchId) {
   const p = pById(playerId), m = mById(matchId);
   const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
@@ -507,12 +674,17 @@ function openSheet(playerId, matchId) {
   document.getElementById('sh-name').textContent = p.name;
   document.getElementById('sh-info').textContent =
     `${fDate(m.date)} · ${m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2'} vs ${m.opponent}`;
+
   const other = M.find(x => x.date === m.date && x.id !== m.id && !x.is_intern);
   let btns = '';
   if (shCtx.absent) {
-    btns = `<button class="sb sb-prs" onclick="doPresent()"><span class="sb-ico">✓</span>Meld tilstede igjen</button>`;
+    btns += `<button class="sb sb-prs" onclick="doPresent()"><span class="sb-ico">✓</span>Meld tilstede igjen</button>`;
+    if (other) {
+      const on = other.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
+      btns += `<button class="sb sb-mv" onclick="doPresentAndMove(${other.id})"><span class="sb-ico">⇄</span>Tilstede og flytt til ${on}</button>`;
+    }
   } else {
-    btns = `<button class="sb sb-abs" onclick="doAbsent()"><span class="sb-ico">✗</span>Meld fraværende</button>`;
+    btns += `<button class="sb sb-abs" onclick="doAbsent()"><span class="sb-ico">✗</span>Meld fraværende</button>`;
     if (other) {
       const on = other.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
       btns += `<button class="sb sb-mv" onclick="doMove(${other.id})"><span class="sb-ico">⇄</span>Flytt til ${on}</button>`;
@@ -522,11 +694,27 @@ function openSheet(playerId, matchId) {
   document.getElementById('sh-btns').innerHTML = btns;
   document.getElementById('overlay').classList.add('on');
 }
+
+// Action sheet for pool players (unassigned) — only option is to add to team
+function openSheetPool(playerId, matchId) {
+  const p = pById(playerId), m = mById(matchId);
+  if (!p || !m) return;
+  shCtx = { playerId, matchId, pool: true };
+  document.getElementById('sh-name').textContent = p.name;
+  document.getElementById('sh-info').textContent = `Ikke i tropp for ${fDate(m.date)}`;
+  const ln = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
+  document.getElementById('sh-btns').innerHTML =
+    `<button class="sb sb-prs" onclick="doAddToTeam()"><span class="sb-ico">＋</span>Legg til i ${ln}</button>
+     <button class="sb sb-x" onclick="closeSheet()"><span class="sb-ico">✕</span>Avbryt</button>`;
+  document.getElementById('overlay').classList.add('on');
+}
+
 function closeSheet(e) {
   if (e && e.target !== document.getElementById('overlay')) return;
   document.getElementById('overlay').classList.remove('on');
   shCtx = null;
 }
+
 async function doAbsent() {
   document.getElementById('overlay').classList.remove('on');
   await setAbsent(shCtx.matchId, shCtx.playerId, true);
@@ -541,35 +729,26 @@ async function doMove(toMid) {
   document.getElementById('overlay').classList.remove('on');
   await movePlayer(shCtx.playerId, shCtx.matchId, toMid);
 }
-
-// ── DB OPS ─────────────────────────────────────────────────────────────
-async function setAbsent(matchId, playerId, absent) {
-  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ is_absent: absent, updated_at: new Date().toISOString() })
-  });
-  const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
-  if (a) a.is_absent = absent;
-  render();
+async function doPresentAndMove(toMid) {
+  document.getElementById('overlay').classList.remove('on');
+  // First mark present, then move
+  await setAbsent(shCtx.matchId, shCtx.playerId, false);
+  await movePlayer(shCtx.playerId, shCtx.matchId, toMid);
 }
-async function movePlayer(playerId, fromMid, toMid) {
-  const p = pById(playerId);
-  await api(`j11_assignments?match_id=eq.${fromMid}&player_id=eq.${playerId}`, { method: 'DELETE' });
+async function doAddToTeam() {
+  document.getElementById('overlay').classList.remove('on');
+  const { playerId, matchId } = shCtx;
   await api('j11_assignments', {
-    method: 'POST',
-    headers: { 'Prefer': 'resolution=merge-duplicates' },
-    body: JSON.stringify({ match_id: toMid, player_id: playerId, is_absent: false })
+    method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
+    body: JSON.stringify({ match_id: matchId, player_id: playerId, is_absent: false })
   });
-  const idx = A.findIndex(a => a.match_id === fromMid && a.player_id === playerId);
-  if (idx > -1) A.splice(idx, 1);
-  const ex = A.find(a => a.match_id === toMid && a.player_id === playerId);
-  if (!ex) A.push({ match_id: toMid, player_id: playerId, is_absent: false });
-  else ex.is_absent = false;
-  toast(`${p?.name} flyttet`);
+  if (!A.find(a => a.match_id === matchId && a.player_id === playerId))
+    A.push({ match_id: matchId, player_id: playerId, is_absent: false });
+  toast(`${pById(playerId)?.name} lagt til i tropp`);
   render();
 }
 
-// ── NAV ────────────────────────────────────────────────────────────────
+// ── NAV & FILTER ──────────────────────────────────────────────────────────
 document.querySelectorAll('.ntab').forEach(t => t.addEventListener('click', () => {
   document.querySelectorAll('.ntab').forEach(x => x.classList.remove('on'));
   document.querySelectorAll('.screen').forEach(x => x.classList.remove('on'));
@@ -577,23 +756,17 @@ document.querySelectorAll('.ntab').forEach(t => t.addEventListener('click', () =
   document.getElementById('pg-' + t.dataset.pg).classList.add('on');
 }));
 
-// ── FILTER ─────────────────────────────────────────────────────────────
 document.querySelectorAll('.fb').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('.fb').forEach(x => x.classList.remove('on'));
-  b.classList.add('on');
-  filter = b.dataset.f;
-  renderPlan();
+  b.classList.add('on'); filter = b.dataset.f; renderPlan();
 }));
 
-// ── TOAST ──────────────────────────────────────────────────────────────
 function toast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('on');
+  t.textContent = msg; t.classList.add('on');
   setTimeout(() => t.classList.remove('on'), 2400);
 }
 
-// ── BOOT ───────────────────────────────────────────────────────────────
 init();
 </script>
 </body>
