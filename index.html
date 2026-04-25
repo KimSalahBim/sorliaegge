@@ -475,10 +475,11 @@ function renderPlan() {
       if (dayResults.length>0) {
         // Show combined goals if multiple matches; show individual if only one
         if (day.filter(m=>!m.is_intern).length===1) {
-          const res=dayResults[0]; const m=mById(res.match_id);
+          const res=dayResults[0];
           const diff=res.our_goals-res.opp_goals;
           const cls=diff>0?'win':diff<0?'loss':'draw';
-          scorePart=`<span class="score-badge ${cls}">${res.our_goals} – ${res.opp_goals}</span>`;
+          const lbl=diff>0?'Seier':diff<0?'Tap':'Uavgjort';
+          scorePart=`<span class="score-badge ${cls}">${res.our_goals}–${res.opp_goals} · ${lbl}</span>`;
         } else {
           scorePart=`<span class="score-badge">${dayResults.map(r=>`${r.our_goals}–${r.opp_goals}`).join(' / ')}</span>`;
         }
