@@ -244,6 +244,22 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 
 /* ── MISSING RESULT ── */
 .score-missing{background:rgba(255,165,0,.25);color:#fff;border:1.5px solid rgba(255,200,50,.5);border-radius:6px;padding:5px 11px;font-size:.72rem;font-weight:700;flex-shrink:0;white-space:nowrap}
+
+/* ── GOAL COUNT POPOVER ── */
+.cnt-backdrop{display:none;position:fixed;inset:0;z-index:490}
+.cnt-backdrop.on{display:block}
+.cnt-pop{position:fixed;background:var(--card);border-radius:14px;padding:16px 18px;box-shadow:0 8px 32px rgba(0,0,0,.22),0 2px 8px rgba(0,0,0,.1);border:1px solid var(--bd);display:none;flex-direction:column;align-items:center;gap:12px;z-index:500;min-width:180px}
+.cnt-pop.on{display:flex}
+.cnt-pop-name{font-size:.78rem;font-weight:700;color:var(--t2);text-align:center;margin-bottom:-2px}
+.cnt-controls{display:flex;align-items:center;gap:16px}
+.cnt-btn{width:40px;height:40px;border-radius:50%;border:none;font-family:inherit;font-size:1.4rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.12s;flex-shrink:0;line-height:1}
+.cnt-btn-minus{background:var(--rel);color:var(--re)}
+.cnt-btn-plus{background:var(--gl);color:var(--gd)}
+@media(hover:hover){.cnt-btn:hover{filter:brightness(.9)}}
+.cnt-btn:disabled{opacity:.3;cursor:default;pointer-events:none}
+.cnt-num{font-size:2rem;font-weight:800;color:var(--t1);min-width:36px;text-align:center;font-variant-numeric:tabular-nums}
+.cnt-ok{width:100%;padding:10px;border-radius:var(--rs);background:var(--g);color:#fff;font-family:inherit;font-size:.85rem;font-weight:700;border:none;cursor:pointer;transition:.12s}
+@media(hover:hover){.cnt-ok:hover{background:var(--gd)}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -755,7 +771,7 @@ function openResultSheet(matchId) {
       btn.dataset.count=n;
       btn.dataset.name=p.name;
       btn.innerHTML=p.name+(n>0?` <span class="ptoggle-cnt">${n}</span>`:'');
-      btn.addEventListener('click', ()=>cycleCount(btn, containerId.includes('goal')?'goal':'assist'));
+      btn.addEventListener('click', ()=>openCountPicker(btn, containerId.includes('goal')?'goal':'assist'));
       wrap.appendChild(btn);
     }
   }
@@ -765,24 +781,55 @@ function openResultSheet(matchId) {
   document.getElementById('res-overlay').classList.add('on');
 }
 
-function cycleCount(btn, type) {
-  const max=5;
-  let n=+(btn.dataset.count||0);
-  n=(n+1)%(max+1);
-  btn.dataset.count=n;
-  const selCls='sel-'+type;
-  const name=btn.dataset.name; // stored on build
-  if (n>0) {
-    btn.classList.add(selCls);
-    btn.innerHTML=name+` <span class="ptoggle-cnt">${n}</span>`;
-  } else {
-    btn.classList.remove(selCls);
-    btn.textContent=name;
-  }
+let _pickerBtn=null, _pickerType=null;
+
+function openCountPicker(btn, type) {
+  _pickerBtn=btn; _pickerType=type;
+  const n=+(btn.dataset.count||0);
+  document.getElementById('cnt-pop-name').textContent=btn.dataset.name;
+  document.getElementById('cnt-num').textContent=n;
+  document.getElementById('cnt-minus').disabled=(n===0);
+  // Position popover near button, stay in viewport
+  const rect=btn.getBoundingClientRect();
+  const pop=document.getElementById('cnt-pop');
+  pop.style.display='flex'; // briefly show to measure
+  const pw=pop.offsetWidth||180, ph=pop.offsetHeight||140;
+  pop.style.display='';
+  let left=rect.left, top=rect.bottom+6;
+  if (left+pw>window.innerWidth-8) left=window.innerWidth-pw-8;
+  if (top+ph>window.innerHeight-8) top=rect.top-ph-6;
+  if (left<8) left=8;
+  pop.style.left=left+'px'; pop.style.top=top+'px';
+  document.getElementById('cnt-backdrop').classList.add('on');
+  pop.classList.add('on');
 }
 
+function pickerAdj(delta) {
+  const el=document.getElementById('cnt-num');
+  let n=+el.textContent+delta;
+  if(n<0)n=0;
+  el.textContent=n;
+  document.getElementById('cnt-minus').disabled=(n===0);
+}
 
-// toggleEvent replaced by cycleCount (see openResultSheet)
+function pickerDone() {
+  if(!_pickerBtn) return;
+  const n=+document.getElementById('cnt-num').textContent;
+  const btn=_pickerBtn, type=_pickerType, name=btn.dataset.name;
+  btn.dataset.count=n;
+  const selCls='sel-'+type;
+  if(n>0){btn.classList.add(selCls);btn.innerHTML=name+` <span class="ptoggle-cnt">${n}</span>`;}
+  else{btn.classList.remove(selCls);btn.textContent=name;}
+  pickerClose();
+}
+
+function pickerClose() {
+  document.getElementById('cnt-backdrop').classList.remove('on');
+  document.getElementById('cnt-pop').classList.remove('on');
+  _pickerBtn=null; _pickerType=null;
+}
+
+// toggleEvent replaced by openCountPicker (see openResultSheet)
 
 async function saveResult() {
   if (!resCtx) return;
@@ -1241,5 +1288,16 @@ function bootAuth() {
 
 bootAuth();
 </script>
+<div class="cnt-backdrop" id="cnt-backdrop" onclick="pickerClose()"></div>
+<div class="cnt-pop" id="cnt-pop">
+  <div class="cnt-pop-name" id="cnt-pop-name"></div>
+  <div class="cnt-controls">
+    <button class="cnt-btn cnt-btn-minus" id="cnt-minus" onclick="pickerAdj(-1)">−</button>
+    <div class="cnt-num" id="cnt-num">0</div>
+    <button class="cnt-btn cnt-btn-plus" onclick="pickerAdj(1)">+</button>
+  </div>
+  <button class="cnt-ok" onclick="pickerDone()">OK</button>
+</div>
+
 </body>
 </html>
