@@ -485,15 +485,9 @@ function renderPlan() {
       ${scorePart}
     </div>`;
 
-    if (allIntern) {
-      html+=`<div class="intern-body"><div class="intern-ico">👥</div><div>
-        <div class="intern-txt">Tropp settes opp på kampdagen</div>
-        <div class="intern-sub">Begge lag møtes — fordeling avtales på stedet</div>
-      </div></div>`;
-    } else {
-      html+=`<div class="kd-body">`;
-      const pool=poolOf(date),solo=day.length===1;
-      for (const m of day) {
+    html+=`<div class="kd-body">`;
+    const pool=poolOf(date),solo=day.length===1;
+    for (const m of day) {
         const ps=psOf(m.id),nA=ps.filter(p=>p.absent).length,nOk=ps.length-nA;
         const lc=m.lag==='L1'?'l1':'l2',ln=m.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2';
         const ha=m.ha==='H'?'Hjemme':m.km?`Borte · ${m.km} km`:'Borte';
@@ -518,17 +512,17 @@ function renderPlan() {
           }
           scorersHtml+=`</div>`;
         }
+        const oppLabel=m.is_intern?ln:('vs '+m.opponent);
         html+=`<div class="tc${solo?' solo':''}" data-mid="${m.id}" data-date="${date}">
           <div class="t-hd">
             <span class="tname ${lc}">${ln}</span>
-            <span class="tha">${ha}</span>
-            <span class="jbadge ${jbCls}">${jLabel}</span>
+            ${!m.is_intern?`<span class="tha">${ha}</span><span class="jbadge ${jbCls}">${jLabel}</span>`:''}
             <span class="t-cnt${nA?' t-cnt-abs':''}">
-              ${nA?`${nOk} av ${ps.length} (${nA} borte)`:`${ps.length} spillere`}
+              ${nA?`${nOk} av ${ps.length} (${nA} borte)`:`${ps.filter(p=>!p.absent).length} spillere`}
             </span>
             ${ps.filter(p=>!p.absent&&p.is_coach_kid).length===0&&ps.filter(p=>!p.absent).length>0?'<span class="cc-warn">⚠ Mangler CC</span>':''}
           </div>
-          <div class="t-opp">vs ${m.opponent}</div>
+          <div class="t-opp">${m.is_intern?'Intern kamp':('vs '+m.opponent)}</div>
           <div class="t-venue">${m.venue}</div>
           <div class="chips" data-mid="${m.id}" data-date="${date}"
             ondragover="zoneOver(event)" ondragenter="zoneEnter(event)"
@@ -557,9 +551,8 @@ function renderPlan() {
           html+=`</div></div>`;
         }
         html+=`</div>`;
-      }
-      html+=`</div>`;
     }
+    html+=`</div>`;
     html+=`</div>`;
   }
   el.innerHTML=html||'<div class="loader">Ingen kamper å vise</div>';
