@@ -152,10 +152,13 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 .events-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .events-label span{font-size:.9rem}
 .player-toggle-grid{display:flex;flex-wrap:wrap;gap:6px}
-.ptoggle{padding:6px 12px;border-radius:20px;font-family:inherit;font-size:.77rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--bg);color:var(--t2);transition:.12s}
+.ptoggle{padding:6px 12px;border-radius:20px;font-family:inherit;font-size:.77rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--bg);color:var(--t2);transition:.12s;display:inline-flex;align-items:center;gap:5px;position:relative}
+.ptoggle:active{transform:scale(.95)}
 .ptoggle.sel-goal{background:var(--gl);color:var(--gd);border-color:var(--gm)}
 .ptoggle.sel-assist{background:var(--bll);color:var(--bl);border-color:#b0d0f0}
 .ptoggle.cc{font-style:italic}
+.ptoggle-cnt{font-size:.68rem;font-weight:800;background:var(--gd);color:#fff;width:17px;height:17px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.ptoggle.sel-assist .ptoggle-cnt{background:var(--bl)}
 .save-btn{width:100%;padding:14px;border-radius:var(--rs);background:var(--g);color:#fff;font-family:inherit;font-size:.9rem;font-weight:800;cursor:pointer;border:none;margin-top:16px;transition:.15s}
 .save-btn:hover{background:var(--gd)}
 .delete-btn{width:100%;padding:10px;border-radius:var(--rs);background:var(--bg);color:var(--re);font-family:inherit;font-size:.8rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bd);margin-top:8px;transition:.15s}
@@ -226,6 +229,21 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 @keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 6px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
 .sync-flash{animation:flash .4s ease}
 @keyframes flash{0%{opacity:.4}100%{opacity:1}}
+
+/* ── TOUCH GHOST ── */
+.touch-ghost{position:fixed;pointer-events:none;z-index:999;opacity:.75;transform:scale(1.08);border-radius:20px;padding:5px 11px;font-size:.77rem;font-weight:700;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.2);background:var(--gl);color:var(--gd);border:1.5px solid var(--gm)}
+
+/* ── UNDO TOAST ── */
+.undo-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:#1a2e1e;color:#fff;padding:10px 8px 10px 18px;border-radius:var(--rs);font-size:.82rem;font-weight:600;z-index:401;opacity:0;transition:.22s;pointer-events:none;display:flex;align-items:center;gap:10px;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.25)}
+.undo-toast.on{opacity:1;transform:translateX(-50%);pointer-events:auto}
+.undo-btn{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.3);color:#fff;padding:5px 12px;border-radius:20px;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;transition:.12s;flex-shrink:0}
+.undo-btn:hover{background:rgba(255,255,255,.28)}
+
+/* ── CC WARNING ── */
+.cc-warn{display:inline-flex;align-items:center;gap:4px;font-size:.62rem;font-weight:700;background:#fffbe6;color:#7a6200;border:1.5px solid #f5e070;padding:2px 8px;border-radius:10px}
+
+/* ── MISSING RESULT ── */
+.score-missing{background:rgba(255,255,255,.15);color:#fff;border:1.5px solid rgba(255,255,255,.3);border-radius:6px;padding:4px 10px;font-size:.68rem;font-weight:700;flex-shrink:0;white-space:nowrap}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -255,6 +273,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 </nav>
 
 <div id="toast" class="toast"></div>
+<div id="undo-toast" class="undo-toast"><span id="undo-msg"></span><button class="undo-btn" onclick="doUndo()">Angre</button></div>
 
 <!-- PLAYER ACTION OVERLAY -->
 <div class="overlay" id="overlay" onclick="closeSheet(event)">
@@ -448,7 +467,7 @@ function renderPlan() {
           scorePart=`<span class="score-badge">${dayResults.map(r=>`${r.our_goals}–${r.opp_goals}`).join(' / ')}</span>`;
         }
       } else {
-        scorePart=`<span class="score-hint">Trykk for å legge inn resultat</span>`;
+        scorePart=`<span class="score-missing">📋 Mangler resultat</span>`;
       }
     }
 
@@ -485,13 +504,17 @@ function renderPlan() {
         let scorersHtml='';
         if (goals.length||assists.length) {
           scorersHtml=`<div class="scorers-row">`;
-          for (const e of goals) {
-            const pn=pById(e.player_id)?.name||'?';
-            scorersHtml+=`<span class="scorer-chip scorer-goal">⚽ ${pn}</span>`;
+          // Aggregate multiple goals per player
+          const gc={},ac={};
+          for (const e of goals) gc[e.player_id]=(gc[e.player_id]||0)+1;
+          for (const e of assists) ac[e.player_id]=(ac[e.player_id]||0)+1;
+          for (const [pid,n] of Object.entries(gc)) {
+            const pn=pById(+pid)?.name||'?';
+            scorersHtml+=`<span class="scorer-chip scorer-goal">⚽ ${pn}${n>1?` ×${n}`:''}</span>`;
           }
-          for (const e of assists) {
-            const pn=pById(e.player_id)?.name||'?';
-            scorersHtml+=`<span class="scorer-chip scorer-assist">🎯 ${pn}</span>`;
+          for (const [pid,n] of Object.entries(ac)) {
+            const pn=pById(+pid)?.name||'?';
+            scorersHtml+=`<span class="scorer-chip scorer-assist">🎯 ${pn}${n>1?` ×${n}`:''}</span>`;
           }
           scorersHtml+=`</div>`;
         }
@@ -503,6 +526,7 @@ function renderPlan() {
             <span class="t-cnt${nA?' t-cnt-abs':''}">
               ${nA?`${nOk} av ${ps.length} (${nA} borte)`:`${ps.length} spillere`}
             </span>
+            ${ps.filter(p=>!p.absent&&p.is_coach_kid).length===0&&ps.filter(p=>!p.absent).length>0?'<span class="cc-warn">⚠ Mangler CC</span>':''}
           </div>
           <div class="t-opp">vs ${m.opponent}</div>
           <div class="t-venue">${m.venue}</div>
@@ -514,6 +538,7 @@ function renderPlan() {
           html+=`<span class="${cls}" draggable="true" data-pid="${p.id}" data-mid="${m.id}" data-date="${date}"
             ondragstart="chipStart(event)" ondragend="chipEnd(event)"
             ondragover="chipOver(event)" ondragleave="chipLeave(event)" ondrop="chipDrop(event)"
+            ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)"
             onclick="openSheet(${p.id},${m.id})">${p.name}</span>`;
         }
         html+=`</div>${scorersHtml}`;
@@ -526,6 +551,7 @@ function renderPlan() {
             html+=`<span class="chip pool" draggable="true" data-pid="${p.id}" data-mid="0" data-date="${date}"
               ondragstart="chipStart(event)" ondragend="chipEnd(event)"
               ondragover="chipOver(event)" ondragleave="chipLeave(event)" ondrop="chipDrop(event)"
+              ontouchstart="touchStart(event)" ontouchmove="touchMove(event)" ontouchend="touchEnd(event)"
               onclick="openSheetPool(${p.id},${m.id})">${p.name}</span>`;
           }
           html+=`</div></div>`;
@@ -706,41 +732,64 @@ function openResultSheet(matchId) {
 
   // Restore hidden elements
   document.getElementById('res-our').closest('.score-row').style.display='';
-  document.querySelectorAll('.events-section').forEach(el=>el.style.display='');
-  document.querySelector('.save-btn').style.display='';
+  document.querySelectorAll('#res-sheet .events-section').forEach(el=>el.style.display='');
+  document.querySelector('#res-sheet .save-btn').style.display='';
 
   // Prefill existing result
   const existing=resultOf(matchId);
   document.getElementById('res-our').value=existing?existing.our_goals:0;
   document.getElementById('res-opp').value=existing?existing.opp_goals:0;
-
-  const existingGoals=new Set(eventsOf(matchId,'goal').map(e=>e.player_id));
-  const existingAssists=new Set(eventsOf(matchId,'assist').map(e=>e.player_id));
-
   document.getElementById('del-btn').style.display=existing?'':'none';
 
-  // Players in this match
+  // Count existing events per player
+  const goalCounts={}, assistCounts={};
+  for (const e of eventsOf(matchId,'goal'))
+    goalCounts[e.player_id]=(goalCounts[e.player_id]||0)+1;
+  for (const e of eventsOf(matchId,'assist'))
+    assistCounts[e.player_id]=(assistCounts[e.player_id]||0)+1;
+
+  // Players in this match (non-absent)
   const ps=psOf(matchId).filter(p=>!p.absent);
 
-  const goalHtml=ps.map(p=>
-    `<button class="ptoggle${p.is_coach_kid?' cc':''} ${existingGoals.has(p.id)?'sel-goal':''}"
-      data-pid="${p.id}" onclick="toggleEvent(this,'goal')">${p.name}</button>`
-  ).join('');
-  const assistHtml=ps.map(p=>
-    `<button class="ptoggle${p.is_coach_kid?' cc':''} ${existingAssists.has(p.id)?'sel-assist':''}"
-      data-pid="${p.id}" onclick="toggleEvent(this,'assist')">${p.name}</button>`
-  ).join('');
+  function buildToggles(containerId, counts) {
+    const wrap=document.getElementById(containerId);
+    wrap.innerHTML='';
+    for (const p of ps) {
+      const btn=document.createElement('button');
+      const n=counts[p.id]||0;
+      btn.className='ptoggle'+(p.is_coach_kid?' cc':'')+(n>0?' sel-'+(containerId.includes('goal')?'goal':'assist'):'');
+      btn.dataset.pid=p.id;
+      btn.dataset.count=n;
+      btn.dataset.name=p.name;
+      btn.innerHTML=p.name+(n>0?` <span class="ptoggle-cnt">${n}</span>`:'');
+      btn.addEventListener('click', ()=>cycleCount(btn, containerId.includes('goal')?'goal':'assist'));
+      wrap.appendChild(btn);
+    }
+  }
 
-  document.getElementById('goal-toggles').innerHTML=goalHtml;
-  document.getElementById('assist-toggles').innerHTML=assistHtml;
-
+  buildToggles('goal-toggles', goalCounts);
+  buildToggles('assist-toggles', assistCounts);
   document.getElementById('res-overlay').classList.add('on');
 }
 
-function toggleEvent(btn, type) {
-  const cls=type==='goal'?'sel-goal':'sel-assist';
-  btn.classList.toggle(cls);
+function cycleCount(btn, type) {
+  const max=5;
+  let n=+(btn.dataset.count||0);
+  n=(n+1)%(max+1);
+  btn.dataset.count=n;
+  const selCls='sel-'+type;
+  const name=btn.dataset.name; // stored on build
+  if (n>0) {
+    btn.classList.add(selCls);
+    btn.innerHTML=name+` <span class="ptoggle-cnt">${n}</span>`;
+  } else {
+    btn.classList.remove(selCls);
+    btn.textContent=name;
+  }
 }
+
+
+// toggleEvent replaced by cycleCount (see openResultSheet)
 
 async function saveResult() {
   if (!resCtx) return;
@@ -768,11 +817,14 @@ async function saveResult() {
   Events=Events.filter(e=>e.match_id!==matchId);
 
   const newEvents=[];
-  document.querySelectorAll('#goal-toggles .sel-goal').forEach(btn=>{
-    newEvents.push({match_id:matchId,player_id:+btn.dataset.pid,event_type:'goal'});
+  // Read count from each button — 1 row per goal/assist
+  document.querySelectorAll('#goal-toggles .ptoggle').forEach(btn=>{
+    const n=+(btn.dataset.count||0);
+    for(let i=0;i<n;i++) newEvents.push({match_id:matchId,player_id:+btn.dataset.pid,event_type:'goal'});
   });
-  document.querySelectorAll('#assist-toggles .sel-assist').forEach(btn=>{
-    newEvents.push({match_id:matchId,player_id:+btn.dataset.pid,event_type:'assist'});
+  document.querySelectorAll('#assist-toggles .ptoggle').forEach(btn=>{
+    const n=+(btn.dataset.count||0);
+    for(let i=0;i<n;i++) newEvents.push({match_id:matchId,player_id:+btn.dataset.pid,event_type:'assist'});
   });
 
   if (newEvents.length>0) {
@@ -807,6 +859,116 @@ function closeResult(e) {
   const picker=document.getElementById('res-picker');
   if (picker) picker.remove();
   resCtx=null;
+}
+
+
+// ── TOUCH DRAG-AND-DROP ────────────────────────────────────────────────────
+let TD = {active:false,pid:null,mid:null,date:null,ghost:null,srcChip:null,startX:0,startY:0};
+
+function touchStart(e) {
+  const chip = e.currentTarget;
+  const t = e.touches[0];
+  TD = {active:false, pid:+chip.dataset.pid, mid:+chip.dataset.mid, date:chip.dataset.date,
+        ghost:null, srcChip:chip, startX:t.clientX, startY:t.clientY};
+  // Don't prevent default yet — preserve click/tap behaviour
+}
+
+function touchMove(e) {
+  if (!TD.pid) return;
+  const t = e.touches[0];
+  const dx = t.clientX - TD.startX, dy = t.clientY - TD.startY;
+  if (!TD.active && Math.sqrt(dx*dx+dy*dy) < 9) return;
+  e.preventDefault(); // prevent scroll once we've confirmed drag intent
+
+  if (!TD.active) {
+    TD.active = true;
+    TD.srcChip.classList.add('dragging');
+    const g = document.createElement('span');
+    g.className = 'touch-ghost';
+    g.textContent = TD.srcChip.textContent;
+    document.body.appendChild(g);
+    TD.ghost = g;
+  }
+
+  // Move ghost
+  const g = TD.ghost;
+  g.style.left = (t.clientX - g.offsetWidth/2) + 'px';
+  g.style.top  = (t.clientY - g.offsetHeight/2) + 'px';
+
+  // Detect target under finger
+  g.style.visibility = 'hidden';
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  g.style.visibility = '';
+
+  document.querySelectorAll('.dz-on,.swap-target').forEach(x=>{x.classList.remove('dz-on','swap-target');});
+  if (!el) return;
+  const tc = el.closest('.chip');
+  const tz = el.closest('.chips');
+  if (tc && tc !== TD.srcChip && tc.dataset.date === TD.date && +tc.dataset.mid !== TD.mid) {
+    tc.classList.add('swap-target');
+  } else if (tz && tz.dataset.date === TD.date && +tz.dataset.mid !== TD.mid) {
+    tz.classList.add('dz-on');
+  }
+}
+
+async function touchEnd(e) {
+  if (!TD.pid) return;
+  if (!TD.active) { TD = {active:false,pid:null,mid:null,date:null,ghost:null,srcChip:null}; return; }
+
+  e.preventDefault();
+  const t = e.changedTouches[0];
+  TD.ghost.remove();
+  TD.srcChip.classList.remove('dragging');
+  document.querySelectorAll('.dz-on,.swap-target').forEach(x=>{x.classList.remove('dz-on','swap-target');});
+
+  const pid=TD.pid, fromMid=TD.mid, date=TD.date;
+  TD = {active:false,pid:null,mid:null,date:null,ghost:null,srcChip:null};
+  const el = document.elementFromPoint(t.clientX, t.clientY);
+  if (!el) return;
+
+  const tc = el.closest('.chip');
+  const tz = el.closest('.chips');
+
+  if (tc && +tc.dataset.pid !== pid) {
+    const tPid=+tc.dataset.pid, tMid=+tc.dataset.mid, tDate=tc.dataset.date;
+    if (tDate !== date) { toast('Kan bare flytte innen samme kampdag'); return; }
+    if (tMid === fromMid) return;
+    if (fromMid === 0) {
+      // pool → chip: replace
+      await api(`j11_assignments?match_id=eq.${tMid}&player_id=eq.${tPid}`,{method:'DELETE'});
+      await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:tMid,player_id:pid,is_absent:false})});
+      const idx=A.findIndex(a=>a.match_id===tMid&&a.player_id===tPid);if(idx>-1)A.splice(idx,1);
+      if(!A.find(a=>a.match_id===tMid&&a.player_id===pid))A.push({match_id:tMid,player_id:pid,is_absent:false});
+      const dName=pById(pid)?.name,tName=pById(tPid)?.name;
+      setUndo(`${dName} inn, ${tName} ut`,async()=>{
+        await api(`j11_assignments?match_id=eq.${tMid}&player_id=eq.${pid}`,{method:'DELETE'});
+        await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:tMid,player_id:tPid,is_absent:false})});
+        const i=A.findIndex(a=>a.match_id===tMid&&a.player_id===pid);if(i>-1)A.splice(i,1);
+        if(!A.find(a=>a.match_id===tMid&&a.player_id===tPid))A.push({match_id:tMid,player_id:tPid,is_absent:false});
+        render();
+      });
+      render();
+    } else {
+      await swapPlayers(pid,fromMid,tPid,tMid);
+    }
+  } else if (tz) {
+    const toMid=+tz.dataset.mid, zDate=tz.dataset.date;
+    if (zDate !== date) { toast('Kan bare flytte innen samme kampdag'); return; }
+    if (toMid === fromMid) return;
+    if (fromMid === 0) {
+      const mTo=mById(toMid);
+      if(mTo&&isDupeOnDay(pid,mTo.date,toMid))toast(`⚠ ${pById(pid)?.name} er allerede tildelt en kamp denne dagen`);
+      await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:toMid,player_id:pid,is_absent:false})});
+      if(!A.find(a=>a.match_id===toMid&&a.player_id===pid))A.push({match_id:toMid,player_id:pid,is_absent:false});
+      setUndo(`${pById(pid)?.name} lagt til`,async()=>{
+        await api(`j11_assignments?match_id=eq.${toMid}&player_id=eq.${pid}`,{method:'DELETE'});
+        const i=A.findIndex(a=>a.match_id===toMid&&a.player_id===pid);if(i>-1)A.splice(i,1);render();
+      });
+      render();
+    } else {
+      await movePlayer(pid,fromMid,toMid);
+    }
+  }
 }
 
 // ── DRAG-DROP ──────────────────────────────────────────────────────────────
@@ -853,24 +1015,61 @@ async function zoneDrop(e){
   } else {const pid=dragPid,from=dragMid;dragPid=null;dragMid=null;dragDate=null;await movePlayer(pid,from,toMid);}
 }
 
+
+// ── UNDO SYSTEM ───────────────────────────────────────────────────────────
+let undoStack = null, undoTimer = null;
+
+function setUndo(label, fn) {
+  undoStack = {fn};
+  clearTimeout(undoTimer);
+  document.getElementById('undo-msg').textContent = label;
+  document.getElementById('undo-toast').classList.add('on');
+  undoTimer = setTimeout(() => {
+    document.getElementById('undo-toast').classList.remove('on');
+    undoStack = null;
+  }, 5000);
+}
+
+async function doUndo() {
+  if (!undoStack) return;
+  clearTimeout(undoTimer);
+  document.getElementById('undo-toast').classList.remove('on');
+  const fn = undoStack.fn;
+  undoStack = null;
+  await fn();
+}
+
+
+// ── DUPLICATE / CC HELPERS ────────────────────────────────────────────────
+function isDupeOnDay(playerId, date, excludeMatchId = null) {
+  return M.filter(m => m.date === date && !m.is_intern && (excludeMatchId === null || m.id !== excludeMatchId))
+    .some(m => A.some(a => a.match_id === m.id && a.player_id === playerId));
+}
+
 // ── DB OPS ─────────────────────────────────────────────────────────────────
-async function swapPlayers(p1,m1,p2,m2){
+async function swapPlayers(p1,m1,p2,m2,skipUndo=false){
   await Promise.all([api(`j11_assignments?match_id=eq.${m1}&player_id=eq.${p1}`,{method:'DELETE'}),api(`j11_assignments?match_id=eq.${m2}&player_id=eq.${p2}`,{method:'DELETE'})]);
   await Promise.all([api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:m2,player_id:p1,is_absent:false})}),api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:m1,player_id:p2,is_absent:false})})]);
   const a1=A.find(a=>a.match_id===m1&&a.player_id===p1),a2=A.find(a=>a.match_id===m2&&a.player_id===p2);
   if(a1){a1.match_id=m2;a1.is_absent=false;}if(a2){a2.match_id=m1;a2.is_absent=false;}
-  toast(`${pById(p1)?.name} ↔ ${pById(p2)?.name} byttet`);render();
+  if(!skipUndo)setUndo(`${pById(p1)?.name} ↔ ${pById(p2)?.name} byttet`,()=>swapPlayers(p1,m2,p2,m1,true));
+  render();
 }
-async function movePlayer(pid,from,to){
+async function movePlayer(pid,from,to,skipUndo=false){
+  const mTo=mById(to);
+  if(mTo&&isDupeOnDay(pid,mTo.date,to))toast(`⚠ ${pById(pid)?.name} er allerede tildelt en kamp denne dagen`);
   await api(`j11_assignments?match_id=eq.${from}&player_id=eq.${pid}`,{method:'DELETE'});
   await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:to,player_id:pid,is_absent:false})});
   const idx=A.findIndex(a=>a.match_id===from&&a.player_id===pid);if(idx>-1)A.splice(idx,1);
   const ex=A.find(a=>a.match_id===to&&a.player_id===pid);if(!ex)A.push({match_id:to,player_id:pid,is_absent:false});else ex.is_absent=false;
-  toast(`${pById(pid)?.name} flyttet`);render();
+  if(!skipUndo)setUndo(`${pById(pid)?.name} flyttet`,()=>movePlayer(pid,to,from,true));
+  render();
 }
-async function setAbsent(matchId,playerId,absent){
+async function setAbsent(matchId,playerId,absent,skipUndo=false){
   await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`,{method:'PATCH',body:JSON.stringify({is_absent:absent,updated_at:new Date().toISOString()})});
-  const a=A.find(x=>x.match_id===matchId&&x.player_id===playerId);if(a)a.is_absent=absent;render();
+  const a=A.find(x=>x.match_id===matchId&&x.player_id===playerId);if(a)a.is_absent=absent;
+  if(!skipUndo)setUndo(`${pById(playerId)?.name} ${absent?'meldt fraværende':'meldt tilstede'}`,()=>setAbsent(matchId,playerId,!absent,true));
+  render();
 }
 
 // ── ACTION SHEET ───────────────────────────────────────────────────────────
@@ -907,13 +1106,30 @@ function closeSheet(e){if(e&&e.target!==document.getElementById('overlay')) retu
 async function doAbsent(){document.getElementById('overlay').classList.remove('on');await setAbsent(shCtx.matchId,shCtx.playerId,true);toast(`${pById(shCtx.playerId)?.name} meldt fraværende`);}
 async function doPresent(){document.getElementById('overlay').classList.remove('on');await setAbsent(shCtx.matchId,shCtx.playerId,false);toast(`${pById(shCtx.playerId)?.name} meldt tilstede`);}
 async function doMove(toMid){document.getElementById('overlay').classList.remove('on');await movePlayer(shCtx.playerId,shCtx.matchId,toMid);}
-async function doPresentAndMove(toMid){document.getElementById('overlay').classList.remove('on');await setAbsent(shCtx.matchId,shCtx.playerId,false);await movePlayer(shCtx.playerId,shCtx.matchId,toMid);}
+async function doPresentAndMove(toMid){
+  document.getElementById('overlay').classList.remove('on');
+  const {matchId, playerId} = shCtx;
+  // Update absent in DB silently (no render, no undo — movePlayer handles both)
+  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`,{
+    method:'PATCH', body:JSON.stringify({is_absent:false, updated_at:new Date().toISOString()})
+  });
+  const a=A.find(x=>x.match_id===matchId&&x.player_id===playerId);
+  if(a) a.is_absent=false;
+  await movePlayer(playerId, matchId, toMid); // single render + undo
+}
 async function doAddToTeam(){
   document.getElementById('overlay').classList.remove('on');
   const {playerId,matchId}=shCtx;
+  const m=mById(matchId);
+  if(m&&isDupeOnDay(playerId,m.date,matchId))toast(`⚠ ${pById(playerId)?.name} er allerede tildelt en kamp denne dagen`);
   await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:matchId,player_id:playerId,is_absent:false})});
   if(!A.find(a=>a.match_id===matchId&&a.player_id===playerId))A.push({match_id:matchId,player_id:playerId,is_absent:false});
-  toast(`${pById(playerId)?.name} lagt til`);render();
+  setUndo(`${pById(playerId)?.name} lagt til`,async()=>{
+    await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`,{method:'DELETE'});
+    const idx=A.findIndex(a=>a.match_id===matchId&&a.player_id===playerId);if(idx>-1)A.splice(idx,1);
+    render();
+  });
+  render();
 }
 
 async function doRemove() {
@@ -923,7 +1139,11 @@ async function doRemove() {
   await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {method:'DELETE'});
   const idx = A.findIndex(a => a.match_id===matchId && a.player_id===playerId);
   if (idx > -1) A.splice(idx, 1);
-  toast(`${pById(playerId)?.name} fjernet fra tropp`);
+  setUndo(`${pById(playerId)?.name} fjernet`, async()=>{
+    await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:matchId,player_id:playerId,is_absent:false})});
+    if(!A.find(a=>a.match_id===matchId&&a.player_id===playerId))A.push({match_id:matchId,player_id:playerId,is_absent:false});
+    render();
+  });
   render();
 }
 
@@ -980,8 +1200,13 @@ function handleRemoteChange() {
     if (freshR) Results = freshR;
     if (freshE) Events = freshE;
     // Flash the content to signal an update
-    document.getElementById('plan-list').classList.add('sync-flash');
-    setTimeout(() => document.getElementById('plan-list').classList.remove('sync-flash'), 400);
+    // Flash whichever content area is currently visible
+    const flashEl = document.querySelector('.screen.on > div:not(#banner):not(.filters)') ||
+                    document.getElementById('plan-list');
+    if (flashEl) {
+      flashEl.classList.add('sync-flash');
+      setTimeout(() => flashEl.classList.remove('sync-flash'), 400);
+    }
     render();
   }, 300);
 }
