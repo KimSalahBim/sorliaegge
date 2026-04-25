@@ -7,13 +7,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --g:#3D6142; --gd:#2a4530; --gl:#EBF3EC; --gm:#c3ddc6;
-  --bl:#1B4F8A; --bll:#dceeff;
-  --re:#B83025; --rel:#FDECEA;
-  --or:#C95200; --orl:#FEF0E7;
-  --bg:#EFF2EF; --card:#fff; --bd:#D2E4D4; --bd2:#E8F0E9;
-  --t1:#111B13; --t2:#4a6050; --t3:#8a9e8d;
-  --r:12px; --rs:8px;
+  --g:#3D6142;--gd:#2a4530;--gl:#EBF3EC;--gm:#c3ddc6;
+  --bl:#1B4F8A;--bll:#dceeff;
+  --re:#B83025;--rel:#FDECEA;
+  --or:#C95200;--orl:#FEF0E7;
+  --ye:#7a6200;--yel:#fffbe6;
+  --bg:#EFF2EF;--card:#fff;--bd:#D2E4D4;--bd2:#E8F0E9;
+  --t1:#111B13;--t2:#4a6050;--t3:#8a9e8d;
+  --r:12px;--rs:8px;
   --sh:0 1px 3px rgba(0,0,0,.07),0 4px 14px rgba(0,0,0,.05);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -51,10 +52,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 
 /* KAMPDAG CARD */
 .kd{background:var(--card);border-radius:var(--r);border:1px solid var(--bd);box-shadow:var(--sh);margin-bottom:12px;overflow:hidden}
-.kd-hd{display:flex;align-items:center;gap:12px;padding:12px 18px}
+.kd-hd{display:flex;align-items:center;gap:12px;padding:12px 18px;cursor:pointer;user-select:none}
 .kd-hd.hm{background:linear-gradient(135deg,#3D6142,#2a4530)}
 .kd-hd.aw{background:linear-gradient(135deg,#1d5290,#0f3560)}
 .kd-hd.dn{background:linear-gradient(135deg,#53685a,#3a4a3f)}
+.kd-hd:hover{filter:brightness(1.05)}
 .kd-day{background:rgba(255,255,255,.15);border-radius:6px;padding:5px 8px;text-align:center;min-width:46px;flex-shrink:0}
 .kd-day-n{display:block;font-size:1.3rem;font-weight:800;color:#fff;line-height:1}
 .kd-day-m{display:block;font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.7);margin-top:1px}
@@ -65,6 +67,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 .kpill{font-size:.59rem;font-weight:700;background:rgba(255,255,255,.15);color:#fff;padding:2px 8px;border-radius:10px}
 .kpill-abs{background:rgba(184,48,37,.5)}
 .kpill-done{background:rgba(255,255,255,.25)}
+/* Score badge in header */
+.score-badge{background:rgba(255,255,255,.92);border-radius:6px;padding:4px 10px;font-size:.88rem;font-weight:800;color:var(--gd);flex-shrink:0;letter-spacing:.02em}
+.score-badge.win{background:#fff;color:var(--gd)}
+.score-badge.loss{background:rgba(255,255,255,.85);color:var(--re)}
+.score-badge.draw{background:rgba(255,255,255,.85);color:var(--or)}
+.score-hint{font-size:.58rem;color:rgba(255,255,255,.55);flex-shrink:0;align-self:center}
 
 /* INTERN */
 .intern-body{padding:15px 18px;background:var(--gl);border-top:1px solid var(--bd);display:flex;align-items:center;gap:12px}
@@ -79,8 +87,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 .tc+.tc{border-left:1px solid var(--bd2)}
 @media(max-width:560px){.tc+.tc{border-left:none;border-top:1px solid var(--bd2)}}
 .tc.solo{grid-column:1/-1}
-
-/* TEAM HEADER */
 .t-hd{display:flex;align-items:center;gap:6px;margin-bottom:7px;flex-wrap:wrap}
 .tname{font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;padding:3px 9px;border-radius:20px;flex-shrink:0}
 .tname.l1{background:var(--gl);color:var(--gd)}
@@ -94,30 +100,31 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 .t-opp{font-size:.8rem;font-weight:700;color:var(--t1);margin-bottom:3px}
 .t-venue{font-size:.68rem;color:var(--t2);margin-bottom:9px}
 
-/* CHIPS ZONE */
-.chips{display:flex;flex-wrap:wrap;gap:5px;min-height:30px;padding:4px;border-radius:var(--rs);transition:background .15s,outline .15s}
-.chips.dz-on{background:rgba(61,97,66,.08);outline:2px dashed var(--g);outline-offset:-2px}
-
-/* POOL SECTION */
-.pool-section{margin-top:12px;padding-top:10px;border-top:1px dashed var(--bd)}
-.pool-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:6px;display:flex;align-items:center;gap:5px}
-.pool-label::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--t3)}
+/* SCORER MINI-LIST in match card */
+.scorers-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--bd2)}
+.scorer-chip{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:20px;display:inline-flex;align-items:center;gap:3px}
+.scorer-goal{background:var(--gl);color:var(--gd)}
+.scorer-assist{background:var(--bll);color:var(--bl)}
 
 /* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:5px;min-height:30px;padding:4px;border-radius:var(--rs);transition:background .15s,outline .15s}
+.chips.dz-on{background:rgba(61,97,66,.08);outline:2px dashed var(--g);outline-offset:-2px}
+.pool-section{margin-top:10px;padding-top:9px;border-top:1px dashed var(--bd2)}
+.pool-label{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.pool-label::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--t3)}
 .chip{padding:5px 11px;border-radius:20px;font-size:.77rem;font-weight:600;cursor:grab;transition:transform .12s,filter .12s,box-shadow .12s,outline .12s;border:1.5px solid transparent;user-select:none;white-space:nowrap}
 .chip.ok{background:var(--gl);color:var(--gd);border-color:var(--gm)}
 .chip.abs{background:var(--rel);color:var(--re);text-decoration:line-through;border-color:#f0bfba}
 .chip.pool{background:var(--bg);color:var(--t2);border-color:var(--bd);border-style:dashed}
 .chip.cc{font-style:italic}
 .chip.dragging{opacity:.3;cursor:grabbing}
-/* SWAP TARGET: visual when another chip hovers over this one */
 .chip.swap-target{outline:2px solid var(--bl);outline-offset:2px;background:var(--bll)!important;color:var(--bl)!important;transform:scale(1.07)}
 .chip:not(.dragging):not(.swap-target):hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.12);filter:brightness(.92)}
 
-/* ACTION SHEET */
+/* OVERLAY / SHEET */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:200;align-items:flex-end;justify-content:center}
 .overlay.on{display:flex}
-.sheet{background:var(--card);border-radius:18px 18px 0 0;padding:20px 20px 36px;width:100%;max-width:480px;animation:su .2s ease}
+.sheet{background:var(--card);border-radius:18px 18px 0 0;padding:20px 20px 40px;width:100%;max-width:520px;animation:su .2s ease;max-height:90vh;overflow-y:auto}
 @keyframes su{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 .sh-hdl{width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 18px}
 .sh-name{font-size:1.05rem;font-weight:800}
@@ -129,14 +136,36 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 .sb-abs{background:var(--rel);color:var(--re)}
 .sb-prs{background:var(--gl);color:var(--gd)}
 .sb-mv{background:var(--bll);color:var(--bl)}
+.sb-res{background:var(--yel);color:var(--ye)}
 .sb-x{background:var(--bg);color:var(--t2);border:1.5px solid var(--bd)}
+
+/* RESULT SHEET */
+.result-sheet-title{font-size:1rem;font-weight:800;margin-bottom:4px}
+.result-sheet-sub{font-size:.77rem;color:var(--t2);margin-bottom:20px}
+.score-row{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.score-team{flex:1;text-align:center}
+.score-team-name{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--t2);margin-bottom:6px}
+.score-input{width:100%;font-family:inherit;font-size:2rem;font-weight:800;text-align:center;border:2px solid var(--bd);border-radius:var(--rs);padding:8px;color:var(--t1);background:var(--bg);outline:none;transition:border-color .15s}
+.score-input:focus{border-color:var(--g)}
+.score-sep{font-size:1.8rem;font-weight:800;color:var(--t3);flex-shrink:0}
+.events-section{margin-bottom:16px}
+.events-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t2);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.events-label span{font-size:.9rem}
+.player-toggle-grid{display:flex;flex-wrap:wrap;gap:6px}
+.ptoggle{padding:6px 12px;border-radius:20px;font-family:inherit;font-size:.77rem;font-weight:600;cursor:pointer;border:1.5px solid var(--bd);background:var(--bg);color:var(--t2);transition:.12s}
+.ptoggle.sel-goal{background:var(--gl);color:var(--gd);border-color:var(--gm)}
+.ptoggle.sel-assist{background:var(--bll);color:var(--bl);border-color:#b0d0f0}
+.ptoggle.cc{font-style:italic}
+.save-btn{width:100%;padding:14px;border-radius:var(--rs);background:var(--g);color:#fff;font-family:inherit;font-size:.9rem;font-weight:800;cursor:pointer;border:none;margin-top:16px;transition:.15s}
+.save-btn:hover{background:var(--gd)}
+.delete-btn{width:100%;padding:10px;border-radius:var(--rs);background:var(--bg);color:var(--re);font-family:inherit;font-size:.8rem;font-weight:700;cursor:pointer;border:1.5px solid var(--bd);margin-top:8px;transition:.15s}
 
 /* TOAST */
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--t1);color:#fff;padding:10px 20px;border-radius:var(--rs);font-size:.82rem;font-weight:600;z-index:400;opacity:0;transition:.22s;pointer-events:none;white-space:nowrap;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 .toast.on{opacity:1;transform:translateX(-50%)}
 
 /* STATS */
-.scard{background:var(--card);border-radius:var(--r);border:1px solid var(--bd);box-shadow:var(--sh);overflow:hidden}
+.scard{background:var(--card);border-radius:var(--r);border:1px solid var(--bd);box-shadow:var(--sh);overflow:hidden;margin-bottom:14px}
 .scard-hd{background:linear-gradient(135deg,var(--g),var(--gd));color:#fff;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;border-radius:var(--r) var(--r) 0 0}
 .scard-hd h2{font-size:.92rem;font-weight:800}
 .scard-sub{font-size:.72rem;opacity:.78}
@@ -160,13 +189,61 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 .flbl{font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t2)}
 .fval{font-size:.9rem;font-weight:800;color:var(--gd)}
 
+/* SCORER TABLE */
+.medal{font-size:.9rem}
+.goal-cell{display:inline-flex;align-items:center;gap:4px}
+
+/* RESULTS OVERVIEW */
+.results-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:14px}
+.res-card{background:var(--card);border-radius:var(--rs);border:1px solid var(--bd);padding:12px 14px;box-shadow:var(--sh)}
+.res-date{font-size:.65rem;font-weight:700;color:var(--t3);margin-bottom:3px}
+.res-teams{font-size:.8rem;font-weight:700;color:var(--t1);margin-bottom:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res-score{font-size:1.3rem;font-weight:800}
+.res-score.win{color:var(--gd)}
+.res-score.loss{color:var(--re)}
+.res-score.draw{color:var(--or)}
+
 /* LOADER */
 .loader{text-align:center;padding:56px 20px;color:var(--t2);font-size:.9rem}
 .spin{width:30px;height:30px;border:3px solid var(--bd);border-top-color:var(--g);border-radius:50%;animation:rot .7s linear infinite;margin:0 auto 12px}
 @keyframes rot{to{transform:rotate(360deg)}}
+
+/* ── PASSWORD SCREEN ── */
+.pw-screen{position:fixed;inset:0;background:linear-gradient(135deg,var(--gd),#1a2e1e);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.pw-box{background:var(--card);border-radius:16px;padding:32px 28px;width:100%;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.35);text-align:center}
+.pw-logo{font-size:2.4rem;margin-bottom:12px}
+.pw-title{font-size:1.1rem;font-weight:800;color:var(--t1);margin-bottom:4px}
+.pw-sub{font-size:.78rem;color:var(--t2);margin-bottom:24px}
+.pw-input{width:100%;padding:13px 16px;border-radius:var(--rs);border:2px solid var(--bd);font-family:inherit;font-size:1.2rem;text-align:center;letter-spacing:.3em;color:var(--t1);background:var(--bg);outline:none;transition:border-color .15s;margin-bottom:12px}
+.pw-input:focus{border-color:var(--g)}
+.pw-btn{width:100%;padding:13px;border-radius:var(--rs);background:var(--g);color:#fff;font-family:inherit;font-size:.9rem;font-weight:800;cursor:pointer;border:none;transition:.15s}
+.pw-btn:hover{background:var(--gd)}
+.pw-error{font-size:.78rem;color:var(--re);margin-top:10px;height:18px}
+
+/* ── LIVE INDICATOR ── */
+.live-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;margin-left:10px;flex-shrink:0;box-shadow:0 0 0 0 rgba(74,222,128,.6);animation:livepulse 2.5s infinite}
+.live-dot.off{background:#9ca3af;animation:none;box-shadow:none}
+@keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 6px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.sync-flash{animation:flash .4s ease}
+@keyframes flash{0%{opacity:.4}100%{opacity:1}}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
+
+
+<div class="pw-screen" id="pw-screen">
+  <div class="pw-box">
+    <div class="pw-logo">⚽</div>
+    <div class="pw-title">Sørlia/Egge J11</div>
+    <div class="pw-sub">Sesongplan 2026 · Trenere</div>
+    <input class="pw-input" id="pw-input" type="password" placeholder="••••••"
+      maxlength="10" autocomplete="off"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="pw-btn" onclick="checkPw()">Logg inn</button>
+    <div class="pw-error" id="pw-error"></div>
+  </div>
+</div>
 
 <nav class="nav">
   <div class="nav-brand"><span>⚽ Sørlia/Egge J11</span></div>
@@ -174,11 +251,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
     <div class="ntab on" data-pg="plan">Kampplan</div>
     <div class="ntab" data-pg="stat">Statistikk</div>
   </div>
-  <div class="nav-end"><span class="sbadge">2026</span></div>
+  <div class="nav-end"><span class="sbadge">2026</span><div class="live-dot off" id="live-dot" title="Live-tilkobling"></div></div>
 </nav>
 
 <div id="toast" class="toast"></div>
 
+<!-- PLAYER ACTION OVERLAY -->
 <div class="overlay" id="overlay" onclick="closeSheet(event)">
   <div class="sheet">
     <div class="sh-hdl"></div>
@@ -188,6 +266,44 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
   </div>
 </div>
 
+<!-- RESULT OVERLAY -->
+<div class="overlay" id="res-overlay" onclick="closeResult(event)">
+  <div class="sheet" id="res-sheet">
+    <div class="sh-hdl"></div>
+    <div class="result-sheet-title" id="res-title"></div>
+    <div class="result-sheet-sub" id="res-sub"></div>
+
+    <!-- SCORE INPUT -->
+    <div class="score-row">
+      <div class="score-team">
+        <div class="score-team-name" id="res-our-name"></div>
+        <input class="score-input" id="res-our" type="number" min="0" max="99" value="0">
+      </div>
+      <div class="score-sep">–</div>
+      <div class="score-team">
+        <div class="score-team-name" id="res-opp-name"></div>
+        <input class="score-input" id="res-opp" type="number" min="0" max="99" value="0">
+      </div>
+    </div>
+
+    <!-- SCORERS -->
+    <div class="events-section">
+      <div class="events-label"><span>⚽</span> Målscorere (velg alle)</div>
+      <div class="player-toggle-grid" id="goal-toggles"></div>
+    </div>
+
+    <!-- ASSISTS -->
+    <div class="events-section">
+      <div class="events-label"><span>🎯</span> Målgivende pasning</div>
+      <div class="player-toggle-grid" id="assist-toggles"></div>
+    </div>
+
+    <button class="save-btn" onclick="saveResult()">Lagre resultat</button>
+    <button class="delete-btn" id="del-btn" onclick="deleteResult()" style="display:none">Slett resultat</button>
+  </div>
+</div>
+
+<!-- KAMPPLAN SCREEN -->
 <div class="screen on" id="pg-plan">
   <div id="banner"></div>
   <div class="filters">
@@ -199,6 +315,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
   <div id="plan-list"><div class="loader"><div class="spin"></div>Laster kampplan…</div></div>
 </div>
 
+<!-- STATISTIKK SCREEN -->
 <div class="screen" id="pg-stat">
   <div id="stat-body"><div class="loader"><div class="spin"></div>Beregner…</div></div>
 </div>
@@ -206,568 +323,705 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--t1);min-he
 <script>
 'use strict';
 
-// ── CONFIG ───────────────────────────────────────────────────────────────
 const SB  = 'https://jxteosjxgrblasksfeyu.supabase.co';
 const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4dGVvc2p4Z3JibGFza3NmZXl1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkxOTE1ODMsImV4cCI6MjA4NDc2NzU4M30.4VhLfxcX0PCkUeK9aYrTrfmTwESH9zOyx4sY61lIZ9w';
 
 async function api(path, opts = {}) {
   const r = await fetch(SB + '/rest/v1/' + path, {
-    headers: {
-      'apikey': KEY, 'Authorization': 'Bearer ' + KEY,
-      'Content-Type': 'application/json', 'Prefer': 'return=minimal',
-      ...(opts.headers || {})
-    },
+    headers: { 'apikey': KEY, 'Authorization': 'Bearer ' + KEY,
+      'Content-Type': 'application/json', 'Prefer': 'return=minimal', ...(opts.headers || {}) },
     ...opts
   });
   if (!r.ok) { console.error('API', r.status, path, await r.text()); return null; }
-  const t = await r.text();
-  return t ? JSON.parse(t) : null;
+  const t = await r.text(); return t ? JSON.parse(t) : null;
 }
 
-// ── STATE ─────────────────────────────────────────────────────────────────
-let P = [], M = [], A = [];
-let filter = 'alle', shCtx = null;
-// Drag state — 0 means "from pool" (unassigned player)
-let dragPid = null, dragMid = null, dragDate = null;
-let dzCounters = {};
+// ── STATE ──────────────────────────────────────────────────────────────────
+let P=[], M=[], A=[], Results=[], Events=[];
+let filter='alle', shCtx=null, resCtx=null;
+let dragPid=null, dragMid=null, dragDate=null, dzCounters={};
 
-// ── BOOT ──────────────────────────────────────────────────────────────────
+// ── INIT ───────────────────────────────────────────────────────────────────
 async function init() {
-  [P, M, A] = await Promise.all([
+  [P, M, A, Results, Events] = await Promise.all([
     api('j11_players?select=*&order=name'),
     api('j11_matches?select=*&order=id'),
     api('j11_assignments?select=*'),
+    api('j11_results?select=*'),
+    api('j11_events?select=*'),
   ]);
-  if (!P || !M || !A) {
-    document.getElementById('plan-list').innerHTML =
-      '<div class="loader" style="color:var(--re)">Feil ved lasting. Sjekk tilkobling.</div>';
+  if (!P||!M||!A) {
+    document.getElementById('plan-list').innerHTML='<div class="loader" style="color:var(--re)">Feil ved lasting.</div>';
     return;
   }
+  Results = Results || []; Events = Events || [];
   render();
+  startRealtime();
 }
 
-// ── HELPERS ───────────────────────────────────────────────────────────────
-const pById  = id => P.find(p => p.id === id);
-const mById  = id => M.find(m => m.id === id);
-const dateKey = s  => { const [d, mo] = s.split('.'); return +mo * 100 + +d; };
-
-const isPlayed = s => {
-  const [d, mo] = s.split('.');
-  const match = new Date(2026, +mo - 1, +d);
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  return match < today;
-};
-
+// ── HELPERS ────────────────────────────────────────────────────────────────
+const pById  = id => P.find(p=>p.id===id);
+const mById  = id => M.find(m=>m.id===id);
+const dateKey = s  => { const [d,mo]=s.split('.'); return +mo*100 + +d; };
+const isPlayed = s => { const [d,mo]=s.split('.'); const dt=new Date(2026,+mo-1,+d),t=new Date(); t.setHours(0,0,0,0); return dt<t; };
 const MO   = ['jan','feb','mar','apr','mai','jun','jul','aug','sep','okt','nov','des'];
-const DAYS = { man:'Man', tir:'Tir', ons:'Ons', tor:'Tor', fre:'Fre', lør:'Lør', søn:'Søn' };
-const fDate  = s  => { const [d, mo] = s.split('.'); return `${+d}. ${MO[+mo - 1]}`; };
-const meetup = ko => {
-  const [h, m] = ko.split(':').map(Number);
-  const t = h * 60 + m - 30;
-  return `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(t % 60).padStart(2, '0')}`;
-};
+const DAYS = {man:'Man',tir:'Tir',ons:'Ons',tor:'Tor',fre:'Fre',lør:'Lør',søn:'Søn'};
+const fDate  = s  => { const [d,mo]=s.split('.'); return `${+d}. ${MO[+mo-1]}`; };
+const meetup = ko => { const [h,m]=ko.split(':').map(Number),t=h*60+m-30; return `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`; };
+const resultOf = matchId => Results.find(r=>r.match_id===matchId);
+const eventsOf = (matchId, type) => Events.filter(e=>e.match_id===matchId && e.event_type===type);
 
-// Players assigned to a specific match (with absent flag)
 function psOf(matchId) {
-  return A.filter(a => a.match_id === matchId)
-    .map(a => ({ ...pById(a.player_id), absent: a.is_absent }))
-    .filter(Boolean)
-    .sort((a, b) => a.name.localeCompare(b.name, 'no'));
+  return A.filter(a=>a.match_id===matchId)
+    .map(a=>({...pById(a.player_id),absent:a.is_absent})).filter(Boolean)
+    .sort((a,b)=>a.name.localeCompare(b.name,'no'));
 }
-
-// Players NOT assigned to any match on this date (pool)
 function poolOf(date) {
-  const assigned = new Set(
-    M.filter(m => m.date === date)
-     .flatMap(m => A.filter(a => a.match_id === m.id).map(a => a.player_id))
-  );
-  return P.filter(p => !assigned.has(p.id)).sort((a, b) => a.name.localeCompare(b.name, 'no'));
+  const assigned=new Set(M.filter(m=>m.date===date).flatMap(m=>A.filter(a=>a.match_id===m.id).map(a=>a.player_id)));
+  return P.filter(p=>!assigned.has(p.id)).sort((a,b)=>a.name.localeCompare(b.name,'no'));
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────
+// ── RENDER ─────────────────────────────────────────────────────────────────
 function render() { renderBanner(); renderFilterCounts(); renderPlan(); renderStats(); }
 
-// ── BANNER ────────────────────────────────────────────────────────────────
+// ── BANNER ─────────────────────────────────────────────────────────────────
 function renderBanner() {
-  const el  = document.getElementById('banner');
-  const next = [...M].filter(m => !isPlayed(m.date)).sort((a, b) => dateKey(a.date) - dateKey(b.date))[0];
-  if (!next) { el.innerHTML = ''; return; }
-  const day    = M.filter(m => m.date === next.date);
-  const opps   = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ') || 'Intern kamp';
-  const venues = [...new Set(day.map(m => m.venue))];
-  const nAbs   = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
-  el.innerHTML = `<div class="nxt">
-    <div class="nxt-ico">📅</div>
-    <div>
-      <div class="nxt-lbl">Neste kamp</div>
-      <div class="nxt-date">${DAYS[next.weekday] || next.weekday} ${fDate(next.date)} · Avspark ${next.kickoff} · Oppmøte ${meetup(next.kickoff)}</div>
-      <div class="nxt-detail">vs ${opps}<br>${venues.join(' / ')}</div>
-      ${nAbs ? `<div class="nxt-alert">⚠ ${nAbs} forfall meldt</div>` : ''}
-    </div>
-  </div>`;
+  const el=document.getElementById('banner');
+  const next=[...M].filter(m=>!isPlayed(m.date)).sort((a,b)=>dateKey(a.date)-dateKey(b.date))[0];
+  if (!next){el.innerHTML='';return;}
+  const day=M.filter(m=>m.date===next.date);
+  const opps=[...new Set(day.map(m=>m.opponent).filter(x=>x!=='Intern kamp'))].join(' + ')||'Intern kamp';
+  const venues=[...new Set(day.map(m=>m.venue))];
+  const nAbs=day.flatMap(m=>psOf(m.id).filter(p=>p.absent)).length;
+  el.innerHTML=`<div class="nxt"><div class="nxt-ico">📅</div><div>
+    <div class="nxt-lbl">Neste kamp</div>
+    <div class="nxt-date">${DAYS[next.weekday]||next.weekday} ${fDate(next.date)} · Avspark ${next.kickoff} · Oppmøte ${meetup(next.kickoff)}</div>
+    <div class="nxt-detail">vs ${opps}<br>${venues.join(' / ')}</div>
+    ${nAbs?`<div class="nxt-alert">⚠ ${nAbs} forfall meldt</div>`:''}
+  </div></div>`;
 }
 
-// ── FILTER COUNTS ─────────────────────────────────────────────────────────
+// ── FILTER COUNTS ──────────────────────────────────────────────────────────
 function renderFilterCounts() {
-  const cnt = { alle: 0, kommende: 0, spilt: 0, forfall: 0 };
-  for (const date of [...new Set(M.map(m => m.date))]) {
-    const day = M.filter(m => m.date === date);
+  const cnt={alle:0,kommende:0,spilt:0,forfall:0};
+  for (const date of [...new Set(M.map(m=>m.date))]) {
     cnt.alle++;
-    if (!isPlayed(date)) cnt.kommende++;
-    else cnt.spilt++;
-    if (day.some(m => psOf(m.id).some(p => p.absent))) cnt.forfall++;
+    if (!isPlayed(date)) cnt.kommende++; else cnt.spilt++;
+    if (M.filter(m=>m.date===date).some(m=>psOf(m.id).some(p=>p.absent))) cnt.forfall++;
   }
-  for (const [k, v] of Object.entries(cnt)) {
-    const el = document.getElementById('cnt-' + k);
-    if (el) el.textContent = v;
-  }
+  for (const [k,v] of Object.entries(cnt)){const el=document.getElementById('cnt-'+k);if(el)el.textContent=v;}
 }
 
-// ── PLAN ──────────────────────────────────────────────────────────────────
+// ── PLAN ───────────────────────────────────────────────────────────────────
 function renderPlan() {
-  dzCounters = {};
-  const el = document.getElementById('plan-list');
-  const byDate = {};
-  for (const m of M) { if (!byDate[m.date]) byDate[m.date] = []; byDate[m.date].push(m); }
-  const sortedDates = Object.keys(byDate).sort((a, b) => dateKey(a) - dateKey(b));
-
-  let html = '';
+  dzCounters={};
+  const el=document.getElementById('plan-list');
+  const byDate={};
+  for (const m of M){if(!byDate[m.date])byDate[m.date]=[];byDate[m.date].push(m);}
+  const sortedDates=Object.keys(byDate).sort((a,b)=>dateKey(a)-dateKey(b));
+  let html='';
   for (const date of sortedDates) {
-    const day = byDate[date], done = isPlayed(date);
-    const nAbs = day.flatMap(m => psOf(m.id).filter(p => p.absent)).length;
-    if (filter === 'kommende' && done) continue;
-    if (filter === 'spilt'    && !done) continue;
-    if (filter === 'forfall'  && !nAbs) continue;
+    const day=byDate[date],done=isPlayed(date);
+    const nAbs=day.flatMap(m=>psOf(m.id).filter(p=>p.absent)).length;
+    if (filter==='kommende'&&done) continue;
+    if (filter==='spilt'&&!done) continue;
+    if (filter==='forfall'&&!nAbs) continue;
+    const isHome=day.some(m=>m.ha==='H'),allIntern=day.every(m=>m.is_intern);
+    const opps=[...new Set(day.map(m=>m.opponent).filter(x=>x!=='Intern kamp'))].join(' + ');
+    const venues=[...new Set(day.map(m=>m.venue))].join(' / ');
+    const hc=done?'dn':isHome?'hm':'aw';
+    const [dn,dm]=date.split('.');
+    const ko=day[0].kickoff;
 
-    const isHome    = day.some(m => m.ha === 'H');
-    const allIntern = day.every(m => m.is_intern);
-    const opps      = [...new Set(day.map(m => m.opponent).filter(x => x !== 'Intern kamp'))].join(' + ');
-    const venues    = [...new Set(day.map(m => m.venue))].join(' / ');
-    const hc        = done ? 'dn' : isHome ? 'hm' : 'aw';
-    const [dn, dm]  = date.split('.');
-    const ko        = day[0].kickoff;
+    // Build score display for played matches
+    let scorePart='';
+    if (done && !allIntern) {
+      const dayResults = day.filter(m=>!m.is_intern).map(m=>resultOf(m.id)).filter(Boolean);
+      if (dayResults.length>0) {
+        // Show combined goals if multiple matches; show individual if only one
+        if (day.filter(m=>!m.is_intern).length===1) {
+          const res=dayResults[0]; const m=mById(res.match_id);
+          const diff=res.our_goals-res.opp_goals;
+          const cls=diff>0?'win':diff<0?'loss':'draw';
+          scorePart=`<span class="score-badge ${cls}">${res.our_goals} – ${res.opp_goals}</span>`;
+        } else {
+          scorePart=`<span class="score-badge">${dayResults.map(r=>`${r.our_goals}–${r.opp_goals}`).join(' / ')}</span>`;
+        }
+      } else {
+        scorePart=`<span class="score-hint">Trykk for å legge inn resultat</span>`;
+      }
+    }
 
-    html += `<div class="kd">
-      <div class="kd-hd ${hc}">
-        <div class="kd-day">
-          <span class="kd-day-n">${+dn}</span>
-          <span class="kd-day-m">${MO[+dm - 1]}</span>
+    html+=`<div class="kd"><div class="kd-hd ${hc}" onclick="headerClick('${date}')">
+      <div class="kd-day"><span class="kd-day-n">${+dn}</span><span class="kd-day-m">${MO[+dm-1]}</span></div>
+      <div class="kd-mid">
+        <div class="kd-opp">${allIntern?'🔄 Intern kamp':'vs '+opps}</div>
+        <div class="kd-venue">${venues}</div>
+        <div class="kd-pills">
+          <span class="kpill">${DAYS[day[0].weekday]||day[0].weekday} · ${ko} (Oppmøte ${meetup(ko)})</span>
+          ${done?'<span class="kpill kpill-done">✓ Spilt</span>':''}
+          ${nAbs?`<span class="kpill kpill-abs">⚠ ${nAbs} forfall</span>`:''}
         </div>
-        <div class="kd-mid">
-          <div class="kd-opp">${allIntern ? '🔄 Intern kamp' : 'vs ' + opps}</div>
-          <div class="kd-venue">${venues}</div>
-          <div class="kd-pills">
-            <span class="kpill">${DAYS[day[0].weekday] || day[0].weekday} · ${ko} (Oppmøte ${meetup(ko)})</span>
-            ${done ? '<span class="kpill kpill-done">✓ Spilt</span>' : ''}
-            ${nAbs ? `<span class="kpill kpill-abs">⚠ ${nAbs} forfall</span>` : ''}
-          </div>
-        </div>
-      </div>`;
+      </div>
+      ${scorePart}
+    </div>`;
 
     if (allIntern) {
-      html += `<div class="intern-body">
-        <div class="intern-ico">👥</div>
-        <div>
-          <div class="intern-txt">Tropp settes opp på kampdagen</div>
-          <div class="intern-sub">Begge lag møtes — fordeling avtales på stedet</div>
-        </div>
-      </div>`;
+      html+=`<div class="intern-body"><div class="intern-ico">👥</div><div>
+        <div class="intern-txt">Tropp settes opp på kampdagen</div>
+        <div class="intern-sub">Begge lag møtes — fordeling avtales på stedet</div>
+      </div></div>`;
     } else {
-      const solo = day.length === 1;
-      const pool = poolOf(date);   // unassigned players this date
-
-      html += `<div class="kd-body">`;
+      html+=`<div class="kd-body">`;
+      const pool=poolOf(date),solo=day.length===1;
       for (const m of day) {
-        const ps = psOf(m.id);
-        const nA = ps.filter(p => p.absent).length;
-        const nOk = ps.length - nA;
-        const lc  = m.lag === 'L1' ? 'l1' : 'l2';
-        const ln  = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
-        const ha  = m.ha === 'H' ? 'Hjemme' : m.km ? `Borte · ${m.km} km` : 'Borte';
-        const jbCls = m.jersey === 'rød' ? 'jbadge-rod' : 'jbadge-oransje';
-        const jLabel = m.jersey === 'rød' ? '🔴 Rød' : '🟠 Oransje';
-
-        html += `<div class="tc${solo ? ' solo' : ''}">
+        const ps=psOf(m.id),nA=ps.filter(p=>p.absent).length,nOk=ps.length-nA;
+        const lc=m.lag==='L1'?'l1':'l2',ln=m.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2';
+        const ha=m.ha==='H'?'Hjemme':m.km?`Borte · ${m.km} km`:'Borte';
+        const jbCls=m.jersey==='rød'?'jbadge-rod':'jbadge-oransje';
+        const jLabel=m.jersey==='rød'?'🔴 Rød':'🟠 Oransje';
+        // Goal/assist summary for this team
+        const goals=eventsOf(m.id,'goal'),assists=eventsOf(m.id,'assist');
+        let scorersHtml='';
+        if (goals.length||assists.length) {
+          scorersHtml=`<div class="scorers-row">`;
+          for (const e of goals) {
+            const pn=pById(e.player_id)?.name||'?';
+            scorersHtml+=`<span class="scorer-chip scorer-goal">⚽ ${pn}</span>`;
+          }
+          for (const e of assists) {
+            const pn=pById(e.player_id)?.name||'?';
+            scorersHtml+=`<span class="scorer-chip scorer-assist">🎯 ${pn}</span>`;
+          }
+          scorersHtml+=`</div>`;
+        }
+        html+=`<div class="tc${solo?' solo':''}" data-mid="${m.id}" data-date="${date}">
           <div class="t-hd">
             <span class="tname ${lc}">${ln}</span>
             <span class="tha">${ha}</span>
             <span class="jbadge ${jbCls}">${jLabel}</span>
-            <span class="t-cnt${nA ? ' t-cnt-abs' : ''}">
-              ${nA ? `${nOk} av ${ps.length} (${nA} borte)` : `${ps.length} spillere`}
+            <span class="t-cnt${nA?' t-cnt-abs':''}">
+              ${nA?`${nOk} av ${ps.length} (${nA} borte)`:`${ps.length} spillere`}
             </span>
           </div>
           <div class="t-opp">vs ${m.opponent}</div>
           <div class="t-venue">${m.venue}</div>
           <div class="chips" data-mid="${m.id}" data-date="${date}"
-            ondragover="zoneOver(event)"
-            ondragenter="zoneEnter(event)"
-            ondragleave="zoneLeave(event)"
-            ondrop="zoneDrop(event)">`;
-
+            ondragover="zoneOver(event)" ondragenter="zoneEnter(event)"
+            ondragleave="zoneLeave(event)" ondrop="zoneDrop(event)">`;
         for (const p of ps) {
-          const cls = ['chip', p.absent ? 'abs' : 'ok', p.is_coach_kid ? 'cc' : ''].filter(Boolean).join(' ');
-          html += `<span class="${cls}" draggable="true"
-            data-pid="${p.id}" data-mid="${m.id}" data-date="${date}"
-            ondragstart="chipStart(event)"
-            ondragend="chipEnd(event)"
-            ondragover="chipOver(event)"
-            ondragleave="chipLeave(event)"
-            ondrop="chipDrop(event)"
+          const cls=['chip',p.absent?'abs':'ok',p.is_coach_kid?'cc':''].filter(Boolean).join(' ');
+          html+=`<span class="${cls}" draggable="true" data-pid="${p.id}" data-mid="${m.id}" data-date="${date}"
+            ondragstart="chipStart(event)" ondragend="chipEnd(event)"
+            ondragover="chipOver(event)" ondragleave="chipLeave(event)" ondrop="chipDrop(event)"
             onclick="openSheet(${p.id},${m.id})">${p.name}</span>`;
         }
-        html += `</div>`;
-
-        // Pool section: show for solo days OR any day where pool is non-empty
-        if (pool.length > 0) {
-          html += `<div class="pool-section">
-            <div class="pool-label">Tilgjengelige (dra inn)</div>
+        html+=`</div>${scorersHtml}`;
+        if (pool.length>0) {
+          html+=`<div class="pool-section"><div class="pool-label">Tilgjengelige (dra inn)</div>
             <div class="chips" data-mid="${m.id}" data-date="${date}"
-              ondragover="zoneOver(event)"
-              ondragenter="zoneEnter(event)"
-              ondragleave="zoneLeave(event)"
-              ondrop="zoneDrop(event)">`;
+              ondragover="zoneOver(event)" ondragenter="zoneEnter(event)"
+              ondragleave="zoneLeave(event)" ondrop="zoneDrop(event)">`;
           for (const p of pool) {
-            html += `<span class="chip pool" draggable="true"
-              data-pid="${p.id}" data-mid="0" data-date="${date}"
-              ondragstart="chipStart(event)"
-              ondragend="chipEnd(event)"
-              ondragover="chipOver(event)"
-              ondragleave="chipLeave(event)"
-              ondrop="chipDrop(event)"
+            html+=`<span class="chip pool" draggable="true" data-pid="${p.id}" data-mid="0" data-date="${date}"
+              ondragstart="chipStart(event)" ondragend="chipEnd(event)"
+              ondragover="chipOver(event)" ondragleave="chipLeave(event)" ondrop="chipDrop(event)"
               onclick="openSheetPool(${p.id},${m.id})">${p.name}</span>`;
           }
-          html += `</div></div>`;
+          html+=`</div></div>`;
         }
-
-        html += `</div>`;
+        html+=`</div>`;
       }
-      html += `</div>`;
+      html+=`</div>`;
     }
-    html += `</div>`;
+    html+=`</div>`;
   }
-  el.innerHTML = html || '<div class="loader">Ingen kamper å vise</div>';
+  el.innerHTML=html||'<div class="loader">Ingen kamper å vise</div>';
 }
 
-// ── STATS ─────────────────────────────────────────────────────────────────
+// ── STATS ──────────────────────────────────────────────────────────────────
 function renderStats() {
-  const stats = {};
-  for (const p of P)
-    stats[p.id] = { name: p.name, cc: p.is_coach_kid, played: 0, km: 0, h: 0, b: 0, r: 0, o: 0, abs: 0 };
+  // km + appearances
+  const stats={};
+  for (const p of P) stats[p.id]={name:p.name,cc:p.is_coach_kid,played:0,km:0,h:0,b:0,r:0,o:0,abs:0,goals:0,assists:0};
   for (const a of A) {
-    const m = mById(a.match_id), s = stats[a.player_id];
-    if (!m || !s) continue;
-    s.km += m.km || 0;   // planlagt km — teller alltid, uavhengig av forfall
-    if (a.is_absent) { s.abs++; continue; }
-    s.played++;
-    m.ha === 'H' ? s.h++ : s.b++;
-    m.jersey === 'rød' ? s.r++ : s.o++;
+    const m=mById(a.match_id),s=stats[a.player_id];
+    if (!m||!s) continue;
+    s.km+=m.km||0;
+    if (a.is_absent){s.abs++;continue;}
+    s.played++;m.ha==='H'?s.h++:s.b++;m.jersey==='rød'?s.r++:s.o++;
   }
-  const rows = Object.values(stats).sort((a, b) => a.km - b.km);
-  const maxKm = Math.max(...rows.map(r => r.km), 1);
-  const avg   = Math.round(rows.reduce((s, r) => s + r.km, 0) / rows.length);
-  const minKm = Math.min(...rows.map(r => r.km));
-  const maxKmVal = Math.max(...rows.map(r => r.km));
+  for (const e of Events) {
+    const s=stats[e.player_id]; if (!s) continue;
+    if (e.event_type==='goal') s.goals++; else s.assists++;
+  }
 
-  document.getElementById('stat-body').innerHTML = `<div class="scard">
-    <div class="scard-hd">
-      <h2>Sesongstatistikk — planlagt reise</h2>
-      <span class="scard-sub">Snitt: ${avg} km · Spread: ${maxKmVal - minKm} km</span>
-    </div>
+  const rows=Object.values(stats);
+  const kmRows=[...rows].sort((a,b)=>a.km-b.km);
+  const scorerRows=[...rows].filter(r=>r.goals>0||r.assists>0).sort((a,b)=>b.goals-a.goals||b.assists-a.assists);
+  const maxKm=Math.max(...rows.map(r=>r.km),1);
+  const avg=Math.round(rows.reduce((s,r)=>s+r.km,0)/rows.length);
+  const minKm=Math.min(...rows.map(r=>r.km));
+  const maxKmVal=Math.max(...rows.map(r=>r.km));
+
+  // Count wins/draws/losses
+  const w=Results.filter(r=>r.our_goals>r.opp_goals).length;
+  const d=Results.filter(r=>r.our_goals===r.opp_goals).length;
+  const l=Results.filter(r=>r.our_goals<r.opp_goals).length;
+  const gf=Results.reduce((s,r)=>s+r.our_goals,0);
+  const ga=Results.reduce((s,r)=>s+r.opp_goals,0);
+
+  let html='';
+
+  // Season summary card
+  if (Results.length>0) {
+    html+=`<div class="scard" style="margin-bottom:14px">
+      <div class="scard-hd"><h2>Sesongoversikt</h2><span class="scard-sub">${Results.length} kamper med resultat</span></div>
+      <div class="scard-foot" style="background:var(--card)">
+        <div class="fstat"><span class="flbl">Seier</span><span class="fval" style="color:var(--g)">${w}</span></div>
+        <div class="fstat"><span class="flbl">Uavgjort</span><span class="fval" style="color:var(--or)">${d}</span></div>
+        <div class="fstat"><span class="flbl">Tap</span><span class="fval" style="color:var(--re)">${l}</span></div>
+        <div class="fstat"><span class="flbl">Mål for</span><span class="fval">${gf}</span></div>
+        <div class="fstat"><span class="flbl">Mål mot</span><span class="fval">${ga}</span></div>
+      </div>
+    </div>`;
+  }
+
+  // Scorer table
+  if (scorerRows.length>0) {
+    html+=`<div class="scard">
+      <div class="scard-hd"><h2>⚽ Toppscorere og assist-liga</h2></div>
+      <div class="scard-body"><table class="stats-tbl">
+        <thead><tr><th>#</th><th>Spiller</th><th>Mål</th><th>Målgivende</th><th>Total</th></tr></thead>
+        <tbody>${scorerRows.map((r,i)=>{
+          const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+          return `<tr class="${r.cc?'cc-row':''}">
+            <td>${medal||i+1}</td>
+            <td><b>${r.name}</b>${r.cc?'<span style="font-size:.58rem;color:var(--t3);margin-left:4px">CC</span>':''}</td>
+            <td><span class="spill sp-g nfont">${r.goals}</span></td>
+            <td><span class="spill sp-b nfont">${r.assists}</span></td>
+            <td class="nfont">${r.goals+r.assists}</td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table></div>
+    </div>`;
+  }
+
+  // Km table
+  html+=`<div class="scard">
+    <div class="scard-hd"><h2>Sesongstatistikk — planlagt reise</h2><span class="scard-sub">Snitt: ${avg} km · Spread: ${maxKmVal-minKm} km</span></div>
     <div class="scard-body"><table class="stats-tbl">
-      <thead><tr>
-        <th>Spiller</th><th>Spilt</th><th>Planlagt km ↑</th><th>Hjemme / Borte</th><th>Drakt</th><th>Forfall</th>
-      </tr></thead>
-      <tbody>${rows.map(r => {
-        const bw = Math.round(r.km / maxKm * 64);
-        const c  = r.km > avg * 1.18 ? 'var(--re)' : r.km < avg * 0.82 ? 'var(--bl)' : 'var(--g)';
-        return `<tr class="${r.cc ? 'cc-row' : ''}">
-          <td><b>${r.name}</b>${r.cc ? '<span style="font-size:.58rem;color:var(--t3);margin-left:5px">CC</span>' : ''}</td>
+      <thead><tr><th>Spiller</th><th>Spilt</th><th>Planlagt km</th><th>Hjemme / Borte</th><th>Drakt</th><th>Forfall</th></tr></thead>
+      <tbody>${kmRows.map(r=>{
+        const bw=Math.round(r.km/maxKm*64);
+        const c=r.km>avg*1.18?'var(--re)':r.km<avg*0.82?'var(--bl)':'var(--g)';
+        return `<tr class="${r.cc?'cc-row':''}">
+          <td><b>${r.name}</b>${r.cc?'<span style="font-size:.58rem;color:var(--t3);margin-left:5px">CC</span>':''}</td>
           <td class="nfont">${r.played}</td>
-          <td><div class="km-cell"><div class="km-bar" style="width:${bw}px;background:${c}"></div>
-            <span class="nfont" style="color:${c}">${r.km}</span></div></td>
+          <td><div class="km-cell"><div class="km-bar" style="width:${bw}px;background:${c}"></div><span class="nfont" style="color:${c}">${r.km}</span></div></td>
           <td><span class="spill sp-g">${r.h}H</span> <span class="spill sp-b">${r.b}B</span></td>
           <td><span class="spill sp-r">${r.r}</span> <span class="spill sp-o">${r.o}</span></td>
-          <td>${r.abs ? `<b style="color:var(--re)">${r.abs}</b>` : '—'}</td>
+          <td>${r.abs?`<b style="color:var(--re)">${r.abs}</b>`:'—'}</td>
         </tr>`;
       }).join('')}</tbody>
     </table></div>
     <div class="scard-foot">
-      <div class="fstat"><span class="flbl">Km-spread</span><span class="fval">${maxKmVal - minKm} km</span></div>
+      <div class="fstat"><span class="flbl">Km-spread</span><span class="fval">${maxKmVal-minKm} km</span></div>
       <div class="fstat"><span class="flbl">Minimum</span><span class="fval">${minKm} km</span></div>
       <div class="fstat"><span class="flbl">Maksimum</span><span class="fval">${maxKmVal} km</span></div>
       <div class="fstat"><span class="flbl">Snitt</span><span class="fval">${avg} km</span></div>
     </div>
   </div>`;
+
+  document.getElementById('stat-body').innerHTML=html;
 }
 
-// ── DRAG: CHIP EVENTS ─────────────────────────────────────────────────────
-function chipStart(e) {
-  dragPid  = +e.currentTarget.dataset.pid;
-  dragMid  = +e.currentTarget.dataset.mid;   // 0 = pool/unassigned
-  dragDate = e.currentTarget.dataset.date;
-  e.currentTarget.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
-  e.dataTransfer.setData('text/plain', String(dragPid));
-}
-function chipEnd(e) {
-  e.currentTarget.classList.remove('dragging');
-}
-
-// Hovering OVER an existing chip — show swap indicator if valid target
-function chipOver(e) {
-  e.preventDefault();
-  e.stopPropagation();   // don't trigger zoneOver
-  const t = e.currentTarget;
-  const tDate = t.dataset.date;
-  const tMid  = +t.dataset.mid;
-  // Valid swap: same date, different match, drag source is not pool (dragMid > 0)
-  // OR pool drag onto chip: valid add-and-remove
-  if (tDate === dragDate && tMid !== dragMid) {
-    e.dataTransfer.dropEffect = 'move';
-    t.classList.add('swap-target');
+// ── RESULT SHEET ───────────────────────────────────────────────────────────
+// Called when user taps the match card header
+function headerClick(date) {
+  const day = M.filter(m=>m.date===date && !m.is_intern);
+  if (!day.length) return;
+  // If multiple teams same day, pick the one not yet resulting, or first
+  // For simplicity open the first non-intern match on this day
+  // (two-team days: we handle per-team separately via multiple opens — for now open first)
+  // Actually: open a combined sheet for the day
+  if (!isPlayed(date)) {
+    toast('Kampen er ikke spilt ennå');
+    return;
   }
-}
-function chipLeave(e) {
-  e.currentTarget.classList.remove('swap-target');
-}
-
-// DROP onto a chip — performs SWAP or ADD-AND-REMOVE
-async function chipDrop(e) {
-  e.preventDefault();
-  e.stopPropagation();   // prevent zoneDrop from also firing
-  const t       = e.currentTarget;
-  t.classList.remove('swap-target');
-  const tPid    = +t.dataset.pid;
-  const tMid    = +t.dataset.mid;
-  const tDate   = t.dataset.date;
-
-  if (!dragPid || dragPid === tPid) return;
-  if (tDate !== dragDate) { toast('Kan bare flytte innen samme kampdag'); return; }
-  if (tMid === dragMid) return;  // same team — no-op
-
-  if (dragMid === 0) {
-    // Pool → chip: INSERT pool player, REMOVE chip player (pool player takes chip's spot)
-    await api(`j11_assignments?match_id=eq.${tMid}&player_id=eq.${tPid}`, { method: 'DELETE' });
-    await api('j11_assignments', {
-      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
-      body: JSON.stringify({ match_id: tMid, player_id: dragPid, is_absent: false })
-    });
-    // Update local state
-    const idx = A.findIndex(a => a.match_id === tMid && a.player_id === tPid);
-    if (idx > -1) A.splice(idx, 1);
-    if (!A.find(a => a.match_id === tMid && a.player_id === dragPid))
-      A.push({ match_id: tMid, player_id: dragPid, is_absent: false });
-    toast(`${pById(dragPid)?.name} inn, ${pById(tPid)?.name} ut`);
+  // If two teams on same day, let user pick which team
+  if (day.length > 1) {
+    // Show picker
+    openResultPicker(date, day);
   } else {
-    // Team → chip: SWAP — player 1 goes to team 2, player 2 goes to team 1
-    await swapPlayers(dragPid, dragMid, tPid, tMid);
+    openResultSheet(day[0].id);
   }
-  dragPid = null; dragMid = null; dragDate = null;
+}
+
+function openResultPicker(date, day) {
+  resCtx = null;
+  // Remove any existing picker
+  const existing = document.getElementById('res-picker');
+  if (existing) existing.remove();
+  // Hide all form elements
+  document.getElementById('res-our').closest('.score-row').style.display = 'none';
+  document.querySelectorAll('#res-sheet .events-section').forEach(el => el.style.display = 'none');
+  document.querySelector('#res-sheet .save-btn').style.display = 'none';
+  document.getElementById('del-btn').style.display = 'none';
+  document.getElementById('res-title').textContent = `Resultat ${fDate(date)}`;
+  document.getElementById('res-sub').textContent = 'Velg lag:';
+  // Build fresh picker
+  const picker = document.createElement('div');
+  picker.id = 'res-picker';
+  picker.innerHTML = day.map(m => {
+    const ln = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
+    const res = resultOf(m.id);
+    const label = res ? `${res.our_goals}–${res.opp_goals}` : 'Ingen resultat';
+    return `<button class="sb sb-res" style="margin-bottom:8px" onclick="openResultSheet(${m.id})"><span class="sb-ico">⚽</span>${ln} vs ${m.opponent} · ${label}</button>`;
+  }).join('') + `<button class="sb sb-x" style="margin-top:4px" onclick="closeResult()"><span class="sb-ico">✕</span>Avbryt</button>`;
+  document.getElementById('res-sheet').appendChild(picker);
+  document.getElementById('res-overlay').classList.add('on');
+}
+
+function createEl(tag, cls, id) {
+  const el=document.createElement(tag);
+  if (cls) el.className=cls; if (id) el.id=id;
+  return el;
+}
+
+function openResultSheet(matchId) {
+  // Remove picker if open
+  const picker=document.getElementById('res-picker');
+  if (picker) picker.remove();
+
+  const m=mById(matchId);
+  if (!m) return;
+  resCtx={matchId};
+
+  const ln=m.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2';
+  document.getElementById('res-title').textContent=`${ln} vs ${m.opponent}`;
+  document.getElementById('res-sub').textContent=`${fDate(m.date)} · ${m.venue}`;
+  document.getElementById('res-our-name').textContent=ln;
+  document.getElementById('res-opp-name').textContent=m.opponent;
+
+  // Restore hidden elements
+  document.getElementById('res-our').closest('.score-row').style.display='';
+  document.querySelectorAll('.events-section').forEach(el=>el.style.display='');
+  document.querySelector('.save-btn').style.display='';
+
+  // Prefill existing result
+  const existing=resultOf(matchId);
+  document.getElementById('res-our').value=existing?existing.our_goals:0;
+  document.getElementById('res-opp').value=existing?existing.opp_goals:0;
+
+  const existingGoals=new Set(eventsOf(matchId,'goal').map(e=>e.player_id));
+  const existingAssists=new Set(eventsOf(matchId,'assist').map(e=>e.player_id));
+
+  document.getElementById('del-btn').style.display=existing?'':'none';
+
+  // Players in this match
+  const ps=psOf(matchId).filter(p=>!p.absent);
+
+  const goalHtml=ps.map(p=>
+    `<button class="ptoggle${p.is_coach_kid?' cc':''} ${existingGoals.has(p.id)?'sel-goal':''}"
+      data-pid="${p.id}" onclick="toggleEvent(this,'goal')">${p.name}</button>`
+  ).join('');
+  const assistHtml=ps.map(p=>
+    `<button class="ptoggle${p.is_coach_kid?' cc':''} ${existingAssists.has(p.id)?'sel-assist':''}"
+      data-pid="${p.id}" onclick="toggleEvent(this,'assist')">${p.name}</button>`
+  ).join('');
+
+  document.getElementById('goal-toggles').innerHTML=goalHtml;
+  document.getElementById('assist-toggles').innerHTML=assistHtml;
+
+  document.getElementById('res-overlay').classList.add('on');
+}
+
+function toggleEvent(btn, type) {
+  const cls=type==='goal'?'sel-goal':'sel-assist';
+  btn.classList.toggle(cls);
+}
+
+async function saveResult() {
+  if (!resCtx) return;
+  const {matchId}=resCtx;
+  const ourG=parseInt(document.getElementById('res-our').value)||0;
+  const oppG=parseInt(document.getElementById('res-opp').value)||0;
+
+  // Upsert result
+  const existing=resultOf(matchId);
+  if (existing) {
+    await api(`j11_results?match_id=eq.${matchId}`,{
+      method:'PATCH',body:JSON.stringify({our_goals:ourG,opp_goals:oppG,updated_at:new Date().toISOString()})
+    });
+    existing.our_goals=ourG; existing.opp_goals=oppG;
+  } else {
+    await api('j11_results',{
+      method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify({match_id:matchId,our_goals:ourG,opp_goals:oppG})
+    });
+    Results.push({match_id:matchId,our_goals:ourG,opp_goals:oppG});
+  }
+
+  // Delete all events for this match, then re-insert
+  await api(`j11_events?match_id=eq.${matchId}`,{method:'DELETE'});
+  Events=Events.filter(e=>e.match_id!==matchId);
+
+  const newEvents=[];
+  document.querySelectorAll('#goal-toggles .sel-goal').forEach(btn=>{
+    newEvents.push({match_id:matchId,player_id:+btn.dataset.pid,event_type:'goal'});
+  });
+  document.querySelectorAll('#assist-toggles .sel-assist').forEach(btn=>{
+    newEvents.push({match_id:matchId,player_id:+btn.dataset.pid,event_type:'assist'});
+  });
+
+  if (newEvents.length>0) {
+    await api('j11_events',{
+      method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},
+      body:JSON.stringify(newEvents)
+    });
+    Events.push(...newEvents);
+  }
+
+  closeResult();
+  toast('Resultat lagret');
   render();
 }
 
-// ── DRAG: ZONE EVENTS ─────────────────────────────────────────────────────
-function zoneEnter(e) {
-  e.preventDefault();
-  const z = e.currentTarget;
-  dzCounters[z.dataset.mid] = (dzCounters[z.dataset.mid] || 0) + 1;
-  if (z.dataset.date === dragDate && +z.dataset.mid !== dragMid)
-    z.classList.add('dz-on');
+async function deleteResult() {
+  if (!resCtx) return;
+  if (!window.confirm('Slett resultatet for denne kampen?')) return;
+  const {matchId}=resCtx;
+  await api(`j11_results?match_id=eq.${matchId}`,{method:'DELETE'});
+  await api(`j11_events?match_id=eq.${matchId}`,{method:'DELETE'});
+  Results=Results.filter(r=>r.match_id!==matchId);
+  Events=Events.filter(e=>e.match_id!==matchId);
+  closeResult();
+  toast('Resultat slettet');
+  render();
 }
-function zoneOver(e) {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'move';
-}
-function zoneLeave(e) {
-  const z = e.currentTarget;
-  dzCounters[z.dataset.mid] = (dzCounters[z.dataset.mid] || 1) - 1;
-  if (dzCounters[z.dataset.mid] <= 0) {
-    z.classList.remove('dz-on');
-    dzCounters[z.dataset.mid] = 0;
-  }
-}
-async function zoneDrop(e) {
-  e.preventDefault();
-  const z   = e.currentTarget;
-  z.classList.remove('dz-on');
-  dzCounters[z.dataset.mid] = 0;
-  const toMid = +z.dataset.mid;
-  if (!dragPid || toMid === dragMid) return;
-  if (z.dataset.date !== dragDate) { toast('Kan bare flytte innen samme kampdag'); return; }
 
-  if (dragMid === 0) {
-    // Pool → zone: ADD player to team (no removal)
-    await api('j11_assignments', {
-      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
-      body: JSON.stringify({ match_id: toMid, player_id: dragPid, is_absent: false })
-    });
-    if (!A.find(a => a.match_id === toMid && a.player_id === dragPid))
-      A.push({ match_id: toMid, player_id: dragPid, is_absent: false });
+function closeResult(e) {
+  if (e&&e.target!==document.getElementById('res-overlay')) return;
+  document.getElementById('res-overlay').classList.remove('on');
+  const picker=document.getElementById('res-picker');
+  if (picker) picker.remove();
+  resCtx=null;
+}
+
+// ── DRAG-DROP ──────────────────────────────────────────────────────────────
+function chipStart(e){dragPid=+e.currentTarget.dataset.pid;dragMid=+e.currentTarget.dataset.mid;dragDate=e.currentTarget.dataset.date;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(dragPid));}
+function chipEnd(e){e.currentTarget.classList.remove('dragging');}
+function chipOver(e){e.preventDefault();e.stopPropagation();const t=e.currentTarget;if(t.dataset.date===dragDate&&+t.dataset.mid!==dragMid){e.dataTransfer.dropEffect='move';t.classList.add('swap-target');}}
+function chipLeave(e){e.currentTarget.classList.remove('swap-target');}
+async function chipDrop(e){
+  e.preventDefault();e.stopPropagation();
+  const t=e.currentTarget;t.classList.remove('swap-target');
+  const tPid=+t.dataset.pid,tMid=+t.dataset.mid,tDate=t.dataset.date;
+  if(!dragPid||dragPid===tPid) return;
+  if(tDate!==dragDate){toast('Kan bare flytte innen samme kampdag');return;}
+  if(tMid===dragMid) return;
+  if(dragMid===0){
+    await api(`j11_assignments?match_id=eq.${tMid}&player_id=eq.${tPid}`,{method:'DELETE'});
+    await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:tMid,player_id:dragPid,is_absent:false})});
+    const idx=A.findIndex(a=>a.match_id===tMid&&a.player_id===tPid);if(idx>-1)A.splice(idx,1);
+    if(!A.find(a=>a.match_id===tMid&&a.player_id===dragPid))A.push({match_id:tMid,player_id:dragPid,is_absent:false});
+    const dName=pById(dragPid)?.name, tName=pById(tPid)?.name;
+    dragPid=null;dragMid=null;dragDate=null;
+    toast(`${dName} inn, ${tName} ut`);
+  } else {
+    const p1=dragPid,m1=dragMid,p2=tPid,m2=tMid;
+    dragPid=null;dragMid=null;dragDate=null;
+    await swapPlayers(p1,m1,p2,m2);
+    return;
+  }
+  render();
+}
+function zoneEnter(e){e.preventDefault();const z=e.currentTarget;dzCounters[z.dataset.mid]=(dzCounters[z.dataset.mid]||0)+1;if(z.dataset.date===dragDate&&+z.dataset.mid!==dragMid)z.classList.add('dz-on');}
+function zoneOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
+function zoneLeave(e){const z=e.currentTarget;dzCounters[z.dataset.mid]=(dzCounters[z.dataset.mid]||1)-1;if(dzCounters[z.dataset.mid]<=0){z.classList.remove('dz-on');dzCounters[z.dataset.mid]=0;}}
+async function zoneDrop(e){
+  e.preventDefault();const z=e.currentTarget;z.classList.remove('dz-on');dzCounters[z.dataset.mid]=0;
+  const toMid=+z.dataset.mid;
+  if(!dragPid||toMid===dragMid) return;
+  if(z.dataset.date!==dragDate){toast('Kan bare flytte innen samme kampdag');return;}
+  if(dragMid===0){
+    await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:toMid,player_id:dragPid,is_absent:false})});
+    if(!A.find(a=>a.match_id===toMid&&a.player_id===dragPid))A.push({match_id:toMid,player_id:dragPid,is_absent:false});
     toast(`${pById(dragPid)?.name} lagt til`);
-    dragPid = null; dragMid = null; dragDate = null;
-    render();
+    dragPid=null;dragMid=null;dragDate=null;render();
+  } else {const pid=dragPid,from=dragMid;dragPid=null;dragMid=null;dragDate=null;await movePlayer(pid,from,toMid);}
+}
+
+// ── DB OPS ─────────────────────────────────────────────────────────────────
+async function swapPlayers(p1,m1,p2,m2){
+  await Promise.all([api(`j11_assignments?match_id=eq.${m1}&player_id=eq.${p1}`,{method:'DELETE'}),api(`j11_assignments?match_id=eq.${m2}&player_id=eq.${p2}`,{method:'DELETE'})]);
+  await Promise.all([api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:m2,player_id:p1,is_absent:false})}),api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:m1,player_id:p2,is_absent:false})})]);
+  const a1=A.find(a=>a.match_id===m1&&a.player_id===p1),a2=A.find(a=>a.match_id===m2&&a.player_id===p2);
+  if(a1){a1.match_id=m2;a1.is_absent=false;}if(a2){a2.match_id=m1;a2.is_absent=false;}
+  toast(`${pById(p1)?.name} ↔ ${pById(p2)?.name} byttet`);render();
+}
+async function movePlayer(pid,from,to){
+  await api(`j11_assignments?match_id=eq.${from}&player_id=eq.${pid}`,{method:'DELETE'});
+  await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:to,player_id:pid,is_absent:false})});
+  const idx=A.findIndex(a=>a.match_id===from&&a.player_id===pid);if(idx>-1)A.splice(idx,1);
+  const ex=A.find(a=>a.match_id===to&&a.player_id===pid);if(!ex)A.push({match_id:to,player_id:pid,is_absent:false});else ex.is_absent=false;
+  toast(`${pById(pid)?.name} flyttet`);render();
+}
+async function setAbsent(matchId,playerId,absent){
+  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`,{method:'PATCH',body:JSON.stringify({is_absent:absent,updated_at:new Date().toISOString()})});
+  const a=A.find(x=>x.match_id===matchId&&x.player_id===playerId);if(a)a.is_absent=absent;render();
+}
+
+// ── ACTION SHEET ───────────────────────────────────────────────────────────
+function openSheet(playerId,matchId){
+  const p=pById(playerId),m=mById(matchId),a=A.find(x=>x.match_id===matchId&&x.player_id===playerId);
+  if(!p||!m) return;
+  shCtx={playerId,matchId,absent:!!a?.is_absent};
+  document.getElementById('sh-name').textContent=p.name;
+  document.getElementById('sh-info').textContent=`${fDate(m.date)} · ${m.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2'} vs ${m.opponent}`;
+  const other=M.find(x=>x.date===m.date&&x.id!==m.id&&!x.is_intern);
+  let btns='';
+  if(shCtx.absent){
+    btns+=`<button class="sb sb-prs" onclick="doPresent()"><span class="sb-ico">✓</span>Meld tilstede igjen</button>`;
+    if(other){const on=other.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2';btns+=`<button class="sb sb-mv" onclick="doPresentAndMove(${other.id})"><span class="sb-ico">⇄</span>Tilstede og flytt til ${on}</button>`;}
   } else {
-    // Team → zone: MOVE (existing behaviour)
-    const pid = dragPid, fromMid = dragMid;
-    dragPid = null; dragMid = null; dragDate = null;
-    await movePlayer(pid, fromMid, toMid);
+    btns+=`<button class="sb sb-abs" onclick="doAbsent()"><span class="sb-ico">✗</span>Meld fraværende</button>`;
+    if(other){const on=other.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2';btns+=`<button class="sb sb-mv" onclick="doMove(${other.id})"><span class="sb-ico">⇄</span>Flytt til ${on}</button>`;}
   }
+  btns+=`<button class="sb" style="background:var(--bg);color:var(--t2);border:1.5px solid var(--bd)" onclick="doRemove()"><span class="sb-ico">🗑</span>Fjern fra tropp</button>`;
+  btns+=`<button class="sb sb-x" onclick="closeSheet()"><span class="sb-ico">✕</span>Avbryt</button>`;
+  document.getElementById('sh-btns').innerHTML=btns;
+  document.getElementById('overlay').classList.add('on');
+}
+function openSheetPool(pid,matchId){
+  const p=pById(pid),m=mById(matchId);if(!p||!m) return;
+  shCtx={playerId:pid,matchId,pool:true};
+  document.getElementById('sh-name').textContent=p.name;
+  document.getElementById('sh-info').textContent=`Ikke i tropp for ${fDate(m.date)}`;
+  const ln=m.lag==='L1'?'Sørlia/Egge':'Sørlia 2/Egge 2';
+  document.getElementById('sh-btns').innerHTML=`<button class="sb sb-prs" onclick="doAddToTeam()"><span class="sb-ico">＋</span>Legg til i ${ln}</button><button class="sb sb-x" onclick="closeSheet()"><span class="sb-ico">✕</span>Avbryt</button>`;
+  document.getElementById('overlay').classList.add('on');
+}
+function closeSheet(e){if(e&&e.target!==document.getElementById('overlay')) return;document.getElementById('overlay').classList.remove('on');shCtx=null;}
+async function doAbsent(){document.getElementById('overlay').classList.remove('on');await setAbsent(shCtx.matchId,shCtx.playerId,true);toast(`${pById(shCtx.playerId)?.name} meldt fraværende`);}
+async function doPresent(){document.getElementById('overlay').classList.remove('on');await setAbsent(shCtx.matchId,shCtx.playerId,false);toast(`${pById(shCtx.playerId)?.name} meldt tilstede`);}
+async function doMove(toMid){document.getElementById('overlay').classList.remove('on');await movePlayer(shCtx.playerId,shCtx.matchId,toMid);}
+async function doPresentAndMove(toMid){document.getElementById('overlay').classList.remove('on');await setAbsent(shCtx.matchId,shCtx.playerId,false);await movePlayer(shCtx.playerId,shCtx.matchId,toMid);}
+async function doAddToTeam(){
+  document.getElementById('overlay').classList.remove('on');
+  const {playerId,matchId}=shCtx;
+  await api('j11_assignments',{method:'POST',headers:{'Prefer':'resolution=merge-duplicates'},body:JSON.stringify({match_id:matchId,player_id:playerId,is_absent:false})});
+  if(!A.find(a=>a.match_id===matchId&&a.player_id===playerId))A.push({match_id:matchId,player_id:playerId,is_absent:false});
+  toast(`${pById(playerId)?.name} lagt til`);render();
 }
 
-// ── DB OPERATIONS ─────────────────────────────────────────────────────────
-async function swapPlayers(pid1, mid1, pid2, mid2) {
-  // Delete both assignments, then re-insert swapped
-  await Promise.all([
-    api(`j11_assignments?match_id=eq.${mid1}&player_id=eq.${pid1}`, { method: 'DELETE' }),
-    api(`j11_assignments?match_id=eq.${mid2}&player_id=eq.${pid2}`, { method: 'DELETE' }),
-  ]);
-  await Promise.all([
-    api('j11_assignments', {
-      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
-      body: JSON.stringify({ match_id: mid2, player_id: pid1, is_absent: false })
-    }),
-    api('j11_assignments', {
-      method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
-      body: JSON.stringify({ match_id: mid1, player_id: pid2, is_absent: false })
-    }),
-  ]);
-  // Update local state
-  const a1 = A.find(a => a.match_id === mid1 && a.player_id === pid1);
-  const a2 = A.find(a => a.match_id === mid2 && a.player_id === pid2);
-  if (a1) { a1.match_id = mid2; a1.is_absent = false; }
-  if (a2) { a2.match_id = mid1; a2.is_absent = false; }
-  toast(`${pById(pid1)?.name} ↔ ${pById(pid2)?.name} byttet plass`);
-  render();
-}
-
-async function movePlayer(pid, fromMid, toMid) {
-  await api(`j11_assignments?match_id=eq.${fromMid}&player_id=eq.${pid}`, { method: 'DELETE' });
-  await api('j11_assignments', {
-    method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
-    body: JSON.stringify({ match_id: toMid, player_id: pid, is_absent: false })
-  });
-  const idx = A.findIndex(a => a.match_id === fromMid && a.player_id === pid);
+async function doRemove() {
+  if (!shCtx) return;
+  document.getElementById('overlay').classList.remove('on');
+  const {playerId, matchId} = shCtx;
+  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {method:'DELETE'});
+  const idx = A.findIndex(a => a.match_id===matchId && a.player_id===playerId);
   if (idx > -1) A.splice(idx, 1);
-  const ex = A.find(a => a.match_id === toMid && a.player_id === pid);
-  if (!ex) A.push({ match_id: toMid, player_id: pid, is_absent: false });
-  else ex.is_absent = false;
-  toast(`${pById(pid)?.name} flyttet`);
+  toast(`${pById(playerId)?.name} fjernet fra tropp`);
   render();
 }
 
-async function setAbsent(matchId, playerId, absent) {
-  await api(`j11_assignments?match_id=eq.${matchId}&player_id=eq.${playerId}`, {
-    method: 'PATCH',
-    body: JSON.stringify({ is_absent: absent, updated_at: new Date().toISOString() })
-  });
-  const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
-  if (a) a.is_absent = absent;
-  render();
+// ── NAV & FILTER ───────────────────────────────────────────────────────────
+document.querySelectorAll('.ntab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('on'));
+  t.classList.add('on');document.getElementById('pg-'+t.dataset.pg).classList.add('on');
+}));
+document.querySelectorAll('.fb').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');filter=b.dataset.f;renderPlan();
+}));
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),2400);}
+
+// ── REALTIME ──────────────────────────────────────────────────────────────
+let sbClient = null;
+let reloadTimer = null;
+
+function startRealtime() {
+  try {
+    sbClient = window.supabase.createClient(SB, KEY);
+  } catch(e) { console.warn('Supabase client init failed', e); return; }
+
+  sbClient
+    .channel('j11-live')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'j11_assignments' }, handleRemoteChange)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'j11_results'     }, handleRemoteChange)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'j11_events'      }, handleRemoteChange)
+    .subscribe(status => {
+      const dot = document.getElementById('live-dot');
+      if (!dot) return;
+      if (status === 'SUBSCRIBED') {
+        dot.classList.remove('off');
+        dot.title = 'Live — endringer synkroniseres automatisk';
+      } else {
+        dot.classList.add('off');
+        dot.title = 'Kobler til…';
+      }
+    });
 }
 
-// ── ACTION SHEET ──────────────────────────────────────────────────────────
-function openSheet(playerId, matchId) {
-  const p = pById(playerId), m = mById(matchId);
-  const a = A.find(x => x.match_id === matchId && x.player_id === playerId);
-  if (!p || !m) return;
-  shCtx = { playerId, matchId, absent: !!a?.is_absent };
-  document.getElementById('sh-name').textContent = p.name;
-  document.getElementById('sh-info').textContent =
-    `${fDate(m.date)} · ${m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2'} vs ${m.opponent}`;
+function handleRemoteChange() {
+  // Debounce — if multiple changes arrive at once, reload once
+  clearTimeout(reloadTimer);
+  reloadTimer = setTimeout(async () => {
+    // Reload only the three dynamic tables
+    const [freshA, freshR, freshE] = await Promise.all([
+      api('j11_assignments?select=*'),
+      api('j11_results?select=*'),
+      api('j11_events?select=*'),
+    ]);
+    if (freshA) A = freshA;
+    if (freshR) Results = freshR;
+    if (freshE) Events = freshE;
+    // Flash the content to signal an update
+    document.getElementById('plan-list').classList.add('sync-flash');
+    setTimeout(() => document.getElementById('plan-list').classList.remove('sync-flash'), 400);
+    render();
+  }, 300);
+}
 
-  const other = M.find(x => x.date === m.date && x.id !== m.id && !x.is_intern);
-  let btns = '';
-  if (shCtx.absent) {
-    btns += `<button class="sb sb-prs" onclick="doPresent()"><span class="sb-ico">✓</span>Meld tilstede igjen</button>`;
-    if (other) {
-      const on = other.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
-      btns += `<button class="sb sb-mv" onclick="doPresentAndMove(${other.id})"><span class="sb-ico">⇄</span>Tilstede og flytt til ${on}</button>`;
-    }
+
+// ── PASSWORD ──────────────────────────────────────────────────────────────
+const PW_KEY = 'j11_auth';
+const PW_HASH = '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5'; // sha256('12345')
+
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  const hash = await sha256(val);
+  if (hash === PW_HASH) {
+    localStorage.setItem(PW_KEY, hash);
+    document.getElementById('pw-screen').style.display = 'none';
+    init();
   } else {
-    btns += `<button class="sb sb-abs" onclick="doAbsent()"><span class="sb-ico">✗</span>Meld fraværende</button>`;
-    if (other) {
-      const on = other.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
-      btns += `<button class="sb sb-mv" onclick="doMove(${other.id})"><span class="sb-ico">⇄</span>Flytt til ${on}</button>`;
-    }
+    document.getElementById('pw-error').textContent = 'Feil passord';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+    setTimeout(() => document.getElementById('pw-error').textContent = '', 2000);
   }
-  btns += `<button class="sb sb-x" onclick="closeSheet()"><span class="sb-ico">✕</span>Avbryt</button>`;
-  document.getElementById('sh-btns').innerHTML = btns;
-  document.getElementById('overlay').classList.add('on');
 }
 
-// Action sheet for pool players (unassigned) — only option is to add to team
-function openSheetPool(playerId, matchId) {
-  const p = pById(playerId), m = mById(matchId);
-  if (!p || !m) return;
-  shCtx = { playerId, matchId, pool: true };
-  document.getElementById('sh-name').textContent = p.name;
-  document.getElementById('sh-info').textContent = `Ikke i tropp for ${fDate(m.date)}`;
-  const ln = m.lag === 'L1' ? 'Sørlia/Egge' : 'Sørlia 2/Egge 2';
-  document.getElementById('sh-btns').innerHTML =
-    `<button class="sb sb-prs" onclick="doAddToTeam()"><span class="sb-ico">＋</span>Legg til i ${ln}</button>
-     <button class="sb sb-x" onclick="closeSheet()"><span class="sb-ico">✕</span>Avbryt</button>`;
-  document.getElementById('overlay').classList.add('on');
+function bootAuth() {
+  const stored = localStorage.getItem(PW_KEY);
+  if (stored === PW_HASH) {
+    document.getElementById('pw-screen').style.display = 'none';
+    init();
+  } else {
+    setTimeout(() => document.getElementById('pw-input').focus(), 100);
+  }
 }
 
-function closeSheet(e) {
-  if (e && e.target !== document.getElementById('overlay')) return;
-  document.getElementById('overlay').classList.remove('on');
-  shCtx = null;
-}
-
-async function doAbsent() {
-  document.getElementById('overlay').classList.remove('on');
-  await setAbsent(shCtx.matchId, shCtx.playerId, true);
-  toast(`${pById(shCtx.playerId)?.name} meldt fraværende`);
-}
-async function doPresent() {
-  document.getElementById('overlay').classList.remove('on');
-  await setAbsent(shCtx.matchId, shCtx.playerId, false);
-  toast(`${pById(shCtx.playerId)?.name} meldt tilstede`);
-}
-async function doMove(toMid) {
-  document.getElementById('overlay').classList.remove('on');
-  await movePlayer(shCtx.playerId, shCtx.matchId, toMid);
-}
-async function doPresentAndMove(toMid) {
-  document.getElementById('overlay').classList.remove('on');
-  // First mark present, then move
-  await setAbsent(shCtx.matchId, shCtx.playerId, false);
-  await movePlayer(shCtx.playerId, shCtx.matchId, toMid);
-}
-async function doAddToTeam() {
-  document.getElementById('overlay').classList.remove('on');
-  const { playerId, matchId } = shCtx;
-  await api('j11_assignments', {
-    method: 'POST', headers: { 'Prefer': 'resolution=merge-duplicates' },
-    body: JSON.stringify({ match_id: matchId, player_id: playerId, is_absent: false })
-  });
-  if (!A.find(a => a.match_id === matchId && a.player_id === playerId))
-    A.push({ match_id: matchId, player_id: playerId, is_absent: false });
-  toast(`${pById(playerId)?.name} lagt til i tropp`);
-  render();
-}
-
-// ── NAV & FILTER ──────────────────────────────────────────────────────────
-document.querySelectorAll('.ntab').forEach(t => t.addEventListener('click', () => {
-  document.querySelectorAll('.ntab').forEach(x => x.classList.remove('on'));
-  document.querySelectorAll('.screen').forEach(x => x.classList.remove('on'));
-  t.classList.add('on');
-  document.getElementById('pg-' + t.dataset.pg).classList.add('on');
-}));
-
-document.querySelectorAll('.fb').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('.fb').forEach(x => x.classList.remove('on'));
-  b.classList.add('on'); filter = b.dataset.f; renderPlan();
-}));
-
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('on');
-  setTimeout(() => t.classList.remove('on'), 2400);
-}
-
-init();
+bootAuth();
 </script>
 </body>
 </html>
