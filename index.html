@@ -537,7 +537,7 @@ function renderPlan() {
             <span class="t-cnt${nA?' t-cnt-abs':''}">
               ${nA?`${nOk} av ${ps.length} (${nA} borte)`:`${ps.filter(p=>!p.absent).length} spillere`}
             </span>
-            ${ps.filter(p=>!p.absent&&p.is_coach_kid).length===0&&ps.filter(p=>!p.absent).length>0?'<span class="cc-warn">⚠ Mangler CC</span>':''}
+            ${ps.filter(p=>!p.absent&&p.is_coach_kid).length===0&&ps.filter(p=>!p.absent).length>0?'<span class="cc-warn">⚠ Mangler trenerbarn</span>':''}
           </div>
           ${solo?`<div class="t-opp">vs ${m.opponent}</div><div class="t-venue">${m.venue}</div>`:''}
           <div class="chips" data-mid="${m.id}" data-date="${date}"
@@ -582,8 +582,9 @@ function renderStats() {
   for (const a of A) {
     const m=mById(a.match_id),s=stats[a.player_id];
     if (!m||!s) continue;
-    s.km+=m.km||0;
+    s.km+=m.km||0;  // planlagt km — alltid
     if (a.is_absent){s.abs++;continue;}
+    if (!isPlayed(m.date)) continue;  // teller bare spilte kamper
     s.played++;m.ha==='H'?s.h++:s.b++;m.jersey==='rød'?s.r++:s.o++;
   }
   for (const e of Events) {
@@ -627,12 +628,14 @@ function renderStats() {
     html+=`<div class="scard">
       <div class="scard-hd"><h2>⚽ Toppscorere og assist-liga</h2></div>
       <div class="scard-body"><table class="stats-tbl">
-        <thead><tr><th>#</th><th>Spiller</th><th>Mål</th><th>Målgivende</th><th>Total</th></tr></thead>
+        <thead><tr><th>#</th><th>Spiller</th><th>Spilt</th><th>Mål</th><th>Målgivende</th><th>Total</th></tr></thead>
         <tbody>${scorerRows.map((r,i)=>{
           const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+          const gpg = r.played>0 ? (r.goals/r.played).toFixed(2).replace('.',',') : '—';
           return `<tr class="${r.cc?'cc-row':''}">
             <td>${medal||i+1}</td>
-            <td><b>${r.name}</b>${r.cc?'<span style="font-size:.65rem;color:var(--t3);margin-left:4px">CC</span>':''}</td>
+            <td><b>${r.name}</b>${r.cc?'<span style="font-size:.62rem;color:var(--t3);margin-left:5px;font-style:normal">Trenerbarn</span>':''}</td>
+            <td class="nfont" style="color:var(--t2)">${r.played}</td>
             <td><span class="spill sp-g nfont">${r.goals}</span></td>
             <td><span class="spill sp-b nfont">${r.assists}</span></td>
             <td class="nfont">${r.goals+r.assists}</td>
@@ -651,7 +654,7 @@ function renderStats() {
         const bw=Math.round(r.km/maxKm*64);
         const c=r.km>avg*1.18?'var(--re)':r.km<avg*0.82?'var(--bl)':'var(--g)';
         return `<tr class="${r.cc?'cc-row':''}">
-          <td><b>${r.name}</b>${r.cc?'<span style="font-size:.65rem;color:var(--t3);margin-left:5px">CC</span>':''}</td>
+          <td><b>${r.name}</b>${r.cc?'<span style="font-size:.62rem;color:var(--t3);margin-left:5px;font-style:normal">Trenerbarn</span>':''}</td>
           <td class="nfont">${r.played}</td>
           <td><div class="km-cell"><div class="km-bar" style="width:${bw}px;background:${c}"></div><span class="nfont" style="color:${c}">${r.km}</span></div></td>
           <td><span class="spill sp-g">${r.h}H</span> <span class="spill sp-b">${r.b}B</span></td>
